@@ -33,6 +33,30 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fairy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Viking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ninja.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Goblin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNDPproject.cpp">
@@ -42,6 +66,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fairy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Viking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ninja.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Goblin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,6 +99,15 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\DNDPproject.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\SAND.jpeg">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="res\Media\N1.bmp">
+      <Filter>Source Files</Filter>
+    </Image>
+    <Image Include="Media\N1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
