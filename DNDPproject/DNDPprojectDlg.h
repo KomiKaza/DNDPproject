@@ -70,4 +70,6 @@ public:
 	CEdit CInvetory;
 	CButton CRestart;
 	afx_msg void OnBnClickedRestart();
+	afx_msg void OnBnClickedHelp();
+	afx_msg void OnBnClickedSave();
 };

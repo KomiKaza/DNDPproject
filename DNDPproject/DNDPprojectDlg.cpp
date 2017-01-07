@@ -30,6 +30,7 @@ int ClassSelect=0;
 Character * me;
 CPoint * Location;
 int MsgAns;
+bool monster[10];
 //end intalize
 
 class CAboutDlg : public CDialogEx
@@ -118,6 +119,8 @@ BEGIN_MESSAGE_MAP(CDNDPprojectDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_EAST, &CDNDPprojectDlg::OnBnClickedEast)
 	ON_BN_CLICKED(IDC_WEST, &CDNDPprojectDlg::OnBnClickedWest)
 	ON_BN_CLICKED(IDC_RESTART, &CDNDPprojectDlg::OnBnClickedRestart)
+	ON_BN_CLICKED(IDC_HELP, &CDNDPprojectDlg::OnBnClickedHelp)
+	ON_BN_CLICKED(IDC_SAVE, &CDNDPprojectDlg::OnBnClickedSave)
 END_MESSAGE_MAP()
 
 
@@ -228,7 +231,6 @@ Dialog.SetFocus();
 Dialog.SetSel(0,-1,false);
 newName=true;
 CGo.EnableWindow(true);
-CRestart.EnableWindow(true);
 
 SDialog="The Pizza you ate yesterday \r\n";
 SDialog+="was not that innocent! it \r\n";
@@ -269,6 +271,7 @@ void CDNDPprojectDlg::OnBnClickedGo()
 {
 	if(newName)
 	{
+		CRestart.EnableWindow(true);
 		newName=false;
 		Dialog.GetWindowTextW(name);
 		msg="";
@@ -463,24 +466,40 @@ Dialog.SetSel(0,-1,false);
 void CDNDPprojectDlg::OnBnClickedNorth()
 {
 (*Location).y++;
+if(Location->y ==9)
+	CNorth.EnableWindow(false);
+if(Location->y >0)
+	CSouth.EnableWindow(true);
 }
 
 
 void CDNDPprojectDlg::OnBnClickedSouth()
 {
 (*Location).y--;
+if(Location->y ==0)
+	CSouth.EnableWindow(false);
+if(Location->y <9)
+	CNorth.EnableWindow(true);
 }
 
 
 void CDNDPprojectDlg::OnBnClickedEast()
 {
 (*Location).x++;
+if(Location->x ==9)
+	CEast.EnableWindow(false);
+if(Location->x >0)
+	CWest.EnableWindow(true);
 }
 
 
 void CDNDPprojectDlg::OnBnClickedWest()
 {
 (*Location).x--;
+if(Location->x ==0)
+	CWest.EnableWindow(false);
+if(Location->x <9)
+	CEast.EnableWindow(true);
 }
 
 
@@ -490,7 +509,7 @@ MsgAns = MessageBox(L"You are in the middle of a game. Are you sure?",
 L"Start Over?", MB_YESNOCANCEL|MB_ICONINFORMATION);
 if(MsgAns==IDYES)
 {
-InitializeGlobals(); //If user clicks again, initialize
+InitializeGlobals(); 
 name="";
 CName.SetWindowTextW(L"");
 OnBnClickedStart();
@@ -515,7 +534,37 @@ msg="";
 SDialog="";
 newName=false;
 ClassSelect=0;
+for(int i=0;i<10;i++)
+monster[i]=false;
 delete me;
 delete Location;
 }
 
+
+
+void CDNDPprojectDlg::OnBnClickedHelp()
+{
+	CString HelpText=CString(_T(""));
+	HelpText="The object of this game is to complet your'e character mission.";
+HelpText+=" in this game you will gain exprience,items such as :\n" ;
+HelpText+=" weapons,armour,potions and even spells.";
+HelpText+=" \n at the game you have few main buttons: \n"; 
+HelpText+="At the begning of the game you will have to choose between";
+HelpText+="the classes available, each one has its own unique ability and storyline"; 
+HelpText+="you should choose a name and then click go. \n when the story begins"; 
+HelpText+="you will have weapons to choose from (you beging with nothing but your hands)\n";
+HelpText+="as you move on , you will get new weapons to use, and also items to make you stronger.\n";
+HelpText+="there is also a special item called potion , which will increase your hp-HitPoints\n";
+HelpText+="in a battle you should choose each turn a weapon and click the action button to use it against youre enemy\n";
+HelpText+="in the main map you can move to each side of the map using the : NORTH,WEST ,EAST , SOUTH button\n Good Luck!";
+
+MessageBox((LPCTSTR)HelpText, L"Dungeon and Dragons 1.0 - Help");
+}
+
+
+void CDNDPprojectDlg::OnBnClickedSave()
+{
+//pSaveName = ( CEdit * ) GetDlgItem( IDC_SaveName );
+//pSavePassword = ( CEdit * ) GetDlgItem( IDC_SavePassword );
+//bool success;
+}
