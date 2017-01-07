@@ -4,6 +4,15 @@
 
 #pragma once
 #include "afxwin.h"
+#include "Character.h"
+#include "Monster.h"
+#include "Elf.h"
+#include "Viking.h"
+#include "Ninja.h"
+#include "Fairy.h"
+#include "SaveDialog.h"
+#include "DLGLoad.h"
+#include <fstream>
 
 
 // CDNDPprojectDlg dialog
@@ -12,7 +21,9 @@ class CDNDPprojectDlg : public CDialogEx
 // Construction
 public:
 	CDNDPprojectDlg(CWnd* pParent = NULL);	// standard constructor
-
+	CDNDPprojectDlg(Character *me,CPoint * Location,CWnd* pParent = NULL);	// standard constructor
+	void afterLoad();
+	void checkLocation();
 // Dialog Data
 	enum { IDD = IDD_DNDPPROJECT_DIALOG };
 
@@ -31,6 +42,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	bool afterload;
 	afx_msg void OnBnClickedQuit();
 	CEdit Output;
 	afx_msg void OnBnClickedStart();
@@ -72,4 +84,6 @@ public:
 	afx_msg void OnBnClickedRestart();
 	afx_msg void OnBnClickedHelp();
 	afx_msg void OnBnClickedSave();
+	afx_msg void OnBnClickedLoad();
+	CButton CSaveG;
 };

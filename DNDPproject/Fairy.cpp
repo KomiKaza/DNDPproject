@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "Fairy.h"
 
 
@@ -27,5 +28,7 @@ void Fairy::Attack(Monster * enemy)
 	int total=enemy->getHP() -DMG()*(enemy->getTotal() )-Magic;
 	enemy->setHP(total);
 }
+
+
 
 

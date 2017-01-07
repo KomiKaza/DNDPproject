@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
+    <ClInclude Include="DLGLoad.h" />
     <ClInclude Include="DNDPproject.h" />
     <ClInclude Include="DNDPprojectDlg.h" />
     <ClInclude Include="Dragon.h" />
@@ -111,11 +112,13 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Ninja.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SaveDialog.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Viking.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DLGLoad.cpp" />
     <ClCompile Include="DNDPproject.cpp" />
     <ClCompile Include="DNDPprojectDlg.cpp" />
     <ClCompile Include="Dragon.cpp" />
@@ -123,6 +126,7 @@
     <ClCompile Include="Fairy.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Ninja.cpp" />
+    <ClCompile Include="SaveDialog.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

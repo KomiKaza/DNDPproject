@@ -6,12 +6,7 @@
 #include "DNDPproject.h"
 #include "DNDPprojectDlg.h"
 #include "afxdialogex.h"
-#include "Character.h"
-#include "Monster.h"
-#include "Elf.h"
-#include "Viking.h"
-#include "Ninja.h"
-#include "Fairy.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,10 +26,11 @@ Character * me;
 CPoint * Location;
 int MsgAns;
 bool monster[10];
+
 //end intalize
 
 class CAboutDlg : public CDialogEx
-{
+{ 
 public:
 	CAboutDlg();
 
@@ -48,6 +44,8 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 };
+
+
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
 {
@@ -64,12 +62,171 @@ END_MESSAGE_MAP()
 
 // CDNDPprojectDlg dialog
 
+void CDNDPprojectDlg::checkLocation()
+{
+	CBitmap CenterPix;//creating bitmap
+	SDialog="";
+	switch((Location->x)*10 +(Location->y))
+	{
+	case 0:
+		SDialog="You are in a neighborhood of the local\r\n residents. ";
+		break;
 
+	case 1:
+		SDialog="You are in a neighborhood of the local \r\n residents. ";
+		break;
+	case 2:
+		SDialog="Oh no, a storm is hitting the beach!\r\n Consider if you want to continue via\r\n the beach,  or you wan to go to \r\n rice fields which are in the east  \r\n direction.";
+		break;
+
+	case 3:
+		SDialog="You are at the beach. You can hear the \r\n Vikings partying hard on their ships!";
+		break;
+
+	case 4:
+		SDialog="You are sorrounded by beautiful palm tress,\r\n although the sky gets darker.";
+		CenterPix.LoadBitmapW(BIT_PIRATE);//load image
+       pView.SetBitmap(CenterPix );//post image
+		break;
+
+	case 5:
+		SDialog="A sharp noise is frightening you!\r\n Its a branch that was cracked by the wind.\r\n You can consider to continue to the north-\r\n maybe the weather is not so \r\n crazy there!";
+		break;
+
+	case 6:
+		SDialog="A pastoral view is sottounding you.\r\n Theres a calm wind.";
+		break;
+
+	case 7:
+		SDialog="Be careful - theres a river in the north\r\n direction!";
+		break;
+
+	case 8:
+		SDialog="Oh no, youre drawning in the river!\r\n Go to the south or the east direction\r\n as soon as you can! ";
+		break;
+
+	case 9:
+SDialog="Oh no, youre drawning in the river!\r\n Go to the south or the east direction\r\n as soon as you can! ";
+break;
+
+	case 18:
+		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
+		break;
+
+	case 19:
+		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
+		break;
+
+	case 20:
+		SDialog="You see some houses on the horizon.";
+		break;
+	case 30:
+		SDialog="You are on a walkway.\r\n Where is it going to lead you?";
+		break;
+	case 40:
+		SDialog="You are sorrunded by beautiful,\r\n blooming cherry trees.\r\n It seems like nothing can\r\n disturb you here.";
+		break;
+
+	case 49:
+		CenterPix.LoadBitmapW(BIT_FAIRY);//load image
+       pView.SetBitmap(CenterPix );//post image
+		break;
+	case 50:
+		SDialog="Look how beautiful the temple you're now in!\r\n Exit the temple and check out the beautiful\r\n gardens that sorround it!";
+		CenterPix.LoadBitmapW(BIT_NINJA);//load image
+       pView.SetBitmap(CenterPix );//post image
+		break;
+	case 94:
+		CenterPix.LoadBitmapW(BIT_ELF);//load image
+       pView.SetBitmap(CenterPix );//post image
+		break;
+
+	default:
+		break;
+	}
+	Output.SetWindowTextW(SDialog);//meanwhile
+}
+
+
+void CDNDPprojectDlg::afterLoad()
+{
+	//////////////////
+
+		CRestart.EnableWindow(true);
+		newName=false;
+		msg="";
+		Dialog.SetWindowTextW(msg);
+
+
+CNorth.EnableWindow(true);
+CSouth.EnableWindow(true);
+CEast.EnableWindow(true);
+CWest.EnableWindow(true);
+CGo.EnableWindow(false);
+Dialog.SetReadOnly(true);
+
+//CBitmap CenterPix;//creating bitmap
+		RHands.SetCheck(true);
+		CSaveG.EnableWindow(true);
+
+CString a;
+a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getDef());
+		CDef.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getStr());
+		CStr.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getInt());
+		CInt.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getDex());
+		CDex.SetWindowTextW(a);
+
+Output.SetWindowTextW(SDialog);
+Cweapon.SetWindowTextW(L"Weapons:");
+GetDlgItem(RAD_HANDS)->SetWindowTextW(L"Hands");
+GetDlgItem(RAD_BOW)->EnableWindow(false);
+GetDlgItem(RAD_SWORD)->EnableWindow(false);
+GetDlgItem(RAD_WAND)->EnableWindow(false);
+
+name=me->getName();
+CName.SetWindowTextW(name);
+
+if(Location->y ==9)
+	CNorth.EnableWindow(false);
+if(Location->y >0)
+	CSouth.EnableWindow(true);
+if(Location->y ==0)
+	CSouth.EnableWindow(false);
+if(Location->y <9)
+	CNorth.EnableWindow(true);
+if(Location->x ==9)
+	CEast.EnableWindow(false);
+if(Location->x >0)
+	CWest.EnableWindow(true);
+if(Location->x ==0)
+	CWest.EnableWindow(false);
+if(Location->x <9)
+	CEast.EnableWindow(true);
+
+CInvetory.SetWindowTextW(L"You have nothing \r\n");//AFTER IL ADD ITEMS NEED TO CHANGE
+checkLocation();
+	////////////////////
+}
 
 CDNDPprojectDlg::CDNDPprojectDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDNDPprojectDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	afterload=false;
+}
+
+CDNDPprojectDlg::CDNDPprojectDlg(Character *m,CPoint * Loc,CWnd* pParent)
+		: CDialogEx(CDNDPprojectDlg::IDD, pParent)
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	me=m;
+	Location=Loc;
+	afterload=true;
 }
 
 void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
@@ -100,6 +257,7 @@ void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, CE_NAME, CName);
 	DDX_Control(pDX, CE_INVETORY, CInvetory);
 	DDX_Control(pDX, IDC_RESTART, CRestart);
+	DDX_Control(pDX, IDC_SAVE, CSaveG);
 }
 
 
@@ -121,6 +279,7 @@ BEGIN_MESSAGE_MAP(CDNDPprojectDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RESTART, &CDNDPprojectDlg::OnBnClickedRestart)
 	ON_BN_CLICKED(IDC_HELP, &CDNDPprojectDlg::OnBnClickedHelp)
 	ON_BN_CLICKED(IDC_SAVE, &CDNDPprojectDlg::OnBnClickedSave)
+	ON_BN_CLICKED(IDC_LOAD, &CDNDPprojectDlg::OnBnClickedLoad)
 END_MESSAGE_MAP()
 
 
@@ -129,6 +288,7 @@ END_MESSAGE_MAP()
 BOOL CDNDPprojectDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
 
 	// Add "About..." menu item to system menu.
 
@@ -149,7 +309,6 @@ BOOL CDNDPprojectDlg::OnInitDialog()
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 
-
 	}
 
 	// Set the icon for this dialog.  The framework does this automatically
@@ -158,6 +317,8 @@ BOOL CDNDPprojectDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+
+
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -173,6 +334,8 @@ void CDNDPprojectDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	{
 		CDialogEx::OnSysCommand(nID, lParam);
 	}
+
+
 }
 
 // If you add a minimize button to your dialog, you will need the code below
@@ -181,6 +344,8 @@ void CDNDPprojectDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CDNDPprojectDlg::OnPaint()
 {
+			if(afterload)
+	afterLoad();
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
@@ -378,6 +543,8 @@ switch(ClassSelect){
 		break;
 
 }
+		me->setName(name);
+		CSaveG.EnableWindow(true);
 
 CString a;
 a.Format(_T("%d"), me->getHP());
@@ -470,6 +637,8 @@ if(Location->y ==9)
 	CNorth.EnableWindow(false);
 if(Location->y >0)
 	CSouth.EnableWindow(true);
+
+checkLocation();
 }
 
 
@@ -480,6 +649,8 @@ if(Location->y ==0)
 	CSouth.EnableWindow(false);
 if(Location->y <9)
 	CNorth.EnableWindow(true);
+
+checkLocation();
 }
 
 
@@ -490,6 +661,8 @@ if(Location->x ==9)
 	CEast.EnableWindow(false);
 if(Location->x >0)
 	CWest.EnableWindow(true);
+
+checkLocation();
 }
 
 
@@ -500,6 +673,8 @@ if(Location->x ==0)
 	CWest.EnableWindow(false);
 if(Location->x <9)
 	CEast.EnableWindow(true);
+
+checkLocation();
 }
 
 
@@ -522,7 +697,8 @@ CNorth.EnableWindow(false);
 CEast.EnableWindow(false);
 CWest.EnableWindow(false);
 CSouth.EnableWindow(false);
-
+CRestart.EnableWindow(false);
+CSaveG.EnableWindow(false);
 }
 
 }
@@ -564,7 +740,16 @@ MessageBox((LPCTSTR)HelpText, L"Dungeon and Dragons 1.0 - Help");
 
 void CDNDPprojectDlg::OnBnClickedSave()
 {
+	SaveDialog dlg(ClassSelect,me,Location);
+dlg.DoModal();
 //pSaveName = ( CEdit * ) GetDlgItem( IDC_SaveName );
 //pSavePassword = ( CEdit * ) GetDlgItem( IDC_SavePassword );
 //bool success;
+}
+
+
+void CDNDPprojectDlg::OnBnClickedLoad()
+{
+	DLGLoad dlg;
+	dlg.DoModal();
 }

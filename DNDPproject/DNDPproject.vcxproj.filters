@@ -57,6 +57,12 @@
     <ClInclude Include="Dragon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SaveDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DLGLoad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DNDPproject.cpp">
@@ -84,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dragon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DLGLoad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
