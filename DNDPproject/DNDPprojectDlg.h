@@ -62,4 +62,12 @@ public:
 	afx_msg void OnBnClickedEast();
 	afx_msg void OnBnClickedWest();
 	CStatic PView;
+	CBitmap IDFUCK;
+	CStatic WATTT;
+	CStatic CSFUCK;
+	CStatic pView;
+	CEdit CName;
+	CEdit CInvetory;
+	CButton CRestart;
+	afx_msg void OnBnClickedRestart();
 };

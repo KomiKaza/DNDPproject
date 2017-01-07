@@ -17,6 +17,7 @@
 #define new DEBUG_NEW
 #endif
 
+void InitializeGlobals();
 
 // CAboutDlg dialog used for App About
 
@@ -28,7 +29,7 @@ bool newName=false;
 int ClassSelect=0;
 Character * me;
 CPoint * Location;
-
+int MsgAns;
 //end intalize
 
 class CAboutDlg : public CDialogEx
@@ -94,7 +95,12 @@ void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_WEST, CWest);
 	DDX_Control(pDX, IDC_EAST, CEast);
 	DDX_Control(pDX, IDC_SOUTH, CSouth);
+	DDX_Control(pDX, IDC_PVIEW, pView);
+	DDX_Control(pDX, CE_NAME, CName);
+	DDX_Control(pDX, CE_INVETORY, CInvetory);
+	DDX_Control(pDX, IDC_RESTART, CRestart);
 }
+
 
 BEGIN_MESSAGE_MAP(CDNDPprojectDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
@@ -111,6 +117,7 @@ BEGIN_MESSAGE_MAP(CDNDPprojectDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_SOUTH, &CDNDPprojectDlg::OnBnClickedSouth)
 	ON_BN_CLICKED(IDC_EAST, &CDNDPprojectDlg::OnBnClickedEast)
 	ON_BN_CLICKED(IDC_WEST, &CDNDPprojectDlg::OnBnClickedWest)
+	ON_BN_CLICKED(IDC_RESTART, &CDNDPprojectDlg::OnBnClickedRestart)
 END_MESSAGE_MAP()
 
 
@@ -215,13 +222,13 @@ void CDNDPprojectDlg::OnBnClickedStart()
 {
 	Dialog.SetReadOnly(false);
 	BtnStart.EnableWindow(false);
-	msg+="Enter your name here!";
+	msg="Enter your name here!";
 Dialog.SetWindowTextW(msg);
 Dialog.SetFocus();
 Dialog.SetSel(0,-1,false);
 newName=true;
 CGo.EnableWindow(true);
-
+CRestart.EnableWindow(true);
 
 SDialog="The Pizza you ate yesterday \r\n";
 SDialog+="was not that innocent! it \r\n";
@@ -250,7 +257,9 @@ RSword.SetWindowTextW(L"Elf");
 RWand.EnableWindow(true);
 RWand.SetWindowTextW(L"Viking");
 
-
+CBitmap CenterPix;//creating bitmap
+	  CenterPix.LoadBitmapW(BIT_BEGIN);//load image
+       pView.SetBitmap(CenterPix );//post image
 
 
 }
@@ -274,13 +283,16 @@ CWest.EnableWindow(true);
 CGo.EnableWindow(false);
 Dialog.SetReadOnly(true);
 
+CBitmap CenterPix;//creating bitmap
+		RHands.SetCheck(true);
+
 switch(ClassSelect){
 	case 0:
 		SDialog="Hello ";
 		SDialog+=name;
 		SDialog+=",\r\n";
 		SDialog+="we are honored to inform you that you are\r\n";
-		SDialog+="the greatest ninjas on earth! You're sitting in a\r\n";
+		SDialog+="the greatest ninja on earth! You're sitting in a\r\n";
 		SDialog+="beautiful ancient temple, drink your\r\n protein shake,\r\n";
 		SDialog+="watching the cherry trees bloom outside\r\n the window,\r\n";
 		SDialog+="when suddenly you hear that your beloved \r\n teacher\r\n";
@@ -289,8 +301,13 @@ switch(ClassSelect){
 		SDialog+="in a middle of a desert,\r\n";
 		SDialog+="go and find him!\r\n";
 		me=new Ninja();
-		RHands.SetCheck(false);
-		Location=new CPoint(0,0);
+		Location=new CPoint(5,0);
+		CenterPix.LoadBitmapW(BIT_NINJA);//load image
+        pView.SetBitmap(CenterPix );//post image
+	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"Shurikan");
+		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Nunchaka");
+		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Katana");
+		CSouth.EnableWindow(false);
 		break;
 	case 1:
 		SDialog="Look at those muscles!\r\n";
@@ -298,7 +315,7 @@ switch(ClassSelect){
 		SDialog+=name;
 		SDialog+=" the Viking!\r\n";
 		SDialog+="There's a storm and you are on an ancient ship.\r\n";
-		SDialog+="There's no land on the horizon.\r\n";
+		SDialog+="You just landed on a long shore.\r\n";
 		SDialog+="A pigeon lands on your shoulder and you \r\n";
 		SDialog+="receive a letter that informs you that there's \r\n";
 		SDialog+="a treasure box in the middle of the desert!\r\n";
@@ -306,7 +323,13 @@ switch(ClassSelect){
 		SDialog+="you have to find that box!\r\n";
 		me=new Viking();
 		RWand.SetCheck(false);
-		Location=new CPoint(10,10);
+		Location=new CPoint(0,4);
+		CenterPix.LoadBitmapW(BIT_PIRATE);//load image
+       pView.SetBitmap(CenterPix );//post image
+	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"Spear");
+		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Sword");
+		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Axe");
+		CWest.EnableWindow(false);
 		break;
 	case 2:
 		SDialog=" Lucky you, you woke up as ";
@@ -320,16 +343,22 @@ switch(ClassSelect){
 		SDialog+="should find her!\r\n";
 		me=new Elf();
 		RSword.SetCheck(false);
-		Location=new CPoint(0,0);
+		Location=new CPoint(9,4);
+		 CenterPix.LoadBitmapW(BIT_ELF);//load image
+       pView.SetBitmap(CenterPix );//post image
+	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"Dagger");
+		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Sword");
+		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Long Bow");
+		CEast.EnableWindow(false);
 		break;
 	case 3:
 		me=new Fairy();
 		RBow.SetCheck(false);
-		Location=new CPoint(0,0);
+		Location=new CPoint(4,9);
 		SDialog="Wow, look at those shiny wings!\r\n";
 		SDialog+="You woke up as ";
 		SDialog+=name;
-		SDialog+="the fairy\r\n in the Goblin Valley!\r\n";
+		SDialog+=" the fairy\r\n in the Goblin Valley!\r\n";
 		SDialog+="Although it looks like the most peaceful place \r\n on earth,\r\n";
 		SDialog+="filled with evergreen trees and fluffy clouds,\r\n ";
 		SDialog+="the most cruel creatures \r\n";
@@ -337,6 +366,12 @@ switch(ClassSelect){
 		SDialog+="live here and they are ruining others lives!\r\n";
 		SDialog+="They stole the Barbie house of the princess of\r\n";
 		SDialog+="the valley and she won't stop crying!\r\n Help her find it.\r\n";
+		CenterPix.LoadBitmapW(BIT_FAIRY);//load image
+        pView.SetBitmap(CenterPix );//post image
+	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"White Magic");
+		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Armour Magic");
+		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Heal Magic");
+		CNorth.EnableWindow(false);
 		break;
 
 }
@@ -355,14 +390,14 @@ a.Format(_T("%d"), me->getHP());
 
 Output.SetWindowTextW(SDialog);
 Cweapon.SetWindowTextW(L"Weapons:");
-GetDlgItem(RAD_HANDS)->EnableWindow(false);
 GetDlgItem(RAD_HANDS)->SetWindowTextW(L"Hands");
 GetDlgItem(RAD_BOW)->EnableWindow(false);
-GetDlgItem(RAD_BOW)->SetWindowTextW(L"Long Bow");
 GetDlgItem(RAD_SWORD)->EnableWindow(false);
-GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Sword");
 GetDlgItem(RAD_WAND)->EnableWindow(false);
-GetDlgItem(RAD_WAND)->SetWindowTextW(L"Wand");
+
+
+CName.SetWindowTextW(name);
+CInvetory.SetWindowTextW(L"You have nothing \r\n");
 	}
 	// TODO: Add your control notification handler code here
 }
@@ -375,6 +410,9 @@ void CDNDPprojectDlg::OnBnClickedHands()
 	ClassSelect=0;
 	// TODO: Add your control notification handler code here
 Output.SetWindowTextW(SDialog+L"You Selected Ninja \r\n High DEX low INT \r\n");
+Dialog.SetFocus();
+Dialog.SetSel(0,-1,false);
+
 	}
 
 }
@@ -387,6 +425,9 @@ void CDNDPprojectDlg::OnBnClickedWand()
 	ClassSelect=1;
 	// TODO: Add your control notification handler code here
 	Output.SetWindowTextW(SDialog+L"You Selected Viking \r\n High STR low INT \r\n");
+	Dialog.SetFocus();
+Dialog.SetSel(0,-1,false);
+
 		}
 }
 
@@ -398,6 +439,9 @@ void CDNDPprojectDlg::OnBnClickedSword()
 	ClassSelect=2;
 	// TODO: Add your control notification handler code here
 		Output.SetWindowTextW(SDialog+L"You Selected Elf \r\n High INT low STR \r\n");
+		Dialog.SetFocus();
+Dialog.SetSel(0,-1,false);
+
 		}
 }
 
@@ -409,6 +453,9 @@ void CDNDPprojectDlg::OnBnClickedBow()
 	ClassSelect=3;
 	// TODO: Add your control notification handler code here
 		Output.SetWindowTextW(SDialog+L"You Selected Fairy \r\n High HP low  DEX \r\n");
+		Dialog.SetFocus();
+Dialog.SetSel(0,-1,false);
+
 		}
 }
 
@@ -435,3 +482,40 @@ void CDNDPprojectDlg::OnBnClickedWest()
 {
 (*Location).x--;
 }
+
+
+void CDNDPprojectDlg::OnBnClickedRestart()
+{
+MsgAns = MessageBox(L"You are in the middle of a game. Are you sure?", 
+L"Start Over?", MB_YESNOCANCEL|MB_ICONINFORMATION);
+if(MsgAns==IDYES)
+{
+InitializeGlobals(); //If user clicks again, initialize
+name="";
+CName.SetWindowTextW(L"");
+OnBnClickedStart();
+CDef.SetWindowTextW(L"");
+CDex.SetWindowTextW(L"");
+CInt.SetWindowTextW(L"");
+CStr.SetWindowTextW(L"");
+CHp.SetWindowTextW(L"");
+CNorth.EnableWindow(false);
+CEast.EnableWindow(false);
+CWest.EnableWindow(false);
+CSouth.EnableWindow(false);
+
+}
+
+}
+
+void InitializeGlobals()
+{
+name="";
+msg=""; 
+SDialog="";
+newName=false;
+ClassSelect=0;
+delete me;
+delete Location;
+}
+

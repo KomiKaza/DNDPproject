@@ -136,6 +136,12 @@
     <None Include="res\DNDPproject.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\..\Desktop\dam.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\Begining.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\ELF_START.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\FAIRY_START.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\NINJA_START.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\PIRATE_START.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\SAND.jpeg" />
     <Image Include="Media\N1.bmp" />
     <Image Include="res\DNDPproject.ico" />
