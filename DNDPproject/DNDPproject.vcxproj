@@ -141,6 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Desktop\dam.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\5.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\6.bmp" />
+    <Image Include="..\..\..\..\..\Desktop\PROJECT\7.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\Begining.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\ELF_START.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\FAIRY_START.bmp" />

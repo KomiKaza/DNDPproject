@@ -26,6 +26,7 @@ Character * me;
 CPoint * Location;
 int MsgAns;
 bool monster[10];
+bool Restart=false; //check if we just restarted the game
 
 //end intalize
 
@@ -77,6 +78,8 @@ void CDNDPprojectDlg::checkLocation()
 		break;
 	case 2:
 		SDialog="Oh no, a storm is hitting the beach!\r\n Consider if you want to continue via\r\n the beach,  or you wan to go to \r\n rice fields which are in the east  \r\n direction.";
+		CenterPix.LoadBitmapW(BIT_5);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 3:
@@ -91,14 +94,20 @@ void CDNDPprojectDlg::checkLocation()
 
 	case 5:
 		SDialog="A sharp noise is frightening you!\r\n Its a branch that was cracked by the wind.\r\n You can consider to continue to the north-\r\n maybe the weather is not so \r\n crazy there!";
+		CenterPix.LoadBitmapW(BIT_5);//load image
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 6:
 		SDialog="A pastoral view is sottounding you.\r\n Theres a calm wind.";
+		CenterPix.LoadBitmapW(BIT_6);//load image
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 7:
 		SDialog="Be careful - theres a river in the north\r\n direction!";
+		CenterPix.LoadBitmapW(BIT_7);//load image
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 8:
@@ -108,6 +117,38 @@ void CDNDPprojectDlg::checkLocation()
 	case 9:
 SDialog="Oh no, youre drawning in the river!\r\n Go to the south or the east direction\r\n as soon as you can! ";
 break;
+
+	case 10:
+		SDialog="You are in a neighborhood of the local\r\n residents. ";
+		break;
+
+	case 11:
+		SDialog="Intersection!\r\n You are in the borderline ofa small village,\r\n the beach and beautiful rice field.\r\n Let your intuiotion lead you.";
+		break;
+
+	case 12:
+		SDialog="You found a sword! ";
+		break;
+
+	case 13:
+		SDialog="The storm is getting stronger!\r\n Find a safe place.";
+		break;	
+
+	case 14:
+		SDialog="You are in the borderline\r\n between the village and the beach.";
+		break;	
+
+	case 15:
+		SDialog="You see the beach in the west\r\n direction- \r\n did you bring your swimsuit?";
+		break;
+
+	case 16:
+		SDialog="You see the beach in the west\r\n direction- \r\n did you bring your swimsuit?";
+		break;
+
+	case 17:
+		SDialog="A strange noise comes from \r\n the east direction- \r\ncheck what is it!";
+		break;
 
 	case 18:
 		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
@@ -120,22 +161,143 @@ break;
 	case 20:
 		SDialog="You see some houses on the horizon.";
 		break;
+
+	case 21:
+		SDialog="Intersection!\r\n You are in the borderline ofa small village,\r\n the beach and beautiful rice field.\r\n Let your intuiotion lead you.";
+		break;
+
+	case 22:
+		SDialog="You see something shining in \r\n the west direction- Go there!";
+		break;
+
+	case 23:
+		SDialog="The storm is getting stronger!\r\n Find a safe place.";
+		break;	
+
+	case 24:
+		SDialog="You are in the borderline\r\n between the village and the beach.";
+		break;	
+
+	case 25:
+		SDialog="Any direction you will choose\r\n will bring you to a new \r\nadventure!";
+		break;
+
+	case 26:
+		SDialog="A strange noise comes from\r\n the north direction- \r\ncheck what is it!";
+		break;
+
+	case 27:
+		SDialog="You are facing the evil goblins\r\n now!\r\n Show them what you've got!";
+		break;
+
+	case 28:
+		SDialog="You are facing the evil goblins\r\n now!\r\n Show them what you've got!";
+		break;
+
+	case 29:
+		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!";
+		break;
+
 	case 30:
 		SDialog="You are on a walkway.\r\n Where is it going to lead you?";
 		break;
+
+	case 31:
+		SDialog="You are in a rice field.\r\n The wind is becoming stronger and \r\n you start feeling tired.";
+		break;
+
+	case 33:
+		SDialog="You can choose to continue to the\r\n beach in the west direction,\r\n or to a village in the north\r\n direction.";
+		break;
+
+	case 34:
+		SDialog="The people of the village are very \r\n nice- they offer you to get some \r\n rest at one of the houses  \r\n which is in the north \r\n direction.";
+		break;
+
+	case 35:
+		SDialog="A meal was coocked for you!";
+		break;
+
+	case 36:
+		SDialog="A nice farmer advised you to \r\n turn northward.";
+		break;
+
+	case 37:
+		SDialog="You are in the Goblins Valley! \r\n Things can turn either very good,\r\n or very bad now.";
+		break;
+
+	case 38:
+		SDialog="You are in the Goblins Valley! \r\n Things can turn either very good,\r\n or very bad now.";
+		break;
+
+	case 39:
+		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!";
+		break;
+
 	case 40:
 		SDialog="You are sorrunded by beautiful,\r\n blooming cherry trees.\r\n It seems like nothing can\r\n disturb you here.";
 		break;
 
+	case 41:
+		SDialog="You are in a rice field.\r\n The wind is becoming stronger and\r\b you start feeling tired.";
+		break;
+
+	case 42:
+		SDialog="You hear some strange noise from\r\n the north direction.\r\n Go check it out.";
+		break;
+
+	case 43:
+		SDialog="Oh no!\r\n You're in a dangerous zone!";
+		break;
+
+	case 44:
+		SDialog="The people of the village are very \r\n nice- they offer you to get some \r\n rest at one of the houses  \r\n which is in the north \r\n direction.";
+		break;
+
+	case 45:
+		SDialog="A meal was coocked for you!";
+		break;
+
+	case 46:
+		SDialog="You are annoying the goblins!\r\n Here they come!";
+		break;
+
+	case 47:
+		SDialog="You are annoying the goblins!\r\n Here they come!";
+		break;
+
+	case 48:
+		SDialog="The goblins live houses made of chocolate-\r\n You can eat as much as your belly\r\n lets you!";
+		break;
+
 	case 49:
+		SDialog="You're on the top of the highest hill \r\n in the Goblins valley!\r\n Take a photo for your'e\r\n Instagram.";
 		CenterPix.LoadBitmapW(BIT_FAIRY);//load image
        pView.SetBitmap(CenterPix );//post image
 		break;
+
 	case 50:
 		SDialog="Look how beautiful the temple you're now in!\r\n Exit the temple and check out the beautiful\r\n gardens that sorround it!";
 		CenterPix.LoadBitmapW(BIT_NINJA);//load image
        pView.SetBitmap(CenterPix );//post image
 		break;
+
+	case 51:
+		SDialog="You are in a rice field.\r\n You've heard that something is happening\r\n horthern of you- Go there!";
+		break;
+
+	case 52:
+		SDialog="A local festival is taking place!\r\n This is your opportunity to\r\n have some good time!";
+		break;
+
+	case 53:
+		SDialog="A local festival is taking place!\r\n This is your opportunity to\r\n have some good time!";
+		break;
+
+	case 61:
+		SDialog="You are in a rice field.\r\n You've heard that something is happening\r\n horthern of you- Go there!";
+		break;
+
 	case 94:
 		CenterPix.LoadBitmapW(BIT_ELF);//load image
        pView.SetBitmap(CenterPix );//post image
@@ -344,8 +506,9 @@ void CDNDPprojectDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CDNDPprojectDlg::OnPaint()
 {
-			if(afterload)
+	if(afterload && !Restart)
 	afterLoad();
+	Restart=false;
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
@@ -680,6 +843,7 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedRestart()
 {
+	Restart=true;
 MsgAns = MessageBox(L"You are in the middle of a game. Are you sure?", 
 L"Start Over?", MB_YESNOCANCEL|MB_ICONINFORMATION);
 if(MsgAns==IDYES)
