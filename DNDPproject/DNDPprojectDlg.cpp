@@ -206,6 +206,10 @@ break;
 		SDialog="You are in a rice field.\r\n The wind is becoming stronger and \r\n you start feeling tired.";
 		break;
 
+	case 32:
+		SDialog="";
+		break;
+
 	case 33:
 		SDialog="You can choose to continue to the\r\n beach in the west direction,\r\n or to a village in the north\r\n direction.";
 		break;
@@ -294,13 +298,189 @@ break;
 		SDialog="A local festival is taking place!\r\n This is your opportunity to\r\n have some good time!";
 		break;
 
+	case 54:
+		SDialog="";
+		break;
+
+	case 55:
+		SDialog="";
+		break;
+
+	case 56:
+		SDialog="";
+		break;
+
+	case 57:
+		SDialog="";
+		break;
+
+	case 58:
+		SDialog="";
+		break;
+
+	case 59:
+		SDialog="";
+		break;
+
+	case 60:
+		SDialog="";
+		break;
+
 	case 61:
 		SDialog="You are in a rice field.\r\n You've heard that something is happening\r\n horthern of you- Go there!";
+		break;
+
+	case 62:
+		SDialog="";
+		break;
+
+	case 63:
+		SDialog="";
+		break;
+
+	case 64:
+		SDialog="";
+		break;
+
+	case 65:
+		SDialog="";
+		break;
+
+	case 66: 
+		SDialog="";
+		break;
+
+	case 67:
+		SDialog="";
+		break;
+
+	case 68:
+		SDialog="";
+		break;
+
+	case 69:
+		SDialog="";
+		break;
+
+	case 70:
+		SDialog="";
+		break;
+
+	case 71:
+		SDialog="";
+		break;
+
+	case 72:
+		SDialog="";
+		break;
+
+	case 73:
+		SDialog="";
+		break;
+
+	case 74:
+		SDialog="";
+		break;
+
+	case 75:
+		SDialog="";
+		break;
+
+	case 76:
+		SDialog="";
+		break;
+
+	case 77:
+		SDialog="";
+		break;
+
+	case 78:
+		SDialog="";
+		break;
+
+	case 79:
+		SDialog="";
+		break;
+
+	case 80:
+		SDialog="";
+		break;
+
+	case 81:
+		SDialog="";
+		break;
+
+	case 82:
+		SDialog="";
+		break;
+
+	case 83:
+		SDialog="";
+		break;
+
+	case 84:
+		SDialog="";
+		break;
+
+	case 85:
+		SDialog="";
+		break;
+
+	case 86:
+		SDialog="";
+		break;
+
+	case 87:
+		SDialog="";
+		break;
+
+	case 88:
+		SDialog="";
+		break;
+
+	case 89:
+		SDialog="";
+		break;
+
+	case 90:
+		SDialog="";
+		break;
+
+	case 91:
+		SDialog="";
+		break;
+
+	case 92:
+		SDialog="";
+		break;
+
+	case 93:
+		SDialog="";
 		break;
 
 	case 94:
 		CenterPix.LoadBitmapW(BIT_ELF);//load image
        pView.SetBitmap(CenterPix );//post image
+		break;
+
+	case 95:
+		SDialog="";
+		break;
+
+	case 96:
+		SDialog="";
+		break;
+
+	case 97: 
+		SDialog="";
+		break;
+
+	case 98:
+		SDialog="";
+		break;
+
+	case 99:
+		SDialog="";
 		break;
 
 	default:
