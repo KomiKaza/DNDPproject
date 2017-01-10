@@ -8,5 +8,6 @@ public:
 	~Viking();
 	void Attack(Monster * enemy);
 	int DMG();
+	CString getStory();
 };
 

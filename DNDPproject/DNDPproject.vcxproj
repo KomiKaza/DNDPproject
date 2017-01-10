@@ -102,20 +102,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
+    <ClInclude Include="CharacterFactory.h" />
     <ClInclude Include="DLGLoad.h" />
     <ClInclude Include="DNDPproject.h" />
     <ClInclude Include="DNDPprojectDlg.h" />
     <ClInclude Include="Dragon.h" />
     <ClInclude Include="Elf.h" />
+    <ClInclude Include="ElfFactory.h" />
     <ClInclude Include="Fairy.h" />
+    <ClInclude Include="FairyFactory.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Ninja.h" />
+    <ClInclude Include="NinjaFactory.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SaveDialog.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Viking.h" />
+    <ClInclude Include="VikingFactory.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DLGLoad.cpp" />
@@ -132,6 +138,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Viking.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DNDPproject.rc" />
@@ -145,11 +152,15 @@
     <Image Include="..\..\..\..\..\Desktop\PROJECT\6.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\7.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\Begining.bmp" />
+    <Image Include="..\..\..\..\..\desktop\project\bitmap1.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\ELF_START.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\FAIRY_START.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\NINJA_START.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\PIRATE_START.bmp" />
     <Image Include="..\..\..\..\..\Desktop\PROJECT\SAND.jpeg" />
+    <Image Include="Media.bmp" />
+    <Image Include="Media\0.bmp" />
+    <Image Include="Media\5.bmp" />
     <Image Include="Media\N1.bmp" />
     <Image Include="res\DNDPproject.ico" />
     <Image Include="res\Media\N1.bmp" />

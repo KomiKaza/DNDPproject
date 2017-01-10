@@ -52,11 +52,12 @@ void DLGLoad::OnBnClickedLoadgame()
 {
 CString problem;
 std::string passwd,nm;
-int hp, dex, def, str, INt, locX,locY;
+int hp, dex, def, str, INt, locX,locY,foodI;
 CString CharacterName; 
 CString pass; 
 bool dagger, sword, bow, mail, armor, healing, fkey;
 int ClassSelect;
+bool *foods =new bool[6];
 CLoadName.GetWindowText(CharacterName);
 CharacterName +=".gam";
 
@@ -90,6 +91,15 @@ ReadStuff >> dex;
 ReadStuff >> locX;
 ReadStuff >> locY;
 ReadStuff >> ClassSelect;
+
+ReadStuff >>foodI;
+
+ReadStuff >>foods[0];
+ReadStuff >>foods[1];
+ReadStuff >>foods[2];
+ReadStuff >>foods[3];
+ReadStuff >>foods[4];
+ReadStuff >>foods[5];
 
 Character *me;
 
@@ -141,8 +151,6 @@ ReadStuff.close();
 MessageBox(L"Your character was loaded successfully!",
 L"Character Loaded Successfully!"); 
 CPoint * Location=new CPoint();
-Location->x=locX;
-Location->y=locY;
 
 switch(ClassSelect){
 	case 0:
@@ -160,6 +168,8 @@ switch(ClassSelect){
 	default:
 		me=new Ninja();
 }
+me->setLocX(locX);
+me->setLocY(locY);
 me->setDef(def);
 me->setDex(dex);
 me->setHp(hp);
@@ -167,9 +177,10 @@ me->setInt(INt);
 me->setStr(str);
 CString cstr(nm.c_str());
 me->setName(cstr);
+me->setFood(foodI);
 
 
-CDNDPprojectDlg dlg(me,Location);
+CDNDPprojectDlg dlg(foods,ClassSelect,me);
 dlg.DoModal();
 EndDialog( 0 );
 

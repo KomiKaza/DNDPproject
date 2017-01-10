@@ -17,16 +17,16 @@ SaveDialog::SaveDialog(CWnd* pParent /*=NULL*/)
 	: CDialogEx(SaveDialog::IDD, pParent)
 {
 	me=NULL;
-	Location=NULL;
 	SaveDialog::ClassType=0;
+	foods=NULL;
 }
 
-SaveDialog::SaveDialog(int classtype,Character * me,CPoint * Location,CWnd* pParent)
+SaveDialog::SaveDialog(bool * foods,int classtype,Character * me,CWnd* pParent)
 	: CDialogEx(SaveDialog::IDD, pParent)
 {
 	SaveDialog::me=me;
-	SaveDialog::Location=Location;
 	SaveDialog::ClassType=classtype;
+	SaveDialog::foods=foods;
 }
 
 SaveDialog::~SaveDialog()
@@ -97,29 +97,21 @@ WriteStuff << me->getInt() << "\n";
 WriteStuff << me->getStr() << "\n";
 WriteStuff << me->getDex() << "\n";
 
-WriteStuff << Location->x << "\n";
-WriteStuff << Location->y << "\n"; 
+WriteStuff << me->getX() << "\n";
+WriteStuff << me->getY() << "\n"; 
 
 WriteStuff<<ClassType<<"\n";
 
-//WriteStuff << CurrentPlayer->getDagger() << "\n";
-//WriteStuff << CurrentPlayer->getSword() << "\n";
-//WriteStuff << CurrentPlayer->getLongBow() << "\n"; 
-//WriteStuff << CurrentPlayer->getChainMail() << "\n"; 
-//WriteStuff << CurrentPlayer->getFullBodyArmor() << "\n";
-//WriteStuff << CurrentPlayer->getHealingPotion() << "\n";
-//WriteStuff << CurrentPlayer->getFishKey() << "\n";
+WriteStuff<<me->getFood()<<"\n";
 
-//WriteStuff << W1GiantAlive << "\n";
-//WriteStuff << E1DragonAlive << "\n"; 
-//WriteStuff << S2MotleyCrewAlive << "\n"; 
-//WriteStuff << FirstTimeInShamanHut << "\n";
-//WriteStuff << CENTERFirstTime << "\n";
-//WriteStuff << UNDERDragonPairAlive << "\n";
-//WriteStuff << FoundHP_West2 << "\n";
-//WriteStuff << FoundHP_Shaman << "\n"; 
-//WriteStuff << ConqueredDragons << "\n";
-//WriteStuff << ConqueredGiants << "\n";
+WriteStuff <<foods[0]<<"\n";
+WriteStuff <<foods[1]<<"\n";
+WriteStuff <<foods[2]<<"\n";
+WriteStuff <<foods[3]<<"\n";
+WriteStuff <<foods[4]<<"\n";
+WriteStuff <<foods[5]<<"\n";
+
+
 
 WriteStuff.close();
 

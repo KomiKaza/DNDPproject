@@ -9,6 +9,7 @@ public:
 	void Attack(Monster * enemy);
 	int DMG();
 	int getMagic() {return Magic;};
+	CString getStory();
 private:
 	int Magic;
 };

@@ -10,7 +10,7 @@ class SaveDialog : public CDialogEx
 
 public:
 	SaveDialog(CWnd* pParent = NULL);   // standard constructor
-	SaveDialog(int classtype,Character * me,CPoint * Location,CWnd* pParent = NULL) ;
+	SaveDialog(bool * foods,int classtype,Character * me,CWnd* pParent = NULL) ;
 	virtual ~SaveDialog();
 
 // Dialog Data
@@ -26,6 +26,6 @@ public:
 	CEdit CSaveName;
 	CEdit CSavePass;
 	Character * me;
-	CPoint * Location;
 	int ClassType;
+	bool * foods;
 };

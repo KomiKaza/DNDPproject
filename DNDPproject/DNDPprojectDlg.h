@@ -10,8 +10,14 @@
 #include "Viking.h"
 #include "Ninja.h"
 #include "Fairy.h"
+#include "Goblin.h"
+#include "Dragon.h"
 #include "SaveDialog.h"
 #include "DLGLoad.h"
+#include "NinjaFactory.h"
+#include "FairyFactory.h"
+#include "ElfFactory.h"
+#include "VikingFactory.h"
 #include <fstream>
 
 
@@ -21,9 +27,10 @@ class CDNDPprojectDlg : public CDialogEx
 // Construction
 public:
 	CDNDPprojectDlg(CWnd* pParent = NULL);	// standard constructor
-	CDNDPprojectDlg(Character *me,CPoint * Location,CWnd* pParent = NULL);	// standard constructor
+	CDNDPprojectDlg(bool * foods,int classSelect,Character *me,CWnd* pParent = NULL);	// standard constructor
 	void afterLoad();
 	void checkLocation();
+	void Battle(int monstertype);
 // Dialog Data
 	enum { IDD = IDD_DNDPPROJECT_DIALOG };
 
@@ -86,4 +93,8 @@ public:
 	afx_msg void OnBnClickedSave();
 	afx_msg void OnBnClickedLoad();
 	CButton CSaveG;
+	CButton CEat;
+	afx_msg void OnBnClickedEat();
+private:
+	CharacterFactory * characterFactory;
 };

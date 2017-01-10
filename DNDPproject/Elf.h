@@ -8,5 +8,6 @@ public:
 	~Elf();
 	void Attack(Monster * enemy);
 	int DMG();
+	CString getStory();
 };
 

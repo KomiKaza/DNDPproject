@@ -8,6 +8,7 @@
 #include "afxdialogex.h"
 
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -27,6 +28,7 @@ CPoint * Location;
 int MsgAns;
 bool monster[10];
 bool Restart=false; //check if we just restarted the game
+bool * foods=new bool[6];
 
 //end intalize
 
@@ -63,18 +65,62 @@ END_MESSAGE_MAP()
 
 // CDNDPprojectDlg dialog
 
+void CDNDPprojectDlg::Battle(int monstertype)
+{
+	CString battleLog;
+	Monster * enemy;
+	switch(monstertype)
+	{
+	case 0:
+		enemy=new Monster();
+		break;
+	case 1:
+		enemy=new Goblin();
+		break;
+	case 2:
+		enemy=new Dragon();
+	}
+	battleLog="A new ";
+	battleLog="has appeared";
+	Output.SetWindowTextW(battleLog);
+	//now add the battle...
+	//while(enemy->getHP() >0 && me->getHP() >0)
+	//{
+	//	//do action
+	//}
+}
+
+
 void CDNDPprojectDlg::checkLocation()
 {
 	CBitmap CenterPix;//creating bitmap
 	SDialog="";
-	switch((Location->x)*10 +(Location->y))
+	CString Temp,Temp0,a;
+	switch((me->getX())*10 +(me->getY()))
 	{
 	case 0:
-		SDialog="You are in a neighborhood of the local\r\n residents. ";
+		if (me->getWeapon0()->getName()=="White Magic" && !me->getWeapon0()->getEnable())
+		{
+		SDialog="You found a book that gives \r\nyou the ability to use Heal Magic";
+		me->getWeapon2()->setEnable(true);
+		RBow.EnableWindow(true);
+		}
+		else
+{		SDialog="You are in a neighborhood of the local\r\n residents. ";
+		CenterPix.LoadBitmapW(BIT_0);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+				}
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 1:
 		SDialog="You are in a neighborhood of the local \r\n residents. ";
+		CenterPix.LoadBitmapW(BIT_0);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 	case 2:
 		SDialog="Oh no, a storm is hitting the beach!\r\n Consider if you want to continue via\r\n the beach,  or you wan to go to \r\n rice fields which are in the east  \r\n direction.";
@@ -127,7 +173,26 @@ break;
 		break;
 
 	case 12:
-		SDialog="You found a sword! ";
+		if (me->getWeapon0()->getName()=="Spear" && !me->getWeapon0()->getEnable())
+		{
+		SDialog="You found a Spear ";
+		me->getWeapon0()->setEnable(true);
+		RWand.EnableWindow(true);
+		}
+		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon2()->getEnable())
+		{
+		SDialog="You found a Long Bow";
+		me->getWeapon2()->setEnable(true);
+		RBow.EnableWindow(true);
+		}
+		else
+			SDialog="Skys getting cloudy";
+
+				Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 13:
@@ -155,7 +220,19 @@ break;
 		break;
 
 	case 19:
+		if (me->getWeapon0()->getName()=="Shurikan" && !me->getWeapon0()->getEnable())
+		{
+		SDialog="You found a Nunchaka!";
+		me->getWeapon1()->setEnable(true);
+		RSword.EnableWindow(true);
+		}
+		else
 		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
+				Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 20:
@@ -188,14 +265,21 @@ break;
 
 	case 27:
 		SDialog="You are facing the evil goblins\r\n now!\r\n Show them what you've got!";
+		//need to add if already defeated the goblin
+		Battle(1);
 		break;
 
 	case 28:
 		SDialog="You are facing the evil goblins\r\n now!\r\n Show them what you've got!";
+		//need to add if already defeated the goblin
+		Battle(1);
 		break;
 
 	case 29:
-		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!";
+		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!\r\n(you lose 2 HP)";
+		me->setHp(me->getHP() -2);
+a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
 		break;
 
 	case 30:
@@ -207,7 +291,7 @@ break;
 		break;
 
 	case 32:
-		SDialog="";
+		SDialog="You'ew becoming hungry! \r\n You have to find some food";
 		break;
 
 	case 33:
@@ -219,7 +303,20 @@ break;
 		break;
 
 	case 35:
+		if(foods[0])
+		{
 		SDialog="A meal was coocked for you!";
+		me->setFood(me->getFood() +1);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		CEat.EnableWindow(true);
+		foods[0]=false;
+		}
+		else
+			SDialog="All the food is gone :(";
 		break;
 
 	case 36:
@@ -235,7 +332,10 @@ break;
 		break;
 
 	case 39:
-		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!";
+		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!\r\n(you lose 2 HP)";
+		me->setHp(me->getHP() -2);
+a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);//I Should add a fitness count later..(29+39)
 		break;
 
 	case 40:
@@ -259,7 +359,21 @@ break;
 		break;
 
 	case 45:
+		if(foods[1])
+		{
 		SDialog="A meal was coocked for you!";
+		me->setFood(me->getFood() +1);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		CEat.EnableWindow(true);
+		foods[1]=false;
+		}
+		else
+			SDialog="All the food is gone :(";
+
 		break;
 
 	case 46:
@@ -291,39 +405,82 @@ break;
 		break;
 
 	case 52:
+		if(foods[2])
+		{
 		SDialog="A local festival is taking place!\r\n This is your opportunity to\r\n have some good time!";
+		me->setFood(me->getFood() +1);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		CEat.EnableWindow(true);
+		foods[2]=false;
+		}
+		else
+			SDialog="All the food is gone :(";
 		break;
 
 	case 53:
+		/*if(foods[3])
+		{
 		SDialog="A local festival is taking place!\r\n This is your opportunity to\r\n have some good time!";
+		me->setFood(me->getFood() +1);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		CInvetory.SetWindowTextW(Temp);
+		CEat.EnableWindow(true);
+		foods[3]=false;
+		}
+		else
+			SDialog="All the food is gone :(";*/
+		SDialog="There's a forest in your north \r\n direction.\r\n Who may hide there?";
 		break;
 
 	case 54:
-		SDialog="";
+		SDialog="Please meet the trolls!\r\n They are hiding in the\r\n forests, \r\nwaiting for a victim! ";
 		break;
 
 	case 55:
-		SDialog="";
+		SDialog="Every diretion you will \r\n pick will lead you\r\n to a new adventure";
 		break;
 
 	case 56:
-		SDialog="";
+		if (me->getWeapon0()->getName()=="Shurikan" && !me->getWeapon0()->getEnable())
+		{
+		SDialog="You found a Shurikan ";
+		me->getWeapon0()->setEnable(true);
+		RWand.EnableWindow(true);
+		}
+		else if(me->getWeapon0()->getName()=="White Magic" && !me->getWeapon2()->getEnable())
+		{
+		SDialog="You found a book that gives \r\nyou the ability to use White Magic";
+		me->getWeapon0()->setEnable(true);
+		RWand.EnableWindow(true);
+		}
+		else
+		SDialog="The view here is amazing!";
+				Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 57:
-		SDialog="";
+		SDialog="You are on a hill and there's \r\n a desert on the horizon!";
 		break;
 
 	case 58:
-		SDialog="";
+		SDialog="You're sorrounded by squirrels \r\n and evergreen trees! \r\n Enjoy the moment";
 		break;
 
 	case 59:
-		SDialog="";
+		SDialog="What a pastoral view!\r\n A valley is in your west direction\r\n and a desert is in your \r\neast direction.\r\n Where will you go?";
 		break;
 
 	case 60:
-		SDialog="";
+		SDialog="The clouds are gathering above\r\n your head.\r\n You need to find a safe place";
 		break;
 
 	case 61:
@@ -331,156 +488,241 @@ break;
 		break;
 
 	case 62:
-		SDialog="";
+		if (me->getWeapon0()->getName()=="Spear" && !me->getWeapon1()->getEnable())
+		{
+		SDialog="You found a Sword ";
+		me->getWeapon1()->setEnable(true);
+		RSword.EnableWindow(true);
+		}
+		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon0()->getEnable())
+		{
+		SDialog="You found a Sword ";
+		me->getWeapon0()->setEnable(true);
+		RWand.EnableWindow(true);
+		}
+		else
+		SDialog="The clouds are gathering above\r\n your head.\r\n You need to find a safe place";
+				Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 63:
-		SDialog="";
+		SDialog="There's a forest in your north \r\n direction.\r\n Who may hide there?";
 		break;
 
 	case 64:
-		SDialog="";
+		SDialog="Please meet the trolls!\r\n They are hiding in the\r\n forests, \r\nwaiting for a victim! ";
 		break;
 
 	case 65:
-		SDialog="";
+		SDialog="You see a desert on \r\nthe horizon!";
 		break;
 
 	case 66: 
-		SDialog="";
+		SDialog="A poisonous snake is accompanying\r\n you!\r\n Be carfel";
 		break;
 
 	case 67:
-		SDialog="";
+		SDialog="It's so hot in here!\r\n You have to find a water\r\n source.";
 		break;
 
 	case 68:
-		SDialog="";
+		SDialog="You are in a borderline!";
 		break;
 
 	case 69:
-		SDialog="";
+		SDialog="What a pastoral view!\r\n A valley is in your west direction\r\n and a desert is in your \r\neast direction.\r\n Where will you go?";
 		break;
 
 	case 70:
-		SDialog="";
+		SDialog="You're in a village.\r\n Will something interesting \r\nhappen here?";
 		break;
 
 	case 71:
-		SDialog="";
+		SDialog="You see a small village\r\n in your north direction.\r\n Maybe the locals can provide\r\n you some food.";
 		break;
 
 	case 72:
-		SDialog="";
+		if(foods[4])
+		{
+		SDialog="You are in a village and the nice\r\n locals made your favorite food\r\n for you- sushi!";
+		me->setFood(me->getFood() +1);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		CEat.EnableWindow(true);
+		foods[4]=false;
+		}
+		else
+			SDialog="The locals ate all\r\n  the food :(";
 		break;
 
 	case 73:
-		SDialog="";
+		SDialog="Oops!\r\n You fell into a river!\r\n To your luck, it's \r\n not that deep";
 		break;
 
 	case 74:
-		SDialog="";
+		SDialog="You are sorrounded by a \r\nbeatiful waterfall";
 		break;
 
 	case 75:
-		SDialog="";
+		SDialog="You've been too hasty and\r\n now you're drowning in a waterfall!";
 		break;
 
 	case 76:
-		SDialog="";
+		if (me->getWeapon0()->getName()=="White Magic" && !me->getWeapon2()->getEnable())
+		{
+		SDialog="You found a book that gives \r\nyou the ability to use Armour Magic";
+		me->getWeapon1()->setEnable(true);
+		RSword.EnableWindow(true);
+		}
+		else if(me->getWeapon0()->getName()=="Spear" && !me->getWeapon2()->getEnable())
+		{
+		SDialog="You found an Axe ";
+		me->getWeapon2()->setEnable(true);
+		RBow.EnableWindow(true);
+		}
+		else
+		SDialog="Nothing to look at \r\nexcept for endless dunes";
+				Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 77:
-		SDialog="";
+		SDialog="Nothing to look at \r\nexcept for endless dunes";
 		break;
 
 	case 78:
-		SDialog="";
+		SDialog="Heres you opportunity to \r\ntake a nap under the palmtrees";
 		break;
 
 	case 79:
-		SDialog="";
+		SDialog="Evil goblins!\r\n Show the who's the boss!";
 		break;
 
 	case 80:
-		SDialog="";
+		SDialog="A sharp noise comes from the\r\n east direction!\r\n Go check what it is ";
 		break;
 
 	case 81:
-		SDialog="";
+		SDialog="You see a small village\r\n in your north direction.\r\n Maybe the locals can provide\r\n you some food.";
 		break;
 
 	case 82:
-		SDialog="";
+		if(foods[5])
+		{
+		SDialog="You are in a village and the nice\r\n locals made your favorite food\r\n for you- sushi!";
+		me->setFood(me->getFood() +1);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		CEat.EnableWindow(true);
+		foods[5]=false;
+		}
+		else
+			SDialog="The locals ate all\r\n  the food :(";
 		break;
 
 	case 83:
-		SDialog="";
+		SDialog="You're in a village.\r\n Will something interesting \r\nhappen here?";
 		break;
 
 	case 84:
-		SDialog="";
+		SDialog="Oops!\r\n You fell into a river!\r\n To your luck, it's \r\b not that deep";
 		break;
 
 	case 85:
-		SDialog="";
+		SDialog="There's a waterfall in your \r\nwest direcion, \r\nbe aware";
 		break;
 
 	case 86:
-		SDialog="";
+		SDialog="Wow!\r\n look at the beautiful \r\nview of the colorful dunes!";
 		break;
 
 	case 87:
-		SDialog="";
+		SDialog="Wow!\r\n look at the beautiful \r\nview of the colorful dunes!";
 		break;
 
 	case 88:
-		SDialog="";
+		SDialog="A beautiful oasis is \r\nsorroundind you!\r\n Drink water and eat\r\n some dates.";
 		break;
 
 	case 89:
-		SDialog="";
+		SDialog="Evil goblins!\r\n Show the who's the boss!";
 		break;
 
 	case 90:
-		SDialog="";
+		SDialog="It's a trap!\r\n You have to defeat the dragons now!";
+		//need to add if already defeated the dragon
+		Battle(2);
 		break;
 
 	case 91:
-		SDialog="";
+		SDialog="It's a trap!\r\n You have to defeat the dragons now!";
+		//need to add if already defeated the dragon
+		Battle(2);
 		break;
 
 	case 92:
-		SDialog="";
+		SDialog="You hear some strange noises\r\n from your south direction.";
 		break;
 
 	case 93:
-		SDialog="";
+		SDialog="There's a river in your\r\n west direction, be careful ";
 		break;
 
 	case 94:
+		SDialog="You are in a magical flying\r\n castle!\r\n Post a picture of the view\r\n in your Snapchat and\r\n continue the journey!";
 		CenterPix.LoadBitmapW(BIT_ELF);//load image
        pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 95:
-		SDialog="";
+		SDialog="Dragons! ,Can you defeat them?";
 		break;
 
 	case 96:
-		SDialog="";
+		SDialog="Dragons! ,Can you defeat them?";
 		break;
 
 	case 97: 
-		SDialog="";
+		SDialog="Its hot and sweaty \r\nand you're becoming tired";
 		break;
 
 	case 98:
-		SDialog="";
+		SDialog="Its hot and sweaty \r\nand you're becoming tired";
 		break;
 
 	case 99:
-		SDialog="";
+		if (me->getWeapon0()->getName()=="Shurikan" && !me->getWeapon2()->getEnable())
+		{
+		SDialog="You found a Katana!";
+		me->getWeapon2()->setEnable(true);
+		RBow.EnableWindow(true);
+		}
+		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon2()->getEnable())
+		{
+		SDialog="You found an Dagger ";
+		me->getWeapon0()->setEnable(true);
+		RWand.EnableWindow(true);
+		}
+		else
+		SDialog="Sand everywhere!\r\n Nothing to see here.";
+				Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	default:
@@ -525,31 +767,38 @@ a.Format(_T("%d"), me->getHP());
 
 Output.SetWindowTextW(SDialog);
 Cweapon.SetWindowTextW(L"Weapons:");
-GetDlgItem(RAD_HANDS)->SetWindowTextW(L"Hands");
-GetDlgItem(RAD_BOW)->EnableWindow(false);
-GetDlgItem(RAD_SWORD)->EnableWindow(false);
-GetDlgItem(RAD_WAND)->EnableWindow(false);
+RHands.SetWindowTextW(L"Hands");
+RBow.EnableWindow(false);
+RSword.EnableWindow(false);
+RWand.EnableWindow(false);
 
 name=me->getName();
 CName.SetWindowTextW(name);
 
-if(Location->y ==9)
 	CNorth.EnableWindow(false);
-if(Location->y >0)
-	CSouth.EnableWindow(true);
-if(Location->y ==0)
-	CSouth.EnableWindow(false);
-if(Location->y <9)
-	CNorth.EnableWindow(true);
-if(Location->x ==9)
 	CEast.EnableWindow(false);
-if(Location->x >0)
-	CWest.EnableWindow(true);
-if(Location->x ==0)
 	CWest.EnableWindow(false);
-if(Location->x <9)
-	CEast.EnableWindow(true);
+	CSouth.EnableWindow(false);
 
+	if  (me->getY() <9)
+		CNorth.EnableWindow(true);
+	if (me->getY()>0)
+		CSouth.EnableWindow(true);
+	if(me->getX()<9)
+		CEast.EnableWindow(true);
+	if(me->getX()>0)
+		CWest.EnableWindow(true);
+
+CString Temp;
+
+if(me->getFood())
+{
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		CInvetory.SetWindowTextW(Temp);
+		CEat.EnableWindow(true);
+}
+else
 CInvetory.SetWindowTextW(L"You have nothing \r\n");//AFTER IL ADD ITEMS NEED TO CHANGE
 checkLocation();
 	////////////////////
@@ -560,15 +809,18 @@ CDNDPprojectDlg::CDNDPprojectDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	afterload=false;
+	characterFactory=NinjaFactory::getInstance();
 }
 
-CDNDPprojectDlg::CDNDPprojectDlg(Character *m,CPoint * Loc,CWnd* pParent)
+CDNDPprojectDlg::CDNDPprojectDlg(bool * food,int classSelect,Character *m,CWnd* pParent)
 		: CDialogEx(CDNDPprojectDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	me=m;
-	Location=Loc;
 	afterload=true;
+	foods=food;
+	ClassSelect=ClassSelect;
+	characterFactory=NinjaFactory::getInstance();
 }
 
 void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
@@ -600,6 +852,7 @@ void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, CE_INVETORY, CInvetory);
 	DDX_Control(pDX, IDC_RESTART, CRestart);
 	DDX_Control(pDX, IDC_SAVE, CSaveG);
+	DDX_Control(pDX, IDC_EAT, CEat);
 }
 
 
@@ -622,6 +875,7 @@ BEGIN_MESSAGE_MAP(CDNDPprojectDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_HELP, &CDNDPprojectDlg::OnBnClickedHelp)
 	ON_BN_CLICKED(IDC_SAVE, &CDNDPprojectDlg::OnBnClickedSave)
 	ON_BN_CLICKED(IDC_LOAD, &CDNDPprojectDlg::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_EAT, &CDNDPprojectDlg::OnBnClickedEat)
 END_MESSAGE_MAP()
 
 
@@ -794,100 +1048,31 @@ CWest.EnableWindow(true);
 CGo.EnableWindow(false);
 Dialog.SetReadOnly(true);
 
-CBitmap CenterPix;//creating bitmap
 		RHands.SetCheck(true);
-
-switch(ClassSelect){
-	case 0:
-		SDialog="Hello ";
-		SDialog+=name;
-		SDialog+=",\r\n";
-		SDialog+="we are honored to inform you that you are\r\n";
-		SDialog+="the greatest ninja on earth! You're sitting in a\r\n";
-		SDialog+="beautiful ancient temple, drink your\r\n protein shake,\r\n";
-		SDialog+="watching the cherry trees bloom outside\r\n the window,\r\n";
-		SDialog+="when suddenly you hear that your beloved \r\n teacher\r\n";
-		SDialog+="Master Splinter is fighting the evils and needs\r\n";
-		SDialog+="your assistance! He informs you that he's\r\n";
-		SDialog+="in a middle of a desert,\r\n";
-		SDialog+="go and find him!\r\n";
-		me=new Ninja();
-		Location=new CPoint(5,0);
-		CenterPix.LoadBitmapW(BIT_NINJA);//load image
-        pView.SetBitmap(CenterPix );//post image
-	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"Shurikan");
-		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Nunchaka");
-		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Katana");
-		CSouth.EnableWindow(false);
-		break;
-	case 1:
-		SDialog="Look at those muscles!\r\n";
-		SDialog+="You woke up as ";
-		SDialog+=name;
-		SDialog+=" the Viking!\r\n";
-		SDialog+="There's a storm and you are on an ancient ship.\r\n";
-		SDialog+="You just landed on a long shore.\r\n";
-		SDialog+="A pigeon lands on your shoulder and you \r\n";
-		SDialog+="receive a letter that informs you that there's \r\n";
-		SDialog+="a treasure box in the middle of the desert!\r\n";
-		SDialog+="As you are a greedy person,\r\n";
-		SDialog+="you have to find that box!\r\n";
-		me=new Viking();
-		RWand.SetCheck(false);
-		Location=new CPoint(0,4);
-		CenterPix.LoadBitmapW(BIT_PIRATE);//load image
-       pView.SetBitmap(CenterPix );//post image
-	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"Spear");
-		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Sword");
-		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Axe");
-		CWest.EnableWindow(false);
-		break;
-	case 2:
-		SDialog=" Lucky you, you woke up as ";
-		SDialog+=name;
-		SDialog+=" the elf\r\n";
-		SDialog+="in a flying castle! This is the place where\r\n";
-		SDialog+="magic happens and doors are  opened \r\n when you say ";
-		SDialog+="Alohomora.\r\n But life cannot be perfect and your\r\n";
-		SDialog+="little elf sister got kidnapped! \r\n";
-		SDialog+="As a  responsible brother you\r\n";
-		SDialog+="should find her!\r\n";
-		me=new Elf();
-		RSword.SetCheck(false);
-		Location=new CPoint(9,4);
-		 CenterPix.LoadBitmapW(BIT_ELF);//load image
-       pView.SetBitmap(CenterPix );//post image
-	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"Dagger");
-		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Sword");
-		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Long Bow");
-		CEast.EnableWindow(false);
-		break;
-	case 3:
-		me=new Fairy();
 		RBow.SetCheck(false);
-		Location=new CPoint(4,9);
-		SDialog="Wow, look at those shiny wings!\r\n";
-		SDialog+="You woke up as ";
-		SDialog+=name;
-		SDialog+=" the fairy\r\n in the Goblin Valley!\r\n";
-		SDialog+="Although it looks like the most peaceful place \r\n on earth,\r\n";
-		SDialog+="filled with evergreen trees and fluffy clouds,\r\n ";
-		SDialog+="the most cruel creatures \r\n";
-		SDialog+="- THE GOBLINS - \r\n";
-		SDialog+="live here and they are ruining others lives!\r\n";
-		SDialog+="They stole the Barbie house of the princess of\r\n";
-		SDialog+="the valley and she won't stop crying!\r\n Help her find it.\r\n";
-		CenterPix.LoadBitmapW(BIT_FAIRY);//load image
-        pView.SetBitmap(CenterPix );//post image
-	    GetDlgItem(RAD_WAND)->SetWindowTextW(L"White Magic");
-		GetDlgItem(RAD_SWORD)->SetWindowTextW(L"Armour Magic");
-		GetDlgItem(RAD_BOW)->SetWindowTextW(L"Heal Magic");
-		CNorth.EnableWindow(false);
-		break;
+		RSword.SetCheck(false);
+		RWand.SetCheck(false);
 
-}
-		me->setName(name);
-		CSaveG.EnableWindow(true);
+me=characterFactory->createCharacter();
+me->setName(name);
+
+
+CSaveG.EnableWindow(true);
+checkLocation();
+
+	CNorth.EnableWindow(false);
+	CEast.EnableWindow(false);
+	CWest.EnableWindow(false);
+	CSouth.EnableWindow(false);
+
+	if  (me->getY() <9)
+		CNorth.EnableWindow(true);
+	if (me->getY()>0)
+		CSouth.EnableWindow(true);
+	if(me->getX()<9)
+		CEast.EnableWindow(true);
+	if(me->getX()>0)
+		CWest.EnableWindow(true);
 
 CString a;
 a.Format(_T("%d"), me->getHP());
@@ -901,12 +1086,15 @@ a.Format(_T("%d"), me->getHP());
 		a.Format(_T("%d"), me->getDex());
 		CDex.SetWindowTextW(a);
 
-Output.SetWindowTextW(SDialog);
+Output.SetWindowTextW(me->getStory());
 Cweapon.SetWindowTextW(L"Weapons:");
-GetDlgItem(RAD_HANDS)->SetWindowTextW(L"Hands");
-GetDlgItem(RAD_BOW)->EnableWindow(false);
-GetDlgItem(RAD_SWORD)->EnableWindow(false);
-GetDlgItem(RAD_WAND)->EnableWindow(false);
+RHands.SetWindowTextW(L"Hands");
+RBow.EnableWindow(false);
+RSword.EnableWindow(false);
+RWand.EnableWindow(false);
+RWand.SetWindowTextW(me->getWeapon0()->getName());
+RSword.SetWindowTextW(me->getWeapon1()->getName());
+RBow.SetWindowTextW(me->getWeapon2()->getName());
 
 
 CName.SetWindowTextW(name);
@@ -920,6 +1108,7 @@ void CDNDPprojectDlg::OnBnClickedHands()
 {
 	if(newName)
 	{
+	characterFactory=NinjaFactory::getInstance();
 	ClassSelect=0;
 	// TODO: Add your control notification handler code here
 Output.SetWindowTextW(SDialog+L"You Selected Ninja \r\n High DEX low INT \r\n");
@@ -936,6 +1125,7 @@ void CDNDPprojectDlg::OnBnClickedWand()
 		if(newName)
 	{
 	ClassSelect=1;
+	characterFactory=VikingFactory::getInstance();
 	// TODO: Add your control notification handler code here
 	Output.SetWindowTextW(SDialog+L"You Selected Viking \r\n High STR low INT \r\n");
 	Dialog.SetFocus();
@@ -950,6 +1140,7 @@ void CDNDPprojectDlg::OnBnClickedSword()
 		if(newName)
 	{
 	ClassSelect=2;
+	characterFactory=ElfFactory::getInstance();
 	// TODO: Add your control notification handler code here
 		Output.SetWindowTextW(SDialog+L"You Selected Elf \r\n High INT low STR \r\n");
 		Dialog.SetFocus();
@@ -965,6 +1156,7 @@ void CDNDPprojectDlg::OnBnClickedBow()
 	{
 	ClassSelect=3;
 	// TODO: Add your control notification handler code here
+		characterFactory=FairyFactory::getInstance();
 		Output.SetWindowTextW(SDialog+L"You Selected Fairy \r\n High HP low  DEX \r\n");
 		Dialog.SetFocus();
 Dialog.SetSel(0,-1,false);
@@ -975,10 +1167,10 @@ Dialog.SetSel(0,-1,false);
 
 void CDNDPprojectDlg::OnBnClickedNorth()
 {
-(*Location).y++;
-if(Location->y ==9)
+	me->goNorth();
+if(me->getY() ==9)
 	CNorth.EnableWindow(false);
-if(Location->y >0)
+if(me->getY() >0)
 	CSouth.EnableWindow(true);
 
 checkLocation();
@@ -987,10 +1179,10 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedSouth()
 {
-(*Location).y--;
-if(Location->y ==0)
+	me->goSouth();
+	if(me->getY() ==0)
 	CSouth.EnableWindow(false);
-if(Location->y <9)
+if(me->getY() <9)
 	CNorth.EnableWindow(true);
 
 checkLocation();
@@ -999,10 +1191,10 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedEast()
 {
-(*Location).x++;
-if(Location->x ==9)
+	me->goEast();
+if(me->getX() ==9)
 	CEast.EnableWindow(false);
-if(Location->x >0)
+if(me->getX() >0)
 	CWest.EnableWindow(true);
 
 checkLocation();
@@ -1011,10 +1203,10 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedWest()
 {
-(*Location).x--;
-if(Location->x ==0)
+me->goWest();
+if(me->getX() ==0)
 	CWest.EnableWindow(false);
-if(Location->x <9)
+if(me->getX() <9)
 	CEast.EnableWindow(true);
 
 checkLocation();
@@ -1043,6 +1235,11 @@ CWest.EnableWindow(false);
 CSouth.EnableWindow(false);
 CRestart.EnableWindow(false);
 CSaveG.EnableWindow(false);
+RHands.SetCheck(true);
+		RBow.SetCheck(false);
+		RSword.SetCheck(false);
+		RWand.SetCheck(false);
+
 }
 
 }
@@ -1084,7 +1281,7 @@ MessageBox((LPCTSTR)HelpText, L"Dungeon and Dragons 1.0 - Help");
 
 void CDNDPprojectDlg::OnBnClickedSave()
 {
-	SaveDialog dlg(ClassSelect,me,Location);
+	SaveDialog dlg(foods,ClassSelect,me);
 dlg.DoModal();
 //pSaveName = ( CEdit * ) GetDlgItem( IDC_SaveName );
 //pSavePassword = ( CEdit * ) GetDlgItem( IDC_SavePassword );
@@ -1096,4 +1293,26 @@ void CDNDPprojectDlg::OnBnClickedLoad()
 {
 	DLGLoad dlg;
 	dlg.DoModal();
+}
+
+
+void CDNDPprojectDlg::OnBnClickedEat()
+{
+	CString a;
+	me->setHp(me->getHP() +2);
+	me->setFood(me->getFood() -1);
+	if (me->getFood() <1)
+	{
+		CEat.EnableWindow(false);
+		CInvetory.SetWindowTextW(L"You have nothing \r\n");//AFTER IL ADD ITEMS NEED TO CHANGE
+	}
+	else
+	{
+		a.Format(_T("%d"), me->getFood());
+		a+=" x Food(+2 HP)";
+			CInvetory.SetWindowTextW(a);
+	}
+	a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
+
 }
