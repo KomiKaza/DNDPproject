@@ -10,9 +10,9 @@ Ninja::Ninja()
 	setHp(12);
 	setStr(3);
 	setLoc(5,0);
-	setWeapon0(new Weapon(0,L"Shurikan",2,6,0,0,0,false));  //
-	setWeapon1(new Weapon(0,L"Nunchaka",4,8,0,0,0,false)); //
-	setWeapon2(new Weapon(0,L"Katana",11,11,0,0,0,false)); //
+	setWeapon0(new Weapon(1,L"Shurikan",2,6,0,0,0,false));  //
+	setWeapon1(new Weapon(2,L"Nunchaka",4,8,0,0,0,false)); //
+	setWeapon2(new Weapon(8,L"Katana",11,11,0,0,0,false)); //
 }
 
 
@@ -22,12 +22,43 @@ Ninja::~Ninja()
 
 int Ninja::DMG()
 {
-	return 0;
+	return getDex()*getStr();
 }
 
 int Ninja::Attack(Monster * enemy,int WeID)
 {
-	return 0;
+		int total;
+		switch(WeID)
+	{
+	case 0:
+	total=DMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 1:
+		total=DMG()+getWeapon0()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 2:
+	total=DMG()+getWeapon1()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 3:
+	total=DMG()+getWeapon2()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+	}
+return total;
 }
 
 CString Ninja::getStory()

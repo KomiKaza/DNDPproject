@@ -10,9 +10,9 @@ Elf::Elf()
 	setHp(14);
 	setStr(2);
 	setLoc(9,4);
-	setWeapon0(new Weapon(0,L"Dagger",4,4,0,0,0,false)); //
-	setWeapon1(new Weapon(0,L"Sword",6,6,0,0,0,false)); //
-	setWeapon2(new Weapon(0,L"Long Bow",8,12,0,0,0,false));  //
+	setWeapon0(new Weapon(4,L"Dagger",4,4,0,0,0,false)); //
+	setWeapon1(new Weapon(5,L"Sword",6,6,0,0,0,false)); //
+	setWeapon2(new Weapon(6,L"Long Bow",8,12,0,0,0,false));  //
 }
 
 
@@ -22,13 +22,43 @@ Elf::~Elf()
 
 int Elf::DMG()
 {
-	return 0;
+	return getDex()*getStr() -1 +getInt()/3;
 }
 
 int Elf::Attack(Monster * enemy,int WeID)
-{
-	enemy->setHP(enemy->getHP() -2);
-return 2;
+{			
+	int total;
+		switch(WeID)
+	{
+	case 0:
+	total=DMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 1:
+		total=DMG()+getWeapon0()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 2:
+	total=DMG()+getWeapon1()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 3:
+	total=DMG()+getWeapon2()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+	}
+return total;
 }
 
 CString Elf::getStory()

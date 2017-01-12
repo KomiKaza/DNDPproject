@@ -10,9 +10,9 @@ Viking::Viking()
 	setHp(13);
 	setStr(6);
 	setLoc(0,4);
-	setWeapon0(new Weapon(0,L"Spear",7,0,0,0,0,false)); //
-	setWeapon1(new Weapon(0,L"Sword",9,4,0,0,0,false));  //
-	setWeapon2(new Weapon(0,L"Axe",14,4,0,0,0,false));  //
+	setWeapon0(new Weapon(2,L"Spear",7,0,0,0,0,false)); //
+	setWeapon1(new Weapon(5,L"Sword",9,4,0,0,0,false));  //
+	setWeapon2(new Weapon(9,L"Axe",14,4,0,0,0,false));  //
 }
 
 
@@ -22,12 +22,43 @@ Viking::~Viking()
 
 int Viking::DMG()
 {
-	return 0;
+	return getStr()*getDex();
 }
 
 int Viking::Attack(Monster * enemy,int WeID)
 {
-	return 0;
+	int total;
+		switch(WeID)
+	{
+	case 0:
+	total=DMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 1:
+		total=DMG()+getWeapon0()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 2:
+	total=DMG()+getWeapon1()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+
+	case 3:
+	total=DMG()+getWeapon2()->getDMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total);
+	break;
+	}
+return total;
 }
 
 CString Viking::getStory()

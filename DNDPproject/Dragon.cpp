@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "Dragon.h"
-
+#include "Character.h"
 
 Dragon::Dragon(void)
 {
-	setAT(20);
-	setDEF(10); 
+	setAT(10);
+	setDEF(6); 
 	setQK(5); 
 	setHP(20);
 }
@@ -17,10 +17,14 @@ Dragon::~Dragon(void)
 
 int Dragon::Attack(Character * player)
 {
-	return 2;
-}
+	int m= (getTotal() )-6*player->getDef() ;
+	if(m<1)
+		m=0;
 
-int Dragon::getTotal() 
+	player->setHp(player->getHP() -m);
+		return m;
+}
+int Dragon::getTotal()
 {
-	return 0;
+	return (getAT()*getQK());
 }

@@ -252,6 +252,7 @@ break;
 		if(me->getWeapon0()->getName()=="Dagger")
 		{
 			SDialog="You found your elf sister!!! \r\n Good job! \r\n you have won the game!";
+			DoEvents();
 			gameOver(1);
 		}
 		else
@@ -745,12 +746,15 @@ a.Format(_T("%d"), me->getHP());
 		if(me->getWeapon0()->getName()=="Spear")
 		{
 			SDialog="Your have found the tresure chest!\r\n You won the game ,\r\nGood job!";
+			DoEvents();
 			gameOver(1);
 		}
 		else
 			if(me->getWeapon0()->getName()=="Shurikan")
 			{
+				
 				SDialog="This is Master Spliner!\r\n Good job!\r\n You won the game!";
+				DoEvents();
 				gameOver(1);
 			}
 			else
@@ -844,6 +848,7 @@ a.Format(_T("%d"), me->getHP());
 		if(me->getWeapon0()->getName()=="White Magic")
 		{
 			SDialog="Your have found the Barbie house!\r\n You won the game ,\r\nGood job!";
+			DoEvents();
 			gameOver(1);
 		}
 		else
@@ -1464,6 +1469,8 @@ RHands.SetCheck(true);
 		for(int i=0;i<6;++i)
 			foods[i]=true;
 		me->setFood(0);
+		for(int i=0;i<6;++i)
+			activeEnemy[i]=true;
 		CEat.EnableWindow(false);
 		CInvetory.SetWindowTextW(L"");
 }
@@ -1625,16 +1632,17 @@ void CDNDPprojectDlg::OnBnClickedAction()
 
 void CDNDPprojectDlg::NextAttack()
 {
-	Sleep(1000);
+	Sleep(2000);
 	backDamaged=enemy->Attack(me);
 	SDialog.Format(_T("%s attacked you and did %d damage,\r\n enemy has %d HP left"), monName,backDamaged,enemy->getHP());
 	Output.SetWindowTextW(SDialog);
+	updateHP();
 	DoEvents();
 }
 
 void CDNDPprojectDlg::Won()
 {
-		Sleep(1000);
+		Sleep(2000);
 		SDialog="You have Won the Battle! enjoy the exp,\r\n you can pass";
 		Output.SetWindowTextW(SDialog);
 		delete enemy;
@@ -1646,13 +1654,29 @@ void CDNDPprojectDlg::Won()
 
 void CDNDPprojectDlg::Died()
 {
-		Sleep(1000);
+		Sleep(2000);
 		SDialog="You Lost the Battle, Game Over";
 		Output.SetWindowTextW(SDialog);
 		delete enemy;
 		gameOver(0);
+		CAction.EnableWindow(false);
 		DoEvents();
 		return;
+}
+
+void CDNDPprojectDlg::updateHP()
+	{
+		CString a;
+		a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getDef());
+		CDef.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getStr());
+		CStr.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getInt());
+		CInt.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getDex());
+		CDex.SetWindowTextW(a);
 }
 
 bool CDNDPprojectDlg::DoEvents()

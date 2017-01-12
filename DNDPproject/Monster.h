@@ -3,6 +3,7 @@
 using namespace std;
 
 class Character;
+
 class Monster {
 public:
 	Monster() {ATTACK=10; DEFFENCE=8; QUICK=4; HP=20;};

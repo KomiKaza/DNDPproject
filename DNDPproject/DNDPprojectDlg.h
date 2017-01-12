@@ -50,6 +50,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	void updateHP();
 	bool DoEvents();
 	void NextAttack();
 	void Died();

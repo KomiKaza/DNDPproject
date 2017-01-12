@@ -20,3 +20,8 @@ Weapon::Weapon(int Damage,CString name,int str,int dex,int hp,int def, int Int,b
 Weapon::~Weapon(void)
 {
 }
+
+int Weapon::getDMG()
+{
+	return Damage;
+}

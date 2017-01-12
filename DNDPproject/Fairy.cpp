@@ -24,14 +24,36 @@ Fairy::~Fairy()
 
 int Fairy::DMG()
 {
-	return getInt() *getDex()+ getStr();
+	return getInt() *getDex();
 }
 
 int Fairy::Attack(Monster * enemy,int WeID)
 {
-	int total=enemy->getHP() -DMG()*(enemy->getTotal() )-Magic;
-	enemy->setHP(total);
+	int total;
+	switch(WeID)
+	{
+	case 0:
+	total=DMG()-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total-Magic);
 	return total;
+	break;
+	case 1:
+		total=DMG()+getWeapon0()->getDex()*getWeapon0()->getInt()*0.55-enemy->getDEF();
+	if(total<1)
+		total=0;
+	enemy->setHP(enemy->getHP()-total-Magic);
+	return total;
+	break;
+	case 2:
+		setDef(getDef()+0.5*getWeapon0()->getInt());
+		break;
+	case 3:
+		setHp(getHP()+0.25*getWeapon2()->getInt()+getWeapon2()->getHp());
+		break;
+	}
+	return 0;
 }
 
 CString Fairy::getStory()
