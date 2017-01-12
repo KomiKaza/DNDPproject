@@ -6,7 +6,7 @@ class Ninja :
 public:
 	Ninja();
 	~Ninja();
-	void Attack(Monster * enemy);
+	int Attack(Monster * enemy,int WeID);
 	int DMG();
 	CString getStory();
 };

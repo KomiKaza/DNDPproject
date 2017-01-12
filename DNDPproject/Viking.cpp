@@ -10,9 +10,9 @@ Viking::Viking()
 	setHp(13);
 	setStr(6);
 	setLoc(0,4);
-	setWeapon0(new Weapon(L"Spear",7,0,0,0,0,false)); //
-	setWeapon1(new Weapon(L"Sword",9,4,0,0,0,false));  //
-	setWeapon2(new Weapon(L"Axe",14,4,0,0,0,false));  //
+	setWeapon0(new Weapon(0,L"Spear",7,0,0,0,0,false)); //
+	setWeapon1(new Weapon(0,L"Sword",9,4,0,0,0,false));  //
+	setWeapon2(new Weapon(0,L"Axe",14,4,0,0,0,false));  //
 }
 
 
@@ -25,9 +25,9 @@ int Viking::DMG()
 	return 0;
 }
 
-void Viking::Attack(Monster * enemy)
+int Viking::Attack(Monster * enemy,int WeID)
 {
-
+	return 0;
 }
 
 CString Viking::getStory()

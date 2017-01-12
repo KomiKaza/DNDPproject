@@ -9,6 +9,7 @@
 
 
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -26,9 +27,14 @@ int ClassSelect=0;
 Character * me;
 CPoint * Location;
 int MsgAns;
+int WeID=0,damage,backDamaged;
 bool monster[10];
 bool Restart=false; //check if we just restarted the game
 bool * foods=new bool[6];
+bool * activeEnemy=new bool[6];
+Monster * enemy;
+CString monName;
+int battleid;
 
 //end intalize
 
@@ -68,21 +74,45 @@ END_MESSAGE_MAP()
 void CDNDPprojectDlg::Battle(int monstertype)
 {
 	CString battleLog;
-	Monster * enemy;
 	switch(monstertype)
 	{
 	case 0:
-		enemy=new Monster();
+		CEast.EnableWindow(true);
+		CWest.EnableWindow(true);
+		CNorth.EnableWindow(true);
+		CSouth.EnableWindow(true);
 		break;
 	case 1:
-		enemy=new Goblin();
+		CEast.EnableWindow(true);
+		CWest.EnableWindow(true);
+		CNorth.EnableWindow(true);
+		CSouth.EnableWindow(true);	
 		break;
 	case 2:
-		enemy=new Dragon();
+		CNorth.EnableWindow(false);
+		CEast.EnableWindow(true);
+		CWest.EnableWindow(true);
+		CSouth.EnableWindow(true);	
+		break;
+	case 3:
+		CEast.EnableWindow(true);
+		CWest.EnableWindow(true);
+		CNorth.EnableWindow(true);
+		CSouth.EnableWindow(true);	
+		break;
+	case 4:
+		CEast.EnableWindow(true);
+		CWest.EnableWindow(true);
+		CNorth.EnableWindow(true);
+		CSouth.EnableWindow(false);	
+		break;
+	case 5:
+		CWest.EnableWindow(true);
+		CNorth.EnableWindow(true);
+		CSouth.EnableWindow(true);	
+		CEast.EnableWindow(false);
+		break;
 	}
-	battleLog="A new ";
-	battleLog="has appeared";
-	Output.SetWindowTextW(battleLog);
 	//now add the battle...
 	//while(enemy->getHP() >0 && me->getHP() >0)
 	//{
@@ -99,22 +129,24 @@ void CDNDPprojectDlg::checkLocation()
 	switch((me->getX())*10 +(me->getY()))
 	{
 	case 0:
-		if (me->getWeapon0()->getName()=="White Magic" && !me->getWeapon0()->getEnable())
+		if (me->getWeapon0()->getName()=="White Magic" && !me->getWeapon2()->getEnable())
 		{
 		SDialog="You found a book that gives \r\nyou the ability to use Heal Magic";
 		me->getWeapon2()->setEnable(true);
 		RBow.EnableWindow(true);
+				Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
-{		SDialog="You are in a neighborhood of the local\r\n residents. ";
+{		
+	SDialog="You are in a neighborhood of the local\r\n residents. ";
 		CenterPix.LoadBitmapW(BIT_0);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 				}
-		Temp.Format(_T("%d"), me->getFood());
-		Temp+=" x Food(+2 HP)";
-		Temp0=me->getWeaponsST();
-		Temp0+=Temp;
-		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 1:
@@ -191,6 +223,7 @@ break;
 				Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
 		Temp0=me->getWeaponsST();
+		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
 		break;
@@ -216,23 +249,32 @@ break;
 		break;
 
 	case 18:
+		if(me->getWeapon0()->getName()=="Dagger")
+		{
+			SDialog="You found your elf sister!!! \r\n Good job! \r\n you have won the game!";
+			gameOver(1);
+		}
+		else
 		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
 		break;
 
 	case 19:
-		if (me->getWeapon0()->getName()=="Shurikan" && !me->getWeapon0()->getEnable())
+		if (me->getWeapon0()->getName()=="Shurikan" && !me->getWeapon1()->getEnable())
 		{
 		SDialog="You found a Nunchaka!";
 		me->getWeapon1()->setEnable(true);
 		RSword.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
 		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
 				Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
-		Temp0=me->getWeaponsST();
-		Temp0+=Temp;
-		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 20:
@@ -264,16 +306,33 @@ break;
 		break;
 
 	case 27:
-		SDialog="You are facing the evil goblins\r\n now!\r\n Show them what you've got!";
-		//need to add if already defeated the goblin
-		Battle(1);
+		if(activeEnemy[0])
+		{
+		SDialog="You are facing the evil goblin\r\n now!\r\n Show him what you've got!";
+		enemy=new Goblin();
+		monName="Goblin";
+		gameOver(2);
+		activeEnemy[0]=false;
+		battleid=0;
+		//checkLocation();
+		}
+		else
+		SDialog="There is a dead Goblin body in here.";	
 		break;
 
 	case 28:
-		SDialog="You are facing the evil goblins\r\n now!\r\n Show them what you've got!";
-		//need to add if already defeated the goblin
-		Battle(1);
-		break;
+		if(activeEnemy[1])
+		{
+		SDialog="You are facing the evil goblin\r\n now!\r\n Show him what you've got!";
+		enemy=new Goblin();
+		monName="Goblin";
+		gameOver(2);
+		activeEnemy[1]=false;
+		battleid=1;
+		//checkLocation();
+		}
+		else
+		SDialog="There is a dead Goblin body in here.";			break;
 
 	case 29:
 		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!\r\n(you lose 2 HP)";
@@ -283,6 +342,22 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 30:
+		if(!me->getItem(1)->getEnable())
+		{
+		SDialog="You Found a pair of boots!";
+		me->getItem(1)->setEnable(true);
+		me->setDef(me->getDef()+me->getItem(1)->getDef());
+		me->setDex(me->getDex()+me->getItem(1)->getDex());
+		me->setInt(me->getInt()+me->getItem(1)->getInt());
+		me->setStr(me->getStr()+me->getItem(1)->getStr());
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		}
+		else
 		SDialog="You are on a walkway.\r\n Where is it going to lead you?";
 		break;
 
@@ -310,6 +385,7 @@ a.Format(_T("%d"), me->getHP());
 		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
 		Temp0=me->getWeaponsST();
+		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
 		CEat.EnableWindow(true);
@@ -355,6 +431,22 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 44:
+		if(!me->getItem(2)->getEnable())
+		{
+		SDialog="You Found a pair of gloves!";
+		me->getItem(2)->setEnable(true);
+		me->setDef(me->getDef()+me->getItem(2)->getDef());
+		me->setDex(me->getDex()+me->getItem(2)->getDex());
+		me->setInt(me->getInt()+me->getItem(2)->getInt());
+		me->setStr(me->getStr()+me->getItem(2)->getStr());
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		}
+		else
 		SDialog="The people of the village are very \r\n nice- they offer you to get some \r\n rest at one of the houses  \r\n which is in the north \r\n direction.";
 		break;
 
@@ -366,6 +458,7 @@ a.Format(_T("%d"), me->getHP());
 		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
 		Temp0=me->getWeaponsST();
+		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
 		CEat.EnableWindow(true);
@@ -412,6 +505,7 @@ a.Format(_T("%d"), me->getHP());
 		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
 		Temp0=me->getWeaponsST();
+		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
 		CEat.EnableWindow(true);
@@ -451,20 +545,27 @@ a.Format(_T("%d"), me->getHP());
 		SDialog="You found a Shurikan ";
 		me->getWeapon0()->setEnable(true);
 		RWand.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else if(me->getWeapon0()->getName()=="White Magic" && !me->getWeapon2()->getEnable())
 		{
 		SDialog="You found a book that gives \r\nyou the ability to use White Magic";
 		me->getWeapon0()->setEnable(true);
 		RWand.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
 		SDialog="The view here is amazing!";
-				Temp.Format(_T("%d"), me->getFood());
-		Temp+=" x Food(+2 HP)";
-		Temp0=me->getWeaponsST();
-		Temp0+=Temp;
-		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 57:
@@ -493,20 +594,27 @@ a.Format(_T("%d"), me->getHP());
 		SDialog="You found a Sword ";
 		me->getWeapon1()->setEnable(true);
 		RSword.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon0()->getEnable())
 		{
 		SDialog="You found a Sword ";
 		me->getWeapon0()->setEnable(true);
 		RWand.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
 		SDialog="The clouds are gathering above\r\n your head.\r\n You need to find a safe place";
-				Temp.Format(_T("%d"), me->getFood());
-		Temp+=" x Food(+2 HP)";
-		Temp0=me->getWeaponsST();
-		Temp0+=Temp;
-		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 63:
@@ -534,11 +642,21 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 69:
-		SDialog="What a pastoral view!\r\n A valley is in your west direction\r\n and a desert is in your \r\neast direction.\r\n Where will you go?";
+		if(activeEnemy[2])
+		{
+		SDialog="It's a trap!\r\n You have to defeat the Syclop now!";
+		enemy=new Cyclop();
+		monName="Cyclop";
+		gameOver(2);
+		activeEnemy[2]=false;
+		battleid=2;
+		}
+		else
+		SDialog="There is a dead Syclop body in here.";
 		break;
 
 	case 70:
-		SDialog="You're in a village.\r\n Will something interesting \r\nhappen here?";
+		SDialog="You're in a village.\r\n There is some weird voice from the east..";
 		break;
 
 	case 71:
@@ -553,6 +671,7 @@ a.Format(_T("%d"), me->getHP());
 		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
 		Temp0=me->getWeaponsST();
+		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
 		CEat.EnableWindow(true);
@@ -575,25 +694,32 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 76:
-		if (me->getWeapon0()->getName()=="White Magic" && !me->getWeapon2()->getEnable())
+		if (me->getWeapon0()->getName()=="White Magic" && !me->getWeapon1()->getEnable())
 		{
 		SDialog="You found a book that gives \r\nyou the ability to use Armour Magic";
 		me->getWeapon1()->setEnable(true);
 		RSword.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else if(me->getWeapon0()->getName()=="Spear" && !me->getWeapon2()->getEnable())
 		{
 		SDialog="You found an Axe ";
 		me->getWeapon2()->setEnable(true);
 		RBow.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
 		SDialog="Nothing to look at \r\nexcept for endless dunes";
-				Temp.Format(_T("%d"), me->getFood());
-		Temp+=" x Food(+2 HP)";
-		Temp0=me->getWeaponsST();
-		Temp0+=Temp;
-		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	case 77:
@@ -601,15 +727,51 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 78:
-		SDialog="Heres you opportunity to \r\ntake a nap under the palmtrees";
+		if(activeEnemy[3])
+		{
+		SDialog="It's a trap!\r\n You have to defeat the Syclop now!";
+		enemy=new Cyclop();
+		monName="Cyclop";
+		gameOver(2);
+		activeEnemy[3]=false;
+		battleid=3;
+		//checkLocation();
+		}
+		else
+		SDialog="There is a dead Syclop body in here.";
 		break;
 
 	case 79:
-		SDialog="Evil goblins!\r\n Show the who's the boss!";
+		if(me->getWeapon0()->getName()=="Spear")
+		{
+			SDialog="Your have found the tresure chest!\r\n You won the game ,\r\nGood job!";
+			gameOver(1);
+		}
+		else
+			if(me->getWeapon0()->getName()=="Shurikan")
+			{
+				SDialog="This is Master Spliner!\r\n Good job!\r\n You won the game!";
+				gameOver(1);
+			}
+			else
+		SDialog="Heres you opportunity to \r\ntake a nap under the palmtrees\r\nwhat is the weird voice\r\n coming from the north...";
 		break;
 
 	case 80:
-		SDialog="A sharp noise comes from the\r\n east direction!\r\n Go check what it is ";
+		if(activeEnemy[4])
+		{
+		SDialog="It's a trap!\r\n You have to defeat the dragon now!";
+		enemy=new Dragon();
+		monName="Dragon";
+		gameOver(2);
+		activeEnemy[4]=false;
+		battleid=4;
+		//checkLocation();
+		}
+		else
+		SDialog="There is a dead dragon body in here.";
+		//need to add if already defeated the dragon
+		//Battle(2);
 		break;
 
 	case 81:
@@ -624,6 +786,7 @@ a.Format(_T("%d"), me->getHP());
 		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
 		Temp0=me->getWeaponsST();
+		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
 		CEat.EnableWindow(true);
@@ -634,6 +797,22 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 83:
+		if(!me->getItem(0)->getEnable())
+		{
+		SDialog="You Found an helmet!";
+		me->getItem(0)->setEnable(true);
+		me->setDef(me->getDef()+me->getItem(0)->getDef());
+		me->setDex(me->getDex()+me->getItem(0)->getDex());
+		me->setInt(me->getInt()+me->getItem(0)->getInt());
+		me->setStr(me->getStr()+me->getItem(0)->getStr());
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		}
+		else
 		SDialog="You're in a village.\r\n Will something interesting \r\nhappen here?";
 		break;
 
@@ -662,15 +841,27 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 90:
-		SDialog="It's a trap!\r\n You have to defeat the dragons now!";
-		//need to add if already defeated the dragon
-		Battle(2);
+		if(me->getWeapon0()->getName()=="White Magic")
+		{
+			SDialog="Your have found the Barbie house!\r\n You won the game ,\r\nGood job!";
+			gameOver(1);
+		}
+		else
+		SDialog="What a pastoral view!\r\n A valley is in your west direction\r\n and a desert is in your \r\neast direction.\r\n Where will you go?";
 		break;
 
 	case 91:
+		if(activeEnemy[5])
+		{
 		SDialog="It's a trap!\r\n You have to defeat the dragons now!";
-		//need to add if already defeated the dragon
-		Battle(2);
+		enemy=new Dragon();
+		monName="Dragon";
+		gameOver(2);
+		activeEnemy[5]=false;
+		battleid=5;
+		}
+		else
+		SDialog="There is a dead dragon body in here.";
 		break;
 
 	case 92:
@@ -709,25 +900,42 @@ a.Format(_T("%d"), me->getHP());
 		SDialog="You found a Katana!";
 		me->getWeapon2()->setEnable(true);
 		RBow.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
-		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon2()->getEnable())
+		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon0()->getEnable())
 		{
 		SDialog="You found an Dagger ";
 		me->getWeapon0()->setEnable(true);
 		RWand.EnableWindow(true);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
 		SDialog="Sand everywhere!\r\n Nothing to see here.";
-				Temp.Format(_T("%d"), me->getFood());
-		Temp+=" x Food(+2 HP)";
-		Temp0=me->getWeaponsST();
-		Temp0+=Temp;
-		CInvetory.SetWindowTextW(Temp0);
 		break;
 
 	default:
 		break;
 	}
+a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getDef());
+		CDef.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getStr());
+		CStr.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getInt());
+		CInt.SetWindowTextW(a);
+		a.Format(_T("%d"), me->getDex());
+		CDex.SetWindowTextW(a);
 	Output.SetWindowTextW(SDialog);//meanwhile
 }
 
@@ -768,9 +976,10 @@ a.Format(_T("%d"), me->getHP());
 Output.SetWindowTextW(SDialog);
 Cweapon.SetWindowTextW(L"Weapons:");
 RHands.SetWindowTextW(L"Hands");
-RBow.EnableWindow(false);
-RSword.EnableWindow(false);
-RWand.EnableWindow(false);
+RBow.EnableWindow(me->getWeapon2()->getEnable());
+RSword.EnableWindow(me->getWeapon1()->getEnable());
+RWand.EnableWindow(me->getWeapon0()->getEnable());
+RHands.EnableWindow(true);
 
 name=me->getName();
 CName.SetWindowTextW(name);
@@ -789,18 +998,25 @@ CName.SetWindowTextW(name);
 	if(me->getX()>0)
 		CWest.EnableWindow(true);
 
-CString Temp;
+CString Temp,Temp0;
 
-if(me->getFood())
+if(me->getFood() || me->getWeapon0()->getEnable()|| me->getWeapon1()->getEnable()|| me->getWeapon2()->getEnable())
 {
 		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
-		CInvetory.SetWindowTextW(Temp);
-		CEat.EnableWindow(true);
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
 }
 else
 CInvetory.SetWindowTextW(L"You have nothing \r\n");//AFTER IL ADD ITEMS NEED TO CHANGE
+if(me->getFood())
+	CEat.EnableWindow(true);
 checkLocation();
+RWand.SetWindowTextW(me->getWeapon0()->getName());
+RSword.SetWindowTextW(me->getWeapon1()->getName());
+RBow.SetWindowTextW(me->getWeapon2()->getName());
 	////////////////////
 }
 
@@ -835,7 +1051,6 @@ void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, CE_DEX, CDex);
 	DDX_Control(pDX, CE_DEF, CDef);
 	DDX_Control(pDX, IDC_WEAPONS, Cweapon);
-	DDX_Control(pDX, IDC_HEAL, CHeal);
 	DDX_Control(pDX, RAD_HANDS, RHands);
 	DDX_Control(pDX, RAD_WAND, RWand);
 	DDX_Control(pDX, RAD_SWORD, RSword);
@@ -853,6 +1068,7 @@ void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RESTART, CRestart);
 	DDX_Control(pDX, IDC_SAVE, CSaveG);
 	DDX_Control(pDX, IDC_EAT, CEat);
+	DDX_Control(pDX, IDC_ACTION, CAction);
 }
 
 
@@ -876,6 +1092,7 @@ BEGIN_MESSAGE_MAP(CDNDPprojectDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_SAVE, &CDNDPprojectDlg::OnBnClickedSave)
 	ON_BN_CLICKED(IDC_LOAD, &CDNDPprojectDlg::OnBnClickedLoad)
 	ON_BN_CLICKED(IDC_EAT, &CDNDPprojectDlg::OnBnClickedEat)
+	ON_BN_CLICKED(IDC_ACTION, &CDNDPprojectDlg::OnBnClickedAction)
 END_MESSAGE_MAP()
 
 
@@ -985,9 +1202,9 @@ void CDNDPprojectDlg::OnBnClickedQuit()
 
 void CDNDPprojectDlg::OnBnClickedStart()
 {
-	Dialog.SetReadOnly(false);
-	BtnStart.EnableWindow(false);
-	msg="Enter your name here!";
+Dialog.SetReadOnly(false);
+BtnStart.EnableWindow(false);
+msg="Enter your name here!";
 Dialog.SetWindowTextW(msg);
 Dialog.SetFocus();
 Dialog.SetSel(0,-1,false);
@@ -1116,6 +1333,7 @@ Dialog.SetFocus();
 Dialog.SetSel(0,-1,false);
 
 	}
+	else WeID=0;
 
 }
 
@@ -1132,6 +1350,7 @@ void CDNDPprojectDlg::OnBnClickedWand()
 Dialog.SetSel(0,-1,false);
 
 		}
+		else WeID=1;
 }
 
 
@@ -1147,6 +1366,7 @@ void CDNDPprojectDlg::OnBnClickedSword()
 Dialog.SetSel(0,-1,false);
 
 		}
+		else WeID=2;
 }
 
 
@@ -1162,6 +1382,7 @@ void CDNDPprojectDlg::OnBnClickedBow()
 Dialog.SetSel(0,-1,false);
 
 		}
+		else WeID=3;
 }
 
 
@@ -1215,11 +1436,12 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedRestart()
 {
-	Restart=true;
 MsgAns = MessageBox(L"You are in the middle of a game. Are you sure?", 
 L"Start Over?", MB_YESNOCANCEL|MB_ICONINFORMATION);
 if(MsgAns==IDYES)
 {
+characterFactory=NinjaFactory::getInstance();
+	Restart=true;
 InitializeGlobals(); 
 name="";
 CName.SetWindowTextW(L"");
@@ -1239,7 +1461,11 @@ RHands.SetCheck(true);
 		RBow.SetCheck(false);
 		RSword.SetCheck(false);
 		RWand.SetCheck(false);
-
+		for(int i=0;i<6;++i)
+			foods[i]=true;
+		me->setFood(0);
+		CEat.EnableWindow(false);
+		CInvetory.SetWindowTextW(L"");
 }
 
 }
@@ -1298,10 +1524,10 @@ void CDNDPprojectDlg::OnBnClickedLoad()
 
 void CDNDPprojectDlg::OnBnClickedEat()
 {
-	CString a;
+	CString a,Temp0;
 	me->setHp(me->getHP() +2);
 	me->setFood(me->getFood() -1);
-	if (me->getFood() <1)
+	if (me->getFood() <1 && !me->getWeapon0()->getEnable()&& !me->getWeapon1()->getEnable()&& !me->getWeapon2()->getEnable())
 	{
 		CEat.EnableWindow(false);
 		CInvetory.SetWindowTextW(L"You have nothing \r\n");//AFTER IL ADD ITEMS NEED TO CHANGE
@@ -1310,9 +1536,139 @@ void CDNDPprojectDlg::OnBnClickedEat()
 	{
 		a.Format(_T("%d"), me->getFood());
 		a+=" x Food(+2 HP)";
-			CInvetory.SetWindowTextW(a);
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+			Temp0+=a;
+			CInvetory.SetWindowTextW(Temp0);
 	}
+	if(me->getFood() <1 )
+		CEat.EnableWindow(false);
+	
 	a.Format(_T("%d"), me->getHP());
 		CHp.SetWindowTextW(a);
 
+}
+
+void CDNDPprojectDlg::gameOver(int id)
+{
+CNorth.EnableWindow(false);
+CEast.EnableWindow(false);
+CWest.EnableWindow(false);
+CSouth.EnableWindow(false);
+CSaveG.EnableWindow(false);
+
+BtnStart.EnableWindow(false);
+
+if(id==2)
+{
+	CAction.EnableWindow(true);
+}
+else
+{
+RHands.SetCheck(false);
+RBow.EnableWindow(false);
+RSword.EnableWindow(false);
+RWand.EnableWindow(false);
+RHands.EnableWindow(false);
+RBow.SetCheck(false);
+RSword.SetCheck(false);
+RWand.SetCheck(false);
+	CEat.EnableWindow(false);
+	CString Text=CString(_T(""));
+	if (id==1)
+	Text="Good Job you have won the game!!!";
+	else
+		Text="You lost the battle, game over!!!";
+
+MessageBox((LPCTSTR)Text, L"Dungeon and Dragons 1.0 - Won");
+}
+}
+
+
+void CDNDPprojectDlg::OnBnClickedAction()
+{
+	CString Damaged;
+	damage=me->Attack(enemy,WeID);
+	switch(WeID)
+	{
+	case 0:
+		Damaged="Hands";
+		break;
+		
+	case 1:
+		Damaged=me->getWeapon0()->getName();
+		break;
+
+	case 2:
+		Damaged=me->getWeapon1()->getName();
+		break;
+
+	case 3:
+		Damaged=me->getWeapon2()->getName();
+		break;
+	}
+	SDialog.Format(_T("You done %d damage, using %s,\r\n %s has %d HP left"), damage,Damaged,monName,enemy->getHP());
+	Output.SetWindowTextW(SDialog);
+	DoEvents();
+	if(enemy->getHP() <1)
+	{
+		Won();
+		return;
+	}
+	NextAttack();
+	if(me->getHP() <1)
+	{
+		Died();
+		return;
+	}
+}
+
+void CDNDPprojectDlg::NextAttack()
+{
+	Sleep(1000);
+	backDamaged=enemy->Attack(me);
+	SDialog.Format(_T("%s attacked you and did %d damage,\r\n enemy has %d HP left"), monName,backDamaged,enemy->getHP());
+	Output.SetWindowTextW(SDialog);
+	DoEvents();
+}
+
+void CDNDPprojectDlg::Won()
+{
+		Sleep(1000);
+		SDialog="You have Won the Battle! enjoy the exp,\r\n you can pass";
+		Output.SetWindowTextW(SDialog);
+		delete enemy;
+		CAction.EnableWindow(false);
+		Battle(battleid);
+		DoEvents();
+		return;
+}
+
+void CDNDPprojectDlg::Died()
+{
+		Sleep(1000);
+		SDialog="You Lost the Battle, Game Over";
+		Output.SetWindowTextW(SDialog);
+		delete enemy;
+		gameOver(0);
+		DoEvents();
+		return;
+}
+
+bool CDNDPprojectDlg::DoEvents()
+{
+    MSG msg;
+    while (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+    {
+        if (msg.message == WM_QUIT)
+        {
+            return FALSE;
+        }
+        if (!AfxGetApp()->PreTranslateMessage(&msg))
+        {
+            ::TranslateMessage(&msg);
+            ::DispatchMessage(&msg);
+        }
+    }
+    return TRUE;
 }

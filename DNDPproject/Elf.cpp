@@ -10,9 +10,9 @@ Elf::Elf()
 	setHp(14);
 	setStr(2);
 	setLoc(9,4);
-	setWeapon0(new Weapon(L"Dagger",4,4,0,0,0,false)); //
-	setWeapon1(new Weapon(L"Sword",6,6,0,0,0,false)); //
-	setWeapon2(new Weapon(L"Long Bow",8,12,0,0,0,false));  //
+	setWeapon0(new Weapon(0,L"Dagger",4,4,0,0,0,false)); //
+	setWeapon1(new Weapon(0,L"Sword",6,6,0,0,0,false)); //
+	setWeapon2(new Weapon(0,L"Long Bow",8,12,0,0,0,false));  //
 }
 
 
@@ -25,9 +25,10 @@ int Elf::DMG()
 	return 0;
 }
 
-void Elf::Attack(Monster * enemy)
+int Elf::Attack(Monster * enemy,int WeID)
 {
-
+	enemy->setHP(enemy->getHP() -2);
+return 2;
 }
 
 CString Elf::getStory()

@@ -6,7 +6,7 @@ class Viking :
 public:
 	Viking();
 	~Viking();
-	void Attack(Monster * enemy);
+	int Attack(Monster * enemy,int WeID);
 	int DMG();
 	CString getStory();
 };

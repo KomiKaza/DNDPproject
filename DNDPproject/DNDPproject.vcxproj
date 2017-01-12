@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterFactory.h" />
+    <ClInclude Include="Cyclop.h" />
     <ClInclude Include="DLGLoad.h" />
     <ClInclude Include="DNDPproject.h" />
     <ClInclude Include="DNDPprojectDlg.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Fairy.h" />
     <ClInclude Include="FairyFactory.h" />
     <ClInclude Include="Goblin.h" />
+    <ClInclude Include="Items.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Ninja.h" />
     <ClInclude Include="NinjaFactory.h" />
@@ -124,6 +126,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cyclop.cpp" />
     <ClCompile Include="DLGLoad.cpp" />
     <ClCompile Include="DNDPproject.cpp" />
     <ClCompile Include="DNDPprojectDlg.cpp" />
@@ -131,6 +134,7 @@
     <ClCompile Include="Elf.cpp" />
     <ClCompile Include="Fairy.cpp" />
     <ClCompile Include="Goblin.cpp" />
+    <ClCompile Include="Items.cpp" />
     <ClCompile Include="Ninja.cpp" />
     <ClCompile Include="SaveDialog.cpp" />
     <ClCompile Include="stdafx.cpp">

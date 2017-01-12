@@ -10,9 +10,9 @@ Ninja::Ninja()
 	setHp(12);
 	setStr(3);
 	setLoc(5,0);
-	setWeapon0(new Weapon(L"Shurikan",2,6,0,0,0,false));  //
-	setWeapon1(new Weapon(L"Nunchaka",4,8,0,0,0,false)); //
-	setWeapon2(new Weapon(L"Katana",11,11,0,0,0,false)); //
+	setWeapon0(new Weapon(0,L"Shurikan",2,6,0,0,0,false));  //
+	setWeapon1(new Weapon(0,L"Nunchaka",4,8,0,0,0,false)); //
+	setWeapon2(new Weapon(0,L"Katana",11,11,0,0,0,false)); //
 }
 
 
@@ -25,9 +25,9 @@ int Ninja::DMG()
 	return 0;
 }
 
-void Ninja::Attack(Monster * enemy)
+int Ninja::Attack(Monster * enemy,int WeID)
 {
-
+	return 0;
 }
 
 CString Ninja::getStory()

@@ -7,7 +7,7 @@ class Monster {
 public:
 	Monster() {ATTACK=10; DEFFENCE=8; QUICK=4; HP=20;};
 	virtual ~Monster(){};
-	virtual void Attack(Character * player) {};
+	virtual int Attack(Character * player) {return 0;};
 	void setHP(int HP) {Monster::HP=HP; };
 	void setDEF(int DEFFENCE) {Monster::DEFFENCE=DEFFENCE; };
 	void setQK(int QUICK) {Monster::QUICK=QUICK; };

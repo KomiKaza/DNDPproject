@@ -12,9 +12,9 @@ Fairy::Fairy()
 	setStr(2);
 	Magic=1;
 	setLoc(4,9);
-	setWeapon0(new Weapon(L"White Magic",0,5,0,0,10,false)); //
-	setWeapon1(new Weapon(L"Armour Magic",0,0,0,10,0,false));//
-	setWeapon2(new Weapon(L"Heal Magic",0,0,2,0,0,false)); //
+	setWeapon0(new Weapon(0,L"White Magic",0,5,0,0,10,false)); //
+	setWeapon1(new Weapon(0,L"Armour Magic",0,0,0,10,0,false));//
+	setWeapon2(new Weapon(0,L"Heal Magic",0,0,2,0,0,false)); //
 }
 
 
@@ -27,10 +27,11 @@ int Fairy::DMG()
 	return getInt() *getDex()+ getStr();
 }
 
-void Fairy::Attack(Monster * enemy)
+int Fairy::Attack(Monster * enemy,int WeID)
 {
 	int total=enemy->getHP() -DMG()*(enemy->getTotal() )-Magic;
 	enemy->setHP(total);
+	return total;
 }
 
 CString Fairy::getStory()

@@ -55,9 +55,11 @@ std::string passwd,nm;
 int hp, dex, def, str, INt, locX,locY,foodI;
 CString CharacterName; 
 CString pass; 
-bool dagger, sword, bow, mail, armor, healing, fkey;
+Character *me;
 int ClassSelect;
-bool *foods =new bool[6];
+int try1;
+int *foods =new int[6];
+int *enable=new int[6];
 CLoadName.GetWindowText(CharacterName);
 CharacterName +=".gam";
 
@@ -94,51 +96,22 @@ ReadStuff >> ClassSelect;
 
 ReadStuff >>foodI;
 
-ReadStuff >>foods[0];
-ReadStuff >>foods[1];
-ReadStuff >>foods[2];
-ReadStuff >>foods[3];
-ReadStuff >>foods[4];
-ReadStuff >>foods[5];
+ReadStuff >> foods[0];
+ReadStuff >> foods[1];
+ReadStuff >> foods[2];
+ReadStuff >> foods[3];
+ReadStuff >> foods[4];
+ReadStuff >> foods[5];
 
-Character *me;
+ReadStuff >> enable[0];
+ReadStuff >> enable[1];
+ReadStuff >> enable[2];
 
-//
-//ReadStuff >> dagger;
-//ReadStuff >> sword; ReadStuff >> bow; 
-//ReadStuff >> mail; ReadStuff >> armor;
-//ReadStuff >> healing; ReadStuff >> fkey;
-//
-//
-//bool giant, dragon, motley, shaman, center, under, HPwest2, HPshaman;
-//int CD, CG;
-//
-//ReadStuff >> giant; W1GiantAlive = giant;
-//ReadStuff >> dragon; E1DragonAlive = dragon; 
-//ReadStuff >> motley; S2MotleyCrewAlive = motley; 
-//ReadStuff >> shaman; FirstTimeInShamanHut = shaman;
-//ReadStuff >> center; CENTERFirstTime = center;
-//ReadStuff >> under; UNDERDragonPairAlive = under;
-//ReadStuff >> HPwest2; FoundHP_West2 = HPwest2;
-//ReadStuff >> HPshaman; FoundHP_Shaman = HPshaman;
-//ReadStuff >> CD; ConqueredDragons = CD;
-//ReadStuff >> CG; ConqueredGiants = CG; 
-//
-//
-//
-//CurrentPlayer->setName(nm.c_str());
-//CurrentPlayer->setHit(hp);
-//CurrentPlayer->setAttack(atk); 
-//CurrentPlayer->setDefense(def); 
-//CurrentPlayer->setLevel(lvl); 
-//CurrentPlayer->setScore(scr);
-//CurrentPlayer->setDagger(dagger);
-//CurrentPlayer->setSword(sword); 
-//CurrentPlayer->setLongBow(bow); 
-//CurrentPlayer->setChainMail(mail); 
-//CurrentPlayer->setFullBodyArmor(armor);
-//CurrentPlayer->setHealingPotion(healing); 
-//CurrentPlayer->setFishKey(fkey); 
+ReadStuff >> enable[3];
+ReadStuff >> enable[4];
+ReadStuff >> enable[5];
+
+
 
 ReadStuff.close();
 //CurrentPlayer->Inventory(); 
@@ -178,9 +151,17 @@ me->setStr(str);
 CString cstr(nm.c_str());
 me->setName(cstr);
 me->setFood(foodI);
+me->getWeapon0()->setEnable(enable[0]?true:false);
+me->getWeapon1()->setEnable(enable[1]?true:false);
+me->getWeapon2()->setEnable(enable[2]?true:false);
+me->getItem(0)->setEnable(enable[3]?true:false);
+me->getItem(1)->setEnable(enable[4]?true:false);
+me->getItem(2)->setEnable(enable[5]?true:false);
+bool neFood[6];
+for(int i=0;i<6;++i)
+	neFood[i]=foods[i]?true:false;
 
-
-CDNDPprojectDlg dlg(foods,ClassSelect,me);
+CDNDPprojectDlg dlg(neFood,ClassSelect,me);
 dlg.DoModal();
 EndDialog( 0 );
 

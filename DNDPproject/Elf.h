@@ -6,7 +6,7 @@ class Elf :
 public:
 	Elf();
 	~Elf();
-	void Attack(Monster * enemy);
+	int Attack(Monster * enemy,int WeID);
 	int DMG();
 	CString getStory();
 };

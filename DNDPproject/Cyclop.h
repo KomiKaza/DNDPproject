@@ -1,12 +1,12 @@
 #pragma once
 #include "monster.h"
-class Goblin :
+class Cyclop :
 	public Monster
 {
 public:
-	Goblin();
-	~Goblin(void);
+	Cyclop(void);
+	~Cyclop(void);
 	int Attack(Character * player);
-	int getTotal() ;
+	 int getTotal();
 };
 

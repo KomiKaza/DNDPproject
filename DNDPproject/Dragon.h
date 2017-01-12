@@ -6,7 +6,7 @@ class Dragon :
 public:
 	Dragon();
 	~Dragon(void);
-	void Attack(Character * player);
+	int Attack(Character * player);
 	int getTotal() ;
 };
 

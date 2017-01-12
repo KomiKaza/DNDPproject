@@ -15,8 +15,9 @@ Dragon::~Dragon(void)
 {
 }
 
-void Dragon::Attack(Character * player)
+int Dragon::Attack(Character * player)
 {
+	return 2;
 }
 
 int Dragon::getTotal() 

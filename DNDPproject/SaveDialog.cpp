@@ -104,13 +104,20 @@ WriteStuff<<ClassType<<"\n";
 
 WriteStuff<<me->getFood()<<"\n";
 
-WriteStuff <<foods[0]<<"\n";
-WriteStuff <<foods[1]<<"\n";
-WriteStuff <<foods[2]<<"\n";
-WriteStuff <<foods[3]<<"\n";
-WriteStuff <<foods[4]<<"\n";
-WriteStuff <<foods[5]<<"\n";
+WriteStuff <<((foods[0])?1:0)<<"\n";
+WriteStuff <<((foods[1])?1:0)<<"\n";
+WriteStuff <<((foods[2])?1:0)<<"\n";
+WriteStuff <<((foods[3])?1:0)<<"\n";
+WriteStuff <<((foods[4])?1:0)<<"\n";
+WriteStuff <<((foods[5])?1:0)<<"\n";
 
+WriteStuff <<((me->getWeapon0()->getEnable())?1:0)<<"\n";
+WriteStuff <<((me->getWeapon1()->getEnable())?1:0)<<"\n";
+WriteStuff <<((me->getWeapon2()->getEnable())?1:0)<<"\n";
+
+WriteStuff <<((me->getItem(0)->getEnable())?1:0)<<"\n";
+WriteStuff <<((me->getItem(1)->getEnable())?1:0)<<"\n";
+WriteStuff <<((me->getItem(2)->getEnable())?1:0)<<"\n";
 
 
 WriteStuff.close();

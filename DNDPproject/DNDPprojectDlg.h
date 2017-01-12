@@ -12,6 +12,7 @@
 #include "Fairy.h"
 #include "Goblin.h"
 #include "Dragon.h"
+#include "Cyclop.h"
 #include "SaveDialog.h"
 #include "DLGLoad.h"
 #include "NinjaFactory.h"
@@ -49,6 +50,11 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	bool DoEvents();
+	void NextAttack();
+	void Died();
+	void Won();
+	void gameOver(int id);
 	bool afterload;
 	afx_msg void OnBnClickedQuit();
 	CEdit Output;
@@ -97,4 +103,7 @@ public:
 	afx_msg void OnBnClickedEat();
 private:
 	CharacterFactory * characterFactory;
+public:
+	afx_msg void OnBnClickedAction();
+	CButton CAction;
 };

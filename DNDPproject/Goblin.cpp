@@ -12,8 +12,9 @@ Goblin::~Goblin(void)
 {
 }
 
-void Goblin::Attack(Character * player)
+int Goblin::Attack(Character * player)
 {
+	return 0;
 }
 
 int Goblin::getTotal() 

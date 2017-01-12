@@ -6,7 +6,7 @@ class Fairy :
 public:
 	Fairy();
 	~Fairy();
-	void Attack(Monster * enemy);
+	int Attack(Monster * enemy,int WeID);
 	int DMG();
 	int getMagic() {return Magic;};
 	CString getStory();
