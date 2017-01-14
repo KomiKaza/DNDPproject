@@ -1,3 +1,11 @@
+/*
+#########################################################################  Final Project ################################################################################################
+This program was created and designed by:
+Shahaf Wagner -  204559272
+Victoria Shakaley - 311292437
+Lecturer: Doctor Michael Kiperberg
+*/
+
 #pragma once
 #include <iostream>
 #include "Monster.h"
@@ -48,6 +56,7 @@ public:
 	void goWest(){Location->x--;};
 	void goNorth(){Location->y++;};
 	void goSouth(){Location->y--;};
+	void LevelUp() {STR++;INT++;DEX++;DEF++;HP=HP+5; }
 	virtual int Attack(Monster * enemy,int WeID) =0; //need to create Monster first...
 	virtual int DMG()  =0;//damage of each character
 	virtual CString getStory()=0;

@@ -4,7 +4,7 @@
 
 Goblin::Goblin(void)
 {
-	setAT(12);setDEF(4); setQK(2); setHP(10);
+	setAT(12);setDEF(4); setQK(2); setHP(100);
 }
 
 

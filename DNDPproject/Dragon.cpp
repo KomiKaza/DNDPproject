@@ -7,7 +7,7 @@ Dragon::Dragon(void)
 	setAT(10);
 	setDEF(6); 
 	setQK(5); 
-	setHP(20);
+	setHP(200);
 }
 
 

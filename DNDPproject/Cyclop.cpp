@@ -4,7 +4,7 @@
 
 Cyclop::Cyclop(void)
 {
-		setAT(5);setDEF(9); setQK(2); setHP(15);
+		setAT(5);setDEF(9); setQK(2); setHP(150);
 
 }
 

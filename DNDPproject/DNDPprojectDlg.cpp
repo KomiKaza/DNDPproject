@@ -1,3 +1,10 @@
+/*
+#########################################################################  Final Project ################################################################################################
+This program was created and designed by:
+Shahaf Wagner -  204559272
+Victoria Shakaley - 311292437
+Lecturer: Doctor Michael Kiperberg
+*/
 
 // DNDPprojectDlg.cpp : implementation file
 //
@@ -6,6 +13,12 @@
 #include "DNDPproject.h"
 #include "DNDPprojectDlg.h"
 #include "afxdialogex.h"
+#include <Windows.h>
+#include <mmsystem.h>
+#include <conio.h>
+#include <iomanip>
+#pragma comment( lib, "Winmm.lib" )
+
 
 
 
@@ -35,6 +48,8 @@ bool * activeEnemy=new bool[6];
 Monster * enemy;
 CString monName;
 int battleid;
+bool afterBattle=false;
+bool west=false,east=false,north=false,south=false;
 
 //end intalize
 
@@ -77,40 +92,40 @@ void CDNDPprojectDlg::Battle(int monstertype)
 	switch(monstertype)
 	{
 	case 0:
-		CEast.EnableWindow(true);
-		CWest.EnableWindow(true);
-		CNorth.EnableWindow(true);
-		CSouth.EnableWindow(true);
+		CEast.EnableWindow(true);east=true;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=true;
+		CSouth.EnableWindow(true);south=true;
 		break;
 	case 1:
-		CEast.EnableWindow(true);
-		CWest.EnableWindow(true);
-		CNorth.EnableWindow(true);
-		CSouth.EnableWindow(true);	
+		CEast.EnableWindow(true);east=true;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=true;
+		CSouth.EnableWindow(true);south=true;
 		break;
 	case 2:
-		CNorth.EnableWindow(false);
-		CEast.EnableWindow(true);
-		CWest.EnableWindow(true);
-		CSouth.EnableWindow(true);	
+		CEast.EnableWindow(true);east=true;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=false;
+		CSouth.EnableWindow(true);south=true;
 		break;
 	case 3:
-		CEast.EnableWindow(true);
-		CWest.EnableWindow(true);
-		CNorth.EnableWindow(true);
-		CSouth.EnableWindow(true);	
+		CEast.EnableWindow(true);east=true;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=true;
+		CSouth.EnableWindow(true);south=true;
 		break;
 	case 4:
-		CEast.EnableWindow(true);
-		CWest.EnableWindow(true);
-		CNorth.EnableWindow(true);
-		CSouth.EnableWindow(false);	
+		CEast.EnableWindow(true);east=true;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=true;
+		CSouth.EnableWindow(true);south=false;
 		break;
 	case 5:
-		CWest.EnableWindow(true);
-		CNorth.EnableWindow(true);
-		CSouth.EnableWindow(true);	
-		CEast.EnableWindow(false);
+		CEast.EnableWindow(true);east=false;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=true;
+		CSouth.EnableWindow(true);south=true;
 		break;
 	}
 	//now add the battle...
@@ -151,16 +166,18 @@ void CDNDPprojectDlg::checkLocation()
 
 	case 1:
 		SDialog="You are in a neighborhood of the local \r\n residents. ";
-		CenterPix.LoadBitmapW(BIT_0);//load image  MAYBE I SHOULD CHANGE PICTURE
+		CenterPix.LoadBitmapW(ID01);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 		break;
 	case 2:
 		SDialog="Oh no, a storm is hitting the beach!\r\n Consider if you want to continue via\r\n the beach,  or you wan to go to \r\n rice fields which are in the east  \r\n direction.";
-		CenterPix.LoadBitmapW(BIT_5);//load image  MAYBE I SHOULD CHANGE PICTURE
+		CenterPix.LoadBitmapW(ID02);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 3:
+		CenterPix.LoadBitmapW(ID03);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are at the beach. You can hear the \r\n Vikings partying hard on their ships!";
 		break;
 
@@ -189,18 +206,26 @@ void CDNDPprojectDlg::checkLocation()
 		break;
 
 	case 8:
+		CenterPix.LoadBitmapW(ID0809);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Oh no, youre drawning in the river!\r\n Go to the south or the east direction\r\n as soon as you can! ";
 		break;
 
 	case 9:
+		CenterPix.LoadBitmapW(ID0809);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 SDialog="Oh no, youre drawning in the river!\r\n Go to the south or the east direction\r\n as soon as you can! ";
 break;
 
 	case 10:
+		CenterPix.LoadBitmapW(ID0010);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in a neighborhood of the local\r\n residents. ";
 		break;
 
 	case 11:
+		CenterPix.LoadBitmapW(ID1121);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Intersection!\r\n You are in the borderline ofa small village,\r\n the beach and beautiful rice field.\r\n Let your intuiotion lead you.";
 		break;
 
@@ -218,7 +243,11 @@ break;
 		RBow.EnableWindow(true);
 		}
 		else
+		{
 			SDialog="Skys getting cloudy";
+			CenterPix.LoadBitmapW(ID1222);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+			}
 
 				Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
@@ -230,38 +259,56 @@ break;
 
 	case 13:
 		SDialog="The storm is getting stronger!\r\n Find a safe place.";
+		CenterPix.LoadBitmapW(ID1323);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;	
 
 	case 14:
+		CenterPix.LoadBitmapW(ID1424);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in the borderline\r\n between the village and the beach.";
 		break;	
 
 	case 15:
+		CenterPix.LoadBitmapW(ID1516);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You see the beach in the west\r\n direction- \r\n did you bring your swimsuit?";
 		break;
 
 	case 16:
+		CenterPix.LoadBitmapW(ID1516);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You see the beach in the west\r\n direction- \r\n did you bring your swimsuit?";
 		break;
 
 	case 17:
 		SDialog="A strange noise comes from \r\n the east direction- \r\ncheck what is it!";
+		CenterPix.LoadBitmapW(ID17);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 18:
 		if(me->getWeapon0()->getName()=="Dagger")
 		{
 			SDialog="You found your elf sister!!! \r\n Good job! \r\n you have won the game!";
+			CenterPix.LoadBitmapW(IDElfsister);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 			DoEvents();
 			gameOver(1);
 		}
 		else
+		{
 		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
+		CenterPix.LoadBitmapW(ID1819);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 19:
 		if (me->getWeapon0()->getName()=="Shurikan" && !me->getWeapon1()->getEnable())
 		{
+			CenterPix.LoadBitmapW(IDNunchaka);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You found a Nunchaka!";
 		me->getWeapon1()->setEnable(true);
 		RSword.EnableWindow(true);
@@ -273,28 +320,42 @@ break;
 		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
+		{
 		SDialog="Although the view is fantastic,\r\n theres a dangerous river in the\r\n west diretion! Be careful.";
-				Temp.Format(_T("%d"), me->getFood());
+		CenterPix.LoadBitmapW(ID1819);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
+		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
 		break;
 
 	case 20:
+		CenterPix.LoadBitmapW(ID20);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You see some houses on the horizon.";
 		break;
 
 	case 21:
+		CenterPix.LoadBitmapW(ID1121);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Intersection!\r\n You are in the borderline ofa small village,\r\n the beach and beautiful rice field.\r\n Let your intuiotion lead you.";
 		break;
 
 	case 22:
+		CenterPix.LoadBitmapW(ID22);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You see something shining in \r\n the west direction- Go there!";
 		break;
 
 	case 23:
+		CenterPix.LoadBitmapW(ID1323);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="The storm is getting stronger!\r\n Find a safe place.";
 		break;	
 
 	case 24:
+		CenterPix.LoadBitmapW(ID1424);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in the borderline\r\n between the village and the beach.";
 		break;	
 
@@ -309,37 +370,56 @@ break;
 	case 27:
 		if(activeEnemy[0])
 		{
+	PlaySound(L"Sound/giant.wav",NULL,SND_FILENAME|SND_ASYNC); 
+		DoEvents();
 		SDialog="You are facing the evil goblin\r\n now!\r\n Show him what you've got!";
 		enemy=new Goblin();
 		monName="Goblin";
 		gameOver(2);
 		activeEnemy[0]=false;
 		battleid=0;
-		//checkLocation();
+		afterBattle=true;
+		CenterPix.LoadBitmapW(IDGOBLIN);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else
+		{
 		SDialog="There is a dead Goblin body in here.";	
+		CenterPix.LoadBitmapW(IDDeadgo);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 28:
 		if(activeEnemy[1])
 		{
+	PlaySound(L"Sound/giant.wav",NULL,SND_FILENAME|SND_ASYNC); 
+		DoEvents();
 		SDialog="You are facing the evil goblin\r\n now!\r\n Show him what you've got!";
 		enemy=new Goblin();
 		monName="Goblin";
 		gameOver(2);
 		activeEnemy[1]=false;
 		battleid=1;
-		//checkLocation();
+		afterBattle=true;
+		CenterPix.LoadBitmapW(IDGOBLIN);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else
-		SDialog="There is a dead Goblin body in here.";			break;
+		{
+		SDialog="There is a dead Goblin body in here.";	
+		CenterPix.LoadBitmapW(IDDeadgo);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
+		break;
 
 	case 29:
 		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!\r\n(you lose 2 HP)";
 		me->setHp(me->getHP() -2);
 a.Format(_T("%d"), me->getHP());
 		CHp.SetWindowTextW(a);
+		CenterPix.LoadBitmapW(ID2939);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 30:
@@ -359,7 +439,12 @@ a.Format(_T("%d"), me->getHP());
 		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
+		{
 		SDialog="You are on a walkway.\r\n Where is it going to lead you?";
+		
+		CenterPix.LoadBitmapW(ID30);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 31:
@@ -375,6 +460,8 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 34:
+		CenterPix.LoadBitmapW(ID3_4);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="The people of the village are very \r\n nice- they offer you to get some \r\n rest at one of the houses  \r\n which is in the north \r\n direction.";
 		break;
 
@@ -401,10 +488,14 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 37:
+		CenterPix.LoadBitmapW(ID3738);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in the Goblins Valley! \r\n Things can turn either very good,\r\n or very bad now.";
 		break;
 
 	case 38:
+		CenterPix.LoadBitmapW(ID3738);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in the Goblins Valley! \r\n Things can turn either very good,\r\n or very bad now.";
 		break;
 
@@ -416,6 +507,8 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 40:
+		CenterPix.LoadBitmapW(ID40);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are sorrunded by beautiful,\r\n blooming cherry trees.\r\n It seems like nothing can\r\n disturb you here.";
 		break;
 
@@ -424,6 +517,8 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 42:
+		CenterPix.LoadBitmapW(ID42);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You hear some strange noise from\r\n the north direction.\r\n Go check it out.";
 		break;
 
@@ -434,6 +529,8 @@ a.Format(_T("%d"), me->getHP());
 	case 44:
 		if(!me->getItem(2)->getEnable())
 		{
+			CenterPix.LoadBitmapW(IDGloves);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You Found a pair of gloves!";
 		me->getItem(2)->setEnable(true);
 		me->setDef(me->getDef()+me->getItem(2)->getDef());
@@ -479,6 +576,8 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 48:
+		CenterPix.LoadBitmapW(ID49);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="The goblins live houses made of chocolate-\r\n You can eat as much as your belly\r\n lets you!";
 		break;
 
@@ -495,6 +594,8 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 51:
+		CenterPix.LoadBitmapW(ID5161);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in a rice field.\r\n You've heard that something is happening\r\n horthern of you- Go there!";
 		break;
 
@@ -514,6 +615,8 @@ a.Format(_T("%d"), me->getHP());
 		}
 		else
 			SDialog="All the food is gone :(";
+		CenterPix.LoadBitmapW(ID5253);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 53:
@@ -530,13 +633,19 @@ a.Format(_T("%d"), me->getHP());
 		else
 			SDialog="All the food is gone :(";*/
 		SDialog="There's a forest in your north \r\n direction.\r\n Who may hide there?";
+		CenterPix.LoadBitmapW(ID5363);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 54:
+		CenterPix.LoadBitmapW(ID5458);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Please meet the trolls!\r\n They are hiding in the\r\n forests, \r\nwaiting for a victim! ";
 		break;
 
 	case 55:
+		CenterPix.LoadBitmapW(ID55);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Every diretion you will \r\n pick will lead you\r\n to a new adventure";
 		break;
 
@@ -555,6 +664,8 @@ a.Format(_T("%d"), me->getHP());
 		}
 		else if(me->getWeapon0()->getName()=="White Magic" && !me->getWeapon2()->getEnable())
 		{
+			CenterPix.LoadBitmapW(IDWhiteMagic);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You found a book that gives \r\nyou the ability to use White Magic";
 		me->getWeapon0()->setEnable(true);
 		RWand.EnableWindow(true);
@@ -566,10 +677,16 @@ a.Format(_T("%d"), me->getHP());
 		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
+		{
 		SDialog="The view here is amazing!";
+		CenterPix.LoadBitmapW(ID5657);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 57:
+		CenterPix.LoadBitmapW(ID5657);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are on a hill and there's \r\n a desert on the horizon!";
 		break;
 
@@ -578,14 +695,20 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 59:
+		CenterPix.LoadBitmapW(ID5969);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="What a pastoral view!\r\n A valley is in your west direction\r\n and a desert is in your \r\neast direction.\r\n Where will you go?";
 		break;
 
 	case 60:
+		CenterPix.LoadBitmapW(ID6062);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="The clouds are gathering above\r\n your head.\r\n You need to find a safe place";
 		break;
 
 	case 61:
+		CenterPix.LoadBitmapW(ID5161);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in a rice field.\r\n You've heard that something is happening\r\n horthern of you- Go there!";
 		break;
 
@@ -601,6 +724,8 @@ a.Format(_T("%d"), me->getHP());
 		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
+		CenterPix.LoadBitmapW(IDSWORD);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon0()->getEnable())
 		{
@@ -613,12 +738,20 @@ a.Format(_T("%d"), me->getHP());
 		if(me->getFood())
 		Temp0+=Temp;
 		CInvetory.SetWindowTextW(Temp0);
+		CenterPix.LoadBitmapW(IDSWORD);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else
+		{
 		SDialog="The clouds are gathering above\r\n your head.\r\n You need to find a safe place";
+		CenterPix.LoadBitmapW(ID6062);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 63:
+		CenterPix.LoadBitmapW(ID5363);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="There's a forest in your north \r\n direction.\r\n Who may hide there?";
 		break;
 
@@ -627,40 +760,61 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 65:
+		CenterPix.LoadBitmapW(ID65);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You see a desert on \r\nthe horizon!";
 		break;
 
 	case 66: 
+		CenterPix.LoadBitmapW(ID66);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="A poisonous snake is accompanying\r\n you!\r\n Be carfel";
 		break;
 
 	case 67:
+		CenterPix.LoadBitmapW(ID67);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="It's so hot in here!\r\n You have to find a water\r\n source.";
 		break;
 
 	case 68:
+		CenterPix.LoadBitmapW(ID68);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are in a borderline!";
 		break;
 
 	case 69:
 		if(activeEnemy[2])
 		{
+	PlaySound(L"Sound/giant.wav",NULL,SND_FILENAME|SND_ASYNC); 
+		DoEvents();
 		SDialog="It's a trap!\r\n You have to defeat the Syclop now!";
 		enemy=new Cyclop();
 		monName="Cyclop";
 		gameOver(2);
 		activeEnemy[2]=false;
 		battleid=2;
+		afterBattle=true;
+		CenterPix.LoadBitmapW(IDCYCLOP);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else
+		{
 		SDialog="There is a dead Syclop body in here.";
+		CenterPix.LoadBitmapW(IDDeadCyc);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 70:
+		CenterPix.LoadBitmapW(ID7083);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You're in a village.\r\n There is some weird voice from the east..";
 		break;
 
 	case 71:
+		CenterPix.LoadBitmapW(ID7181);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You see a small village\r\n in your north direction.\r\n Maybe the locals can provide\r\n you some food.";
 		break;
 
@@ -680,23 +834,33 @@ a.Format(_T("%d"), me->getHP());
 		}
 		else
 			SDialog="The locals ate all\r\n  the food :(";
+		CenterPix.LoadBitmapW(ID7282);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 73:
+		CenterPix.LoadBitmapW(ID7384);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Oops!\r\n You fell into a river!\r\n To your luck, it's \r\n not that deep";
 		break;
 
 	case 74:
+		CenterPix.LoadBitmapW(ID74);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You are sorrounded by a \r\nbeatiful waterfall";
 		break;
 
 	case 75:
+		CenterPix.LoadBitmapW(ID75);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You've been too hasty and\r\n now you're drowning in a waterfall!";
 		break;
 
 	case 76:
 		if (me->getWeapon0()->getName()=="White Magic" && !me->getWeapon1()->getEnable())
 		{
+			CenterPix.LoadBitmapW(IDArmourMa);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You found a book that gives \r\nyou the ability to use Armour Magic";
 		me->getWeapon1()->setEnable(true);
 		RSword.EnableWindow(true);
@@ -709,6 +873,8 @@ a.Format(_T("%d"), me->getHP());
 		}
 		else if(me->getWeapon0()->getName()=="Spear" && !me->getWeapon2()->getEnable())
 		{
+			CenterPix.LoadBitmapW(IDAxe);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You found an Axe ";
 		me->getWeapon2()->setEnable(true);
 		RBow.EnableWindow(true);
@@ -720,31 +886,47 @@ a.Format(_T("%d"), me->getHP());
 		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
+		{
 		SDialog="Nothing to look at \r\nexcept for endless dunes";
+		CenterPix.LoadBitmapW(ID7677);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 77:
+		CenterPix.LoadBitmapW(ID7677);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Nothing to look at \r\nexcept for endless dunes";
 		break;
 
 	case 78:
 		if(activeEnemy[3])
 		{
+	PlaySound(L"Sound/giant.wav",NULL,SND_FILENAME|SND_ASYNC); 
+		DoEvents();
 		SDialog="It's a trap!\r\n You have to defeat the Syclop now!";
 		enemy=new Cyclop();
 		monName="Cyclop";
 		gameOver(2);
 		activeEnemy[3]=false;
 		battleid=3;
-		//checkLocation();
+		afterBattle=true;
+		CenterPix.LoadBitmapW(IDCYCLOP);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else
+		{
 		SDialog="There is a dead Syclop body in here.";
+		CenterPix.LoadBitmapW(IDDeadCyc);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 79:
 		if(me->getWeapon0()->getName()=="Spear")
 		{
+			CenterPix.LoadBitmapW(IDTresure);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 			SDialog="Your have found the tresure chest!\r\n You won the game ,\r\nGood job!";
 			DoEvents();
 			gameOver(1);
@@ -752,28 +934,41 @@ a.Format(_T("%d"), me->getHP());
 		else
 			if(me->getWeapon0()->getName()=="Shurikan")
 			{
-				
+				CenterPix.LoadBitmapW(IDSplinter);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 				SDialog="This is Master Spliner!\r\n Good job!\r\n You won the game!";
 				DoEvents();
 				gameOver(1);
 			}
 			else
+			{
 		SDialog="Heres you opportunity to \r\ntake a nap under the palmtrees\r\nwhat is the weird voice\r\n coming from the north...";
+		CenterPix.LoadBitmapW(ID78);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+			}
 		break;
 
 	case 80:
 		if(activeEnemy[4])
 		{
+			PlaySound(L"Sound/dragon.wav",NULL,SND_FILENAME|SND_ASYNC); 
+			DoEvents();
 		SDialog="It's a trap!\r\n You have to defeat the dragon now!";
 		enemy=new Dragon();
 		monName="Dragon";
 		gameOver(2);
 		activeEnemy[4]=false;
 		battleid=4;
-		//checkLocation();
+		afterBattle=true;
+		CenterPix.LoadBitmapW(IDDRAGON);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else
+		{
 		SDialog="There is a dead dragon body in here.";
+		CenterPix.LoadBitmapW(IDDeadDr);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		//need to add if already defeated the dragon
 		//Battle(2);
 		break;
@@ -821,22 +1016,32 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 84:
+		CenterPix.LoadBitmapW(ID8485);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Oops!\r\n You fell into a river!\r\n To your luck, it's \r\b not that deep";
 		break;
 
 	case 85:
+		CenterPix.LoadBitmapW(ID8485);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="There's a waterfall in your \r\nwest direcion, \r\nbe aware";
 		break;
 
 	case 86:
+		CenterPix.LoadBitmapW(ID8687);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Wow!\r\n look at the beautiful \r\nview of the colorful dunes!";
 		break;
 
 	case 87:
+		CenterPix.LoadBitmapW(ID8687);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Wow!\r\n look at the beautiful \r\nview of the colorful dunes!";
 		break;
 
 	case 88:
+		CenterPix.LoadBitmapW(ID88);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="A beautiful oasis is \r\nsorroundind you!\r\n Drink water and eat\r\n some dates.";
 		break;
 
@@ -847,6 +1052,8 @@ a.Format(_T("%d"), me->getHP());
 	case 90:
 		if(me->getWeapon0()->getName()=="White Magic")
 		{
+			CenterPix.LoadBitmapW(IDBarbie);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 			SDialog="Your have found the Barbie house!\r\n You won the game ,\r\nGood job!";
 			DoEvents();
 			gameOver(1);
@@ -858,22 +1065,35 @@ a.Format(_T("%d"), me->getHP());
 	case 91:
 		if(activeEnemy[5])
 		{
+		PlaySound(L"Sound/dragon.wav",NULL,SND_FILENAME|SND_ASYNC); 
+		DoEvents();
 		SDialog="It's a trap!\r\n You have to defeat the dragons now!";
 		enemy=new Dragon();
 		monName="Dragon";
 		gameOver(2);
 		activeEnemy[5]=false;
 		battleid=5;
+		afterBattle=true;
+		CenterPix.LoadBitmapW(IDDRAGON);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		}
 		else
+		{
 		SDialog="There is a dead dragon body in here.";
+		CenterPix.LoadBitmapW(IDDeadDr);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	case 92:
+		CenterPix.LoadBitmapW(ID92);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You hear some strange noises\r\n from your south direction.";
 		break;
 
 	case 93:
+		CenterPix.LoadBitmapW(ID93);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="There's a river in your\r\n west direction, be careful ";
 		break;
 
@@ -884,24 +1104,34 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 95:
-		SDialog="Dragons! ,Can you defeat them?";
+		SDialog="What a nice view...";
+		CenterPix.LoadBitmapW(ID94);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		break;
 
 	case 96:
-		SDialog="Dragons! ,Can you defeat them?";
-		break;
+		SDialog="What a nice view...";
+		CenterPix.LoadBitmapW(ID94);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+	   break;
 
 	case 97: 
+		CenterPix.LoadBitmapW(ID9798);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Its hot and sweaty \r\nand you're becoming tired";
 		break;
 
 	case 98:
+		CenterPix.LoadBitmapW(ID9798);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="Its hot and sweaty \r\nand you're becoming tired";
 		break;
 
 	case 99:
 		if (me->getWeapon0()->getName()=="Shurikan" && !me->getWeapon2()->getEnable())
 		{
+			CenterPix.LoadBitmapW(IDKatana);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You found a Katana!";
 		me->getWeapon2()->setEnable(true);
 		RBow.EnableWindow(true);
@@ -914,6 +1144,8 @@ a.Format(_T("%d"), me->getHP());
 		}
 		else if(me->getWeapon0()->getName()=="Dagger" && !me->getWeapon0()->getEnable())
 		{
+			CenterPix.LoadBitmapW(IDDagger);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
 		SDialog="You found an Dagger ";
 		me->getWeapon0()->setEnable(true);
 		RWand.EnableWindow(true);
@@ -925,11 +1157,21 @@ a.Format(_T("%d"), me->getHP());
 		CInvetory.SetWindowTextW(Temp0);
 		}
 		else
+		{
 		SDialog="Sand everywhere!\r\n Nothing to see here.";
+		CenterPix.LoadBitmapW(ID99);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+		}
 		break;
 
 	default:
 		break;
+	}
+	if(afterBattle)
+	{
+		afterBattle=false;
+		Sleep(2000);
+		PlaySound(L"Sound/theme.wav",NULL,SND_FILENAME|SND_ASYNC); 
 	}
 a.Format(_T("%d"), me->getHP());
 		CHp.SetWindowTextW(a);
@@ -948,6 +1190,7 @@ a.Format(_T("%d"), me->getHP());
 void CDNDPprojectDlg::afterLoad()
 {
 	//////////////////
+	PlaySound(L"Sound/theme.wav",NULL,SND_FILENAME|SND_ASYNC); 
 
 		CRestart.EnableWindow(true);
 		newName=false;
@@ -955,10 +1198,10 @@ void CDNDPprojectDlg::afterLoad()
 		Dialog.SetWindowTextW(msg);
 
 
-CNorth.EnableWindow(true);
-CSouth.EnableWindow(true);
-CEast.EnableWindow(true);
-CWest.EnableWindow(true);
+		CEast.EnableWindow(true);east=true;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=true;
+		CSouth.EnableWindow(true);south=true;
 CGo.EnableWindow(false);
 Dialog.SetReadOnly(true);
 
@@ -989,36 +1232,40 @@ RHands.EnableWindow(true);
 name=me->getName();
 CName.SetWindowTextW(name);
 
-	CNorth.EnableWindow(false);
-	CEast.EnableWindow(false);
-	CWest.EnableWindow(false);
-	CSouth.EnableWindow(false);
+	CNorth.EnableWindow(false);north=false;
+	CEast.EnableWindow(false);east=false;
+	CWest.EnableWindow(false);west=false;
+	CSouth.EnableWindow(false);south=false;
 
-	if  (me->getY() <9)
-		CNorth.EnableWindow(true);
-	if (me->getY()>0)
-		CSouth.EnableWindow(true);
-	if(me->getX()<9)
-		CEast.EnableWindow(true);
-	if(me->getX()>0)
-		CWest.EnableWindow(true);
+	if  (me->getY() <9){
+		CNorth.EnableWindow(true);north=true;}
+	if (me->getY()>0){
+		CSouth.EnableWindow(true);south=true;}
+	if(me->getX()<9){
+		CEast.EnableWindow(true);east=true;}
+	if(me->getX()>0){
+		CWest.EnableWindow(true);west=true;}
 
 CString Temp,Temp0;
+Temp="";
+		Temp0=me->getWeaponsST();
 
-if(me->getFood() || me->getWeapon0()->getEnable()|| me->getWeapon1()->getEnable()|| me->getWeapon2()->getEnable())
+		if(!(me->getFood() ||me->getWeapon0()->getEnable()||me->getWeapon1()->getEnable()||me->getWeapon2()->getEnable() ||me->getItem(0)->getEnable()||me->getItem(1)->getEnable() ||me->getItem(2)->getEnable())   )
+		{
+Temp0="You have nothing \r\n";//AFTER IL ADD ITEMS NEED TO CHANGE
+		}
+else if(me->getFood())
 {
 		Temp.Format(_T("%d"), me->getFood());
 		Temp+=" x Food(+2 HP)";
-		Temp0=me->getWeaponsST();
-		if(me->getFood())
-		Temp0+=Temp;
-		CInvetory.SetWindowTextW(Temp0);
+			CEat.EnableWindow(true);
+					Temp0+=Temp;
+
 }
-else
-CInvetory.SetWindowTextW(L"You have nothing \r\n");//AFTER IL ADD ITEMS NEED TO CHANGE
-if(me->getFood())
-	CEat.EnableWindow(true);
-checkLocation();
+		CInvetory.SetWindowTextW(Temp0);
+
+
+	checkLocation();
 RWand.SetWindowTextW(me->getWeapon0()->getName());
 RSword.SetWindowTextW(me->getWeapon1()->getName());
 RBow.SetWindowTextW(me->getWeapon2()->getName());
@@ -1098,6 +1345,7 @@ BEGIN_MESSAGE_MAP(CDNDPprojectDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_LOAD, &CDNDPprojectDlg::OnBnClickedLoad)
 	ON_BN_CLICKED(IDC_EAT, &CDNDPprojectDlg::OnBnClickedEat)
 	ON_BN_CLICKED(IDC_ACTION, &CDNDPprojectDlg::OnBnClickedAction)
+	ON_BN_CLICKED(ID_STOPMUSIC, &CDNDPprojectDlg::OnBnClickedStopmusic)
 END_MESSAGE_MAP()
 
 
@@ -1107,6 +1355,14 @@ BOOL CDNDPprojectDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	//////////////////////
+
+
+
+
+
+
+	///////////////////
 
 	// Add "About..." menu item to system menu.
 
@@ -1215,6 +1471,8 @@ Dialog.SetFocus();
 Dialog.SetSel(0,-1,false);
 newName=true;
 CGo.EnableWindow(true);
+PlaySound(L"Sound/theme.wav",NULL,SND_FILENAME|SND_ASYNC); 
+
 
 SDialog="The Pizza you ate yesterday \r\n";
 SDialog+="was not that innocent! it \r\n";
@@ -1263,10 +1521,10 @@ void CDNDPprojectDlg::OnBnClickedGo()
 
 //SDialog=L""+name+L" \r\n";
 
-CNorth.EnableWindow(true);
-CSouth.EnableWindow(true);
-CEast.EnableWindow(true);
-CWest.EnableWindow(true);
+		CEast.EnableWindow(true);east=true;
+		CWest.EnableWindow(true); west=true;
+		CNorth.EnableWindow(true);north=true;
+		CSouth.EnableWindow(true);south=true;
 CGo.EnableWindow(false);
 Dialog.SetReadOnly(true);
 
@@ -1282,19 +1540,19 @@ me->setName(name);
 CSaveG.EnableWindow(true);
 checkLocation();
 
-	CNorth.EnableWindow(false);
-	CEast.EnableWindow(false);
-	CWest.EnableWindow(false);
-	CSouth.EnableWindow(false);
+	CNorth.EnableWindow(false);north=false;
+	CEast.EnableWindow(false);east=false;
+	CWest.EnableWindow(false);west=false;
+	CSouth.EnableWindow(false);south=false;
 
-	if  (me->getY() <9)
-		CNorth.EnableWindow(true);
-	if (me->getY()>0)
-		CSouth.EnableWindow(true);
-	if(me->getX()<9)
-		CEast.EnableWindow(true);
-	if(me->getX()>0)
-		CWest.EnableWindow(true);
+	if  (me->getY() <9){
+		CNorth.EnableWindow(true);north=true;}
+	if (me->getY()>0){
+		CSouth.EnableWindow(true);south=true;}
+	if(me->getX()<9){
+		CEast.EnableWindow(true);east=true;}
+	if(me->getX()>0){
+		CWest.EnableWindow(true);west=true;}
 
 CString a;
 a.Format(_T("%d"), me->getHP());
@@ -1394,10 +1652,10 @@ Dialog.SetSel(0,-1,false);
 void CDNDPprojectDlg::OnBnClickedNorth()
 {
 	me->goNorth();
-if(me->getY() ==9)
-	CNorth.EnableWindow(false);
-if(me->getY() >0)
-	CSouth.EnableWindow(true);
+if(me->getY() ==9){
+	CNorth.EnableWindow(false);north=east;}
+if(me->getY() >0){
+	CSouth.EnableWindow(true);south=true;}
 
 checkLocation();
 }
@@ -1406,10 +1664,10 @@ checkLocation();
 void CDNDPprojectDlg::OnBnClickedSouth()
 {
 	me->goSouth();
-	if(me->getY() ==0)
-	CSouth.EnableWindow(false);
-if(me->getY() <9)
-	CNorth.EnableWindow(true);
+	if(me->getY() ==0){
+		CSouth.EnableWindow(false);south=false;}
+if(me->getY() <9){
+	CNorth.EnableWindow(true);north=true;}
 
 checkLocation();
 }
@@ -1418,10 +1676,10 @@ checkLocation();
 void CDNDPprojectDlg::OnBnClickedEast()
 {
 	me->goEast();
-if(me->getX() ==9)
-	CEast.EnableWindow(false);
-if(me->getX() >0)
-	CWest.EnableWindow(true);
+if(me->getX() ==9){
+	CEast.EnableWindow(false);east=false;}
+if(me->getX() >0){
+	CWest.EnableWindow(true);west=true;}
 
 checkLocation();
 }
@@ -1430,10 +1688,10 @@ checkLocation();
 void CDNDPprojectDlg::OnBnClickedWest()
 {
 me->goWest();
-if(me->getX() ==0)
-	CWest.EnableWindow(false);
-if(me->getX() <9)
-	CEast.EnableWindow(true);
+if(me->getX() ==0){
+	CWest.EnableWindow(false);west=false;}
+if(me->getX() <9){
+	CEast.EnableWindow(true);east=true;}
 
 checkLocation();
 }
@@ -1456,10 +1714,10 @@ CDex.SetWindowTextW(L"");
 CInt.SetWindowTextW(L"");
 CStr.SetWindowTextW(L"");
 CHp.SetWindowTextW(L"");
-CNorth.EnableWindow(false);
-CEast.EnableWindow(false);
-CWest.EnableWindow(false);
-CSouth.EnableWindow(false);
+CNorth.EnableWindow(false);north=false;
+CEast.EnableWindow(false);east=false;
+CWest.EnableWindow(false);west=false;
+CSouth.EnableWindow(false);south=false;
 CRestart.EnableWindow(false);
 CSaveG.EnableWindow(false);
 RHands.SetCheck(true);
@@ -1473,6 +1731,7 @@ RHands.SetCheck(true);
 			activeEnemy[i]=true;
 		CEat.EnableWindow(false);
 		CInvetory.SetWindowTextW(L"");
+		CAction.EnableWindow(false);
 }
 
 }
@@ -1558,10 +1817,10 @@ void CDNDPprojectDlg::OnBnClickedEat()
 
 void CDNDPprojectDlg::gameOver(int id)
 {
-CNorth.EnableWindow(false);
-CEast.EnableWindow(false);
-CWest.EnableWindow(false);
-CSouth.EnableWindow(false);
+CNorth.EnableWindow(false);north=false;
+CEast.EnableWindow(false);east=false;
+CWest.EnableWindow(false);west=false;
+CSouth.EnableWindow(false);south=false;
 CSaveG.EnableWindow(false);
 
 BtnStart.EnableWindow(false);
@@ -1614,6 +1873,7 @@ void CDNDPprojectDlg::OnBnClickedAction()
 		Damaged=me->getWeapon2()->getName();
 		break;
 	}
+	PlaySound(L"Sound/sword.wav",NULL,SND_FILENAME|SND_ASYNC); 
 	SDialog.Format(_T("You done %d damage, using %s,\r\n %s has %d HP left"), damage,Damaged,monName,enemy->getHP());
 	Output.SetWindowTextW(SDialog);
 	DoEvents();
@@ -1632,11 +1892,19 @@ void CDNDPprojectDlg::OnBnClickedAction()
 
 void CDNDPprojectDlg::NextAttack()
 {
+	CAction.EnableWindow(false);
+	DoEvents();
 	Sleep(2000);
 	backDamaged=enemy->Attack(me);
+	if(monName=="Dragon")
+	PlaySound(L"Sound/dragon.wav",NULL,SND_FILENAME|SND_ASYNC); 
+	else
+	PlaySound(L"Sound/giant.wav",NULL,SND_FILENAME|SND_ASYNC); 
+		DoEvents();
 	SDialog.Format(_T("%s attacked you and did %d damage,\r\n enemy has %d HP left"), monName,backDamaged,enemy->getHP());
 	Output.SetWindowTextW(SDialog);
 	updateHP();
+		CAction.EnableWindow(true);
 	DoEvents();
 }
 
@@ -1648,6 +1916,8 @@ void CDNDPprojectDlg::Won()
 		delete enemy;
 		CAction.EnableWindow(false);
 		Battle(battleid);
+		me->LevelUp();
+		updateHP();
 		DoEvents();
 		return;
 }
@@ -1696,3 +1966,49 @@ bool CDNDPprojectDlg::DoEvents()
     }
     return TRUE;
 }
+
+void CDNDPprojectDlg::OnBnClickedStopmusic()
+{
+	PlaySound( NULL, NULL, 0 );
+	// TODO: Add your control notification handler code here
+}
+
+BOOL CDNDPprojectDlg::PreTranslateMessage(MSG * pMsg)
+{
+	CDNDPprojectDlg m;
+	int x=(int)pMsg->wParam;
+	if(pMsg->message==WM_KEYDOWN)
+	{
+		switch(x)
+		{
+		case VK_UP:
+			if(north)
+				OnBnClickedNorth();
+		break;
+		case VK_DOWN:
+			if(south)
+				OnBnClickedSouth();
+			break;
+
+		case VK_RIGHT:
+			if(east)
+				OnBnClickedEast();
+			break;
+
+		case VK_LEFT:
+			if(west)
+				OnBnClickedWest();
+			break;
+
+			default:
+				break;
+
+		}
+
+	}
+    return  __super::PreTranslateMessage(pMsg);
+
+
+
+}
+

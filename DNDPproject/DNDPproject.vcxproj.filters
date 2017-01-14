@@ -194,5 +194,260 @@
     <Image Include="Media.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Media\00,10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\01.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\02.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\03.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\04.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\4,3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\05.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\06.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\07.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\08,09.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\11,21.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\12,22.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\13,23.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\14,24.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\15,16.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\17.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\19,18.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\20.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\22.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\29,39.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\30.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\37,38.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\40.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\42.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\48.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\49.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\50.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\51,61.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\52,53.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\53,63.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\54,58.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\55.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\56,57.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\59,69.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\60,62.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\65.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\66.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\67.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\68.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\70,83.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\71,81,village.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\72,82.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\74.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\75.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\76,77.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\78.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\84,73.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\84,85.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\87,86.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\88.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\90,91,dragons.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\92.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\93.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\94.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\97,98.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\99.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\Begining.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\bowAndArrow.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\ELF_START.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\FAIRY_START.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\flyingCastle.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\goblins.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\NINJA_START.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\PIRATE_START.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\sword.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\CYCLOP.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\nunchaka.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\speer.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\splinter.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\treasureBox.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\whiteMagic.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\healPotion.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\katana.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\gloves.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\elfSister.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\dagger.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\deadCyclop.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\deadDragon.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\deadGoblin.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\blackMagic.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\armor.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\ax.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Media\barbieHouse.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

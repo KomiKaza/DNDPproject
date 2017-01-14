@@ -25,8 +25,10 @@
 // CDNDPprojectDlg dialog
 class CDNDPprojectDlg : public CDialogEx
 {
+
 // Construction
 public:
+	BOOL PreTranslateMessage(MSG * pMsg);
 	CDNDPprojectDlg(CWnd* pParent = NULL);	// standard constructor
 	CDNDPprojectDlg(bool * foods,int classSelect,Character *me,CWnd* pParent = NULL);	// standard constructor
 	void afterLoad();
@@ -107,4 +109,6 @@ private:
 public:
 	afx_msg void OnBnClickedAction();
 	CButton CAction;
+	afx_msg void OnBnClickedStopmusic();
 };
+
