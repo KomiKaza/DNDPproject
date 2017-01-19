@@ -17,9 +17,10 @@ Lecturer: Doctor Michael Kiperberg
 #include <mmsystem.h>
 #include <conio.h>
 #include <iomanip>
+#include <iostream>
+#include <thread>
+
 #pragma comment( lib, "Winmm.lib" )
-
-
 
 
 
@@ -41,17 +42,17 @@ Character * me;
 CPoint * Location;
 int MsgAns;
 int WeID=0,damage,backDamaged;
-bool monster[10];
 bool Restart=false; //check if we just restarted the game
-bool * foods=new bool[6];
+bool * foods=new bool[7];
 bool * activeEnemy=new bool[6];
 Monster * enemy;
 CString monName;
 int battleid;
 bool afterBattle=false;
 bool west=false,east=false,north=false,south=false;
-
 //end intalize
+
+
 
 class CAboutDlg : public CDialogEx
 { 
@@ -97,32 +98,20 @@ void CDNDPprojectDlg::Battle(int monstertype)
 		CNorth.EnableWindow(true);north=true;
 		CSouth.EnableWindow(true);south=true;
 		break;
-	case 1:
-		CEast.EnableWindow(true);east=true;
-		CWest.EnableWindow(true); west=true;
-		CNorth.EnableWindow(true);north=true;
-		CSouth.EnableWindow(true);south=true;
-		break;
 	case 2:
 		CEast.EnableWindow(true);east=true;
 		CWest.EnableWindow(true); west=true;
-		CNorth.EnableWindow(true);north=false;
-		CSouth.EnableWindow(true);south=true;
-		break;
-	case 3:
-		CEast.EnableWindow(true);east=true;
-		CWest.EnableWindow(true); west=true;
-		CNorth.EnableWindow(true);north=true;
+		CNorth.EnableWindow(false);north=false;
 		CSouth.EnableWindow(true);south=true;
 		break;
 	case 4:
 		CEast.EnableWindow(true);east=true;
 		CWest.EnableWindow(true); west=true;
 		CNorth.EnableWindow(true);north=true;
-		CSouth.EnableWindow(true);south=false;
+		CSouth.EnableWindow(false);south=false;
 		break;
 	case 5:
-		CEast.EnableWindow(true);east=false;
+		CEast.EnableWindow(false);east=false;
 		CWest.EnableWindow(true); west=true;
 		CNorth.EnableWindow(true);north=true;
 		CSouth.EnableWindow(true);south=true;
@@ -209,12 +198,18 @@ void CDNDPprojectDlg::checkLocation()
 		CenterPix.LoadBitmapW(ID0809);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 		SDialog="Oh no, youre drawning in the river!\r\n Go to the south or the east direction\r\n as soon as you can! ";
+				me->setHp(me->getHP() -2);
+a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
 		break;
 
 	case 9:
 		CenterPix.LoadBitmapW(ID0809);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 SDialog="Oh no, youre drawning in the river!\r\n Go to the south or the east direction\r\n as soon as you can! ";
+		me->setHp(me->getHP() -2);
+a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
 break;
 
 	case 10:
@@ -400,7 +395,7 @@ break;
 		monName="Goblin";
 		gameOver(2);
 		activeEnemy[1]=false;
-		battleid=1;
+		battleid=0;
 		afterBattle=true;
 		CenterPix.LoadBitmapW(IDGOBLIN);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
@@ -854,6 +849,9 @@ a.Format(_T("%d"), me->getHP());
 		CenterPix.LoadBitmapW(ID75);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 		SDialog="You've been too hasty and\r\n now you're drowning in a waterfall!";
+				me->setHp(me->getHP() -2);
+a.Format(_T("%d"), me->getHP());
+		CHp.SetWindowTextW(a);
 		break;
 
 	case 76:
@@ -909,7 +907,7 @@ a.Format(_T("%d"), me->getHP());
 		monName="Cyclop";
 		gameOver(2);
 		activeEnemy[3]=false;
-		battleid=3;
+		battleid=0;
 		afterBattle=true;
 		CenterPix.LoadBitmapW(IDCYCLOP);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
@@ -1042,7 +1040,22 @@ a.Format(_T("%d"), me->getHP());
 	case 88:
 		CenterPix.LoadBitmapW(ID88);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
+				if(foods[6])
+		{
 		SDialog="A beautiful oasis is \r\nsorroundind you!\r\n Drink water and eat\r\n some dates.";
+		me->setFood(me->getFood() +1);
+		Temp.Format(_T("%d"), me->getFood());
+		Temp+=" x Food(+2 HP)";
+		Temp0=me->getWeaponsST();
+		if(me->getFood())
+		Temp0+=Temp;
+		CInvetory.SetWindowTextW(Temp0);
+		CEat.EnableWindow(true);
+		foods[6]=false;
+		}
+		else
+			SDialog="A beautiful oasis is \r\nsorroundind you!\r\n  but no food :(";
+
 		break;
 
 	case 89:
@@ -1471,7 +1484,7 @@ Dialog.SetFocus();
 Dialog.SetSel(0,-1,false);
 newName=true;
 CGo.EnableWindow(true);
-PlaySound(L"Sound/theme.wav",NULL,SND_FILENAME|SND_ASYNC); 
+PlaySound(L"Sound/theme.wav",NULL,SND_FILENAME|SND_LOOP | SND_ASYNC); 
 
 
 SDialog="The Pizza you ate yesterday \r\n";
@@ -1511,11 +1524,14 @@ CBitmap CenterPix;//creating bitmap
 
 void CDNDPprojectDlg::OnBnClickedGo()
 {
+		CString FixText=CString(_T(""));
+	Dialog.GetWindowTextW(name);
+	if(name!="Enter your name here!")
+	{
 	if(newName)
 	{
 		CRestart.EnableWindow(true);
 		newName=false;
-		Dialog.GetWindowTextW(name);
 		msg="";
 		Dialog.SetWindowTextW(msg);
 
@@ -1579,6 +1595,14 @@ RBow.SetWindowTextW(me->getWeapon2()->getName());
 
 CName.SetWindowTextW(name);
 CInvetory.SetWindowTextW(L"You have nothing \r\n");
+	}
+	}
+	else
+	{
+		FixText="Please enter different name!";
+		MessageBox((LPCTSTR)FixText, L"Dungeon and Dragons 1.0 - Bad Name");
+		Dialog.SetFocus();
+Dialog.SetSel(0,-1,false);
 	}
 	// TODO: Add your control notification handler code here
 }
@@ -1719,7 +1743,6 @@ CEast.EnableWindow(false);east=false;
 CWest.EnableWindow(false);west=false;
 CSouth.EnableWindow(false);south=false;
 CRestart.EnableWindow(false);
-CSaveG.EnableWindow(false);
 RHands.SetCheck(true);
 		RBow.SetCheck(false);
 		RSword.SetCheck(false);
@@ -1744,7 +1767,7 @@ SDialog="";
 newName=false;
 ClassSelect=0;
 for(int i=0;i<10;i++)
-monster[i]=false;
+activeEnemy[i]=false;
 delete me;
 delete Location;
 }
@@ -1773,7 +1796,7 @@ MessageBox((LPCTSTR)HelpText, L"Dungeon and Dragons 1.0 - Help");
 
 void CDNDPprojectDlg::OnBnClickedSave()
 {
-	SaveDialog dlg(foods,ClassSelect,me);
+	SaveDialog dlg(activeEnemy,foods,ClassSelect,me);
 dlg.DoModal();
 //pSaveName = ( CEdit * ) GetDlgItem( IDC_SaveName );
 //pSavePassword = ( CEdit * ) GetDlgItem( IDC_SavePassword );
@@ -1783,7 +1806,7 @@ dlg.DoModal();
 
 void CDNDPprojectDlg::OnBnClickedLoad()
 {
-	DLGLoad dlg;
+	DLGLoad dlg(this);
 	dlg.DoModal();
 }
 
@@ -1796,7 +1819,7 @@ void CDNDPprojectDlg::OnBnClickedEat()
 	if (me->getFood() <1 && !me->getWeapon0()->getEnable()&& !me->getWeapon1()->getEnable()&& !me->getWeapon2()->getEnable())
 	{
 		CEat.EnableWindow(false);
-		CInvetory.SetWindowTextW(L"You have nothing \r\n");//AFTER IL ADD ITEMS NEED TO CHANGE
+		CInvetory.SetWindowTextW(L"You have nothing \r\n");
 	}
 	else
 	{
@@ -1892,9 +1915,11 @@ void CDNDPprojectDlg::OnBnClickedAction()
 
 void CDNDPprojectDlg::NextAttack()
 {
+	//thread t(&CDNDPprojectDlg::stopTemp,this);
 	CAction.EnableWindow(false);
 	DoEvents();
 	Sleep(2000);
+	//t.join();
 	backDamaged=enemy->Attack(me);
 	if(monName=="Dragon")
 	PlaySound(L"Sound/dragon.wav",NULL,SND_FILENAME|SND_ASYNC); 
@@ -1918,6 +1943,7 @@ void CDNDPprojectDlg::Won()
 		Battle(battleid);
 		me->LevelUp();
 		updateHP();
+		CSaveG.EnableWindow(true);
 		DoEvents();
 		return;
 }
@@ -2012,3 +2038,31 @@ BOOL CDNDPprojectDlg::PreTranslateMessage(MSG * pMsg)
 
 }
 
+void CDNDPprojectDlg::setBoolFood(bool * food)
+{
+	foods=food;
+}
+
+void CDNDPprojectDlg::setBoolMonster(bool * monster)
+{
+	activeEnemy=monster;
+}
+
+void CDNDPprojectDlg::setClass(int classType)
+{
+		ClassSelect=classType;
+		characterFactory=NinjaFactory::getInstance();
+
+}
+
+void CDNDPprojectDlg::setChar(Character * m)
+{
+	me=m;
+		afterload=true;
+}
+
+
+void CDNDPprojectDlg::stopTemp()
+{
+	CAction.EnableWindow(false);
+}

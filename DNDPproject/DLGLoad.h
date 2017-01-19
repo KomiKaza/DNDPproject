@@ -1,6 +1,7 @@
 #pragma once
 #include "afxwin.h"
 
+class CDNDPprojectDlg;
 
 // DLGLoad dialog
 
@@ -9,7 +10,7 @@ class DLGLoad : public CDialogEx
 	DECLARE_DYNAMIC(DLGLoad)
 
 public:
-	DLGLoad(CWnd* pParent = NULL);   // standard constructor
+	DLGLoad(CDNDPprojectDlg * dl,CWnd* pParent = NULL);   // standard constructor
 	virtual ~DLGLoad();
 
 // Dialog Data
@@ -24,4 +25,5 @@ public:
 	afx_msg void OnBnClickedCancelload();
 	CEdit CLoadName;
 	CEdit CLoadPass;
+	CDNDPprojectDlg * dlg;
 };

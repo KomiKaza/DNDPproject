@@ -28,6 +28,7 @@ class CDNDPprojectDlg : public CDialogEx
 
 // Construction
 public:
+	void stopTemp();
 	BOOL PreTranslateMessage(MSG * pMsg);
 	CDNDPprojectDlg(CWnd* pParent = NULL);	// standard constructor
 	CDNDPprojectDlg(bool * foods,int classSelect,Character *me,CWnd* pParent = NULL);	// standard constructor
@@ -52,6 +53,10 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	void setBoolMonster(bool * monster);
+	void setBoolFood(bool * food);
+	void setClass(int classType);
+	void setChar(Character * me);
 	void updateHP();
 	bool DoEvents();
 	void NextAttack();

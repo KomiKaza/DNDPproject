@@ -19,14 +19,16 @@ SaveDialog::SaveDialog(CWnd* pParent /*=NULL*/)
 	me=NULL;
 	SaveDialog::ClassType=0;
 	foods=NULL;
+	monsters=NULL;
 }
 
-SaveDialog::SaveDialog(bool * foods,int classtype,Character * me,CWnd* pParent)
+SaveDialog::SaveDialog(bool * monsters,bool * foods,int classtype,Character * me,CWnd* pParent)
 	: CDialogEx(SaveDialog::IDD, pParent)
 {
 	SaveDialog::me=me;
 	SaveDialog::ClassType=classtype;
 	SaveDialog::foods=foods;
+	SaveDialog::monsters=monsters;
 }
 
 SaveDialog::~SaveDialog()
@@ -78,7 +80,7 @@ L"Error! Character Could Not Be Saved.");
 
 else 
 {
-//NOTE: We need to convert the CStrings to strings to write the data.
+// convert the CStrings to strings to write the data.
 char PASSWORD[100] = " ";
 for(int y = 0; y < password.GetLength(); y++)
 { PASSWORD[y] = password[y]; }
@@ -88,7 +90,7 @@ char CHARNAME[100] = " ";
 for(int z = 0; z < CHARACTERNAME.GetLength(); z++)
 { CHARNAME[z] = CHARACTERNAME[z]; }
 
-//Simple serialization of Character class 
+// serialization of Character class 
 WriteStuff << PASSWORD << "\n"; 
 WriteStuff << CHARNAME << "\n";
 WriteStuff << me->getHP() << "\n";
@@ -110,6 +112,16 @@ WriteStuff <<((foods[2])?1:0)<<"\n";
 WriteStuff <<((foods[3])?1:0)<<"\n";
 WriteStuff <<((foods[4])?1:0)<<"\n";
 WriteStuff <<((foods[5])?1:0)<<"\n";
+WriteStuff <<((foods[6])?1:0)<<"\n";
+
+
+WriteStuff <<((monsters[0])?1:0)<<"\n";
+WriteStuff <<((monsters[1])?1:0)<<"\n";
+WriteStuff <<((monsters[2])?1:0)<<"\n";
+WriteStuff <<((monsters[3])?1:0)<<"\n";
+WriteStuff <<((monsters[4])?1:0)<<"\n";
+WriteStuff <<((monsters[5])?1:0)<<"\n";
+
 
 WriteStuff <<((me->getWeapon0()->getEnable())?1:0)<<"\n";
 WriteStuff <<((me->getWeapon1()->getEnable())?1:0)<<"\n";

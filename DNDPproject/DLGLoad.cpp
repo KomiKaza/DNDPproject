@@ -21,10 +21,10 @@
 
 IMPLEMENT_DYNAMIC(DLGLoad, CDialogEx)
 
-DLGLoad::DLGLoad(CWnd* pParent /*=NULL*/)
+DLGLoad::DLGLoad(CDNDPprojectDlg * dlg,CWnd* pParent /*=NULL*/)
 	: CDialogEx(DLGLoad::IDD, pParent)
 {
-
+	DLGLoad::dlg=dlg;
 }
 
 DLGLoad::~DLGLoad()
@@ -58,8 +58,9 @@ CString pass;
 Character *me;
 int ClassSelect;
 int try1;
-int *foods =new int[6];
+int *foods =new int[7];
 int *enable=new int[6];
+int * monsters=new int[10];
 CLoadName.GetWindowText(CharacterName);
 CharacterName +=".gam";
 
@@ -78,11 +79,9 @@ else
 CLoadPass.GetWindowText(pass);
 std::getline(ReadStuff, passwd);
 
-//Need to convert the string to CString with .c_str()
 if(pass == passwd.c_str())
 { 
-//Careful! serialization = you must read in exactly the same order as you wrote!
-//Have to use getline for nm since name may have spaces in it
+
 getline(ReadStuff, nm); 
 ReadStuff >> hp;
 ReadStuff >> def;
@@ -102,6 +101,16 @@ ReadStuff >> foods[2];
 ReadStuff >> foods[3];
 ReadStuff >> foods[4];
 ReadStuff >> foods[5];
+ReadStuff >> foods[6];
+
+
+ReadStuff >> monsters[0];
+ReadStuff >> monsters[1];
+ReadStuff >> monsters[2];
+ReadStuff >> monsters[3];
+ReadStuff >> monsters[4];
+ReadStuff >> monsters[5];
+
 
 ReadStuff >> enable[0];
 ReadStuff >> enable[1];
@@ -114,12 +123,6 @@ ReadStuff >> enable[5];
 
 
 ReadStuff.close();
-//CurrentPlayer->Inventory(); 
-//CurrentPlayer->DisplayStats();
-//NeedName = false; 
-//Conquests();
-//pName->SetWindowText(CurrentPlayer->getName());
-//PlaySound(L"media/theme.wav",NULL,SND_FILENAME|SND_ASYNC);
 
 MessageBox(L"Your character was loaded successfully!",
 L"Character Loaded Successfully!"); 
@@ -157,12 +160,20 @@ me->getWeapon2()->setEnable(enable[2]?true:false);
 me->getItem(0)->setEnable(enable[3]?true:false);
 me->getItem(1)->setEnable(enable[4]?true:false);
 me->getItem(2)->setEnable(enable[5]?true:false);
-bool neFood[6];
+bool neFood[7];
+bool neMonster[6];
 for(int i=0;i<6;++i)
+{
+	neMonster[i]=monsters[i]?true:false;
 	neFood[i]=foods[i]?true:false;
+}
+	neFood[6]=foods[6]?true:false;
 
-CDNDPprojectDlg dlg(neFood,ClassSelect,me);
-dlg.DoModal();
+dlg->setBoolFood(neFood);
+dlg->setBoolMonster(neMonster);
+dlg->setClass(ClassSelect);
+dlg->setChar(me);
+dlg->Invalidate();
 EndDialog( 0 );
 
 }//close if
