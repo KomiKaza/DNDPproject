@@ -39,7 +39,6 @@ CString SDialog=CString(_T(""));
 bool newName=false;
 int ClassSelect=0;
 Character * me;
-CPoint * Location;
 int MsgAns;
 int WeID=0,damage,backDamaged;
 bool Restart=false; //check if we just restarted the game
@@ -50,6 +49,7 @@ CString monName;
 int battleid;
 bool afterBattle=false;
 bool west=false,east=false,north=false,south=false;
+bool justwon=false;
 //end intalize
 
 
@@ -89,7 +89,6 @@ END_MESSAGE_MAP()
 
 void CDNDPprojectDlg::Battle(int monstertype)
 {
-	CString battleLog;
 	switch(monstertype)
 	{
 	case 0:
@@ -117,11 +116,7 @@ void CDNDPprojectDlg::Battle(int monstertype)
 		CSouth.EnableWindow(true);south=true;
 		break;
 	}
-	//now add the battle...
-	//while(enemy->getHP() >0 && me->getHP() >0)
-	//{
-	//	//do action
-	//}
+
 }
 
 
@@ -129,7 +124,7 @@ void CDNDPprojectDlg::checkLocation()
 {
 	CBitmap CenterPix;//creating bitmap
 	SDialog="";
-	CString Temp,Temp0,a;
+	CString Temp,Temp0,a,enemyhp;
 	switch((me->getX())*10 +(me->getY()))
 	{
 	case 0:
@@ -159,7 +154,7 @@ void CDNDPprojectDlg::checkLocation()
        pView.SetBitmap(CenterPix );//post image
 		break;
 	case 2:
-		SDialog="Oh no, a storm is hitting the beach!\r\n Consider if you want to continue via\r\n the beach,  or you wan to go to \r\n rice fields which are in the east  \r\n direction.";
+		SDialog = "Oh no, a storm is hitting the beach!\r\n Consider if you want to continue via\r\n the beach,  or you want to go to \r\n rice fields which are in the east  \r\n direction.";
 		CenterPix.LoadBitmapW(ID02);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 		break;
@@ -351,11 +346,11 @@ break;
 	case 24:
 		CenterPix.LoadBitmapW(ID1424);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
-		SDialog="You are in the borderline\r\n between the village and the beach.";
+		SDialog = "Any direction you will choose\r\n will bring you to a new \r\nadventure!";
 		break;	
 
 	case 25:
-		SDialog="Any direction you will choose\r\n will bring you to a new \r\nadventure!";
+		SDialog = "Where will you go?";
 		break;
 
 	case 26:
@@ -370,6 +365,8 @@ break;
 		SDialog="You are facing the evil goblin\r\n now!\r\n Show him what you've got!";
 		enemy=new Goblin();
 		monName="Goblin";
+		enemyhp.Format(_T("%d"), enemy->getHP());
+		CEnemyhp.SetWindowTextW(enemyhp);
 		gameOver(2);
 		activeEnemy[0]=false;
 		battleid=0;
@@ -393,6 +390,8 @@ break;
 		SDialog="You are facing the evil goblin\r\n now!\r\n Show him what you've got!";
 		enemy=new Goblin();
 		monName="Goblin";
+		enemyhp.Format(_T("%d"), enemy->getHP());
+		CEnemyhp.SetWindowTextW(enemyhp);
 		gameOver(2);
 		activeEnemy[1]=false;
 		battleid=0;
@@ -495,10 +494,7 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 39:
-		SDialog="You are in the hills zone \r\n and you're not as fit \r\nas you remembered!\r\n(you lose 2 HP)";
-		me->setHp(me->getHP() -2);
-a.Format(_T("%d"), me->getHP());
-		CHp.SetWindowTextW(a);//I Should add a fitness count later..(29+39)
+		SDialog = "You are in the hills zone. \r\n Be careful!";
 		break;
 
 	case 40:
@@ -508,7 +504,7 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 41:
-		SDialog="You are in a rice field.\r\n The wind is becoming stronger and\r\b you start feeling tired.";
+		SDialog="You are in a rice field.\r\n The wind is becoming stronger and\r\n you start feeling tired.";
 		break;
 
 	case 42:
@@ -563,7 +559,7 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 46:
-		SDialog="You are annoying the goblins!\r\n Here they come!";
+		SDialog = "You see an oasis in the horizon";
 		break;
 
 	case 47:
@@ -571,13 +567,13 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 48:
-		CenterPix.LoadBitmapW(ID49);//load image  MAYBE I SHOULD CHANGE PICTURE
+		CenterPix.LoadBitmapW(ID48);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 		SDialog="The goblins live houses made of chocolate-\r\n You can eat as much as your belly\r\n lets you!";
 		break;
 
 	case 49:
-		SDialog="You're on the top of the highest hill \r\n in the Goblins valley!\r\n Take a photo for your'e\r\n Instagram.";
+		SDialog = "You're on the top of the highest hill \r\n in the Goblins valley!\r\n Take a photo for your\r\n Instagram.";
 		CenterPix.LoadBitmapW(BIT_FAIRY);//load image
        pView.SetBitmap(CenterPix );//post image
 		break;
@@ -635,7 +631,7 @@ a.Format(_T("%d"), me->getHP());
 	case 54:
 		CenterPix.LoadBitmapW(ID5458);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
-		SDialog="Please meet the trolls!\r\n They are hiding in the\r\n forests, \r\nwaiting for a victim! ";
+		SDialog = "Where are the trolls?\r\n They should be around ";
 		break;
 
 	case 55:
@@ -686,7 +682,7 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 58:
-		SDialog="You're sorrounded by squirrels \r\n and evergreen trees! \r\n Enjoy the moment";
+		SDialog = "Is there somebody hiding behind the hills of \r\n  sand?";
 		break;
 
 	case 59:
@@ -751,13 +747,13 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 64:
-		SDialog="Please meet the trolls!\r\n They are hiding in the\r\n forests, \r\nwaiting for a victim! ";
+		SDialog = "Be aware of the trolls!\r\n They are hiding somewhere! ";
 		break;
 
 	case 65:
 		CenterPix.LoadBitmapW(ID65);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
-		SDialog="You see a desert on \r\nthe horizon!";
+		SDialog = "You are in a desert!";
 		break;
 
 	case 66: 
@@ -786,6 +782,8 @@ a.Format(_T("%d"), me->getHP());
 		SDialog="It's a trap!\r\n You have to defeat the Syclop now!";
 		enemy=new Cyclop();
 		monName="Cyclop";
+		enemyhp.Format(_T("%d"), enemy->getHP());
+		CEnemyhp.SetWindowTextW(enemyhp);
 		gameOver(2);
 		activeEnemy[2]=false;
 		battleid=2;
@@ -836,7 +834,7 @@ a.Format(_T("%d"), me->getHP());
 	case 73:
 		CenterPix.LoadBitmapW(ID7384);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
-		SDialog="Oops!\r\n You fell into a river!\r\n To your luck, it's \r\n not that deep";
+		SDialog = "Oops!\r\n You fell into a river! \r\n To your luck, it is not that deep";
 		break;
 
 	case 74:
@@ -905,6 +903,8 @@ a.Format(_T("%d"), me->getHP());
 		SDialog="It's a trap!\r\n You have to defeat the Syclop now!";
 		enemy=new Cyclop();
 		monName="Cyclop";
+		enemyhp.Format(_T("%d"), enemy->getHP());
+		CEnemyhp.SetWindowTextW(enemyhp);
 		gameOver(2);
 		activeEnemy[3]=false;
 		battleid=0;
@@ -925,7 +925,7 @@ a.Format(_T("%d"), me->getHP());
 		{
 			CenterPix.LoadBitmapW(IDTresure);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
-			SDialog="Your have found the tresure chest!\r\n You won the game ,\r\nGood job!";
+			SDialog = "Your have found the treasure box!\r\n You won the game ,\r\nGood job!";
 			DoEvents();
 			gameOver(1);
 		}
@@ -954,6 +954,8 @@ a.Format(_T("%d"), me->getHP());
 		SDialog="It's a trap!\r\n You have to defeat the dragon now!";
 		enemy=new Dragon();
 		monName="Dragon";
+		enemyhp.Format(_T("%d"), enemy->getHP());
+		CEnemyhp.SetWindowTextW(enemyhp);
 		gameOver(2);
 		activeEnemy[4]=false;
 		battleid=4;
@@ -1016,7 +1018,7 @@ a.Format(_T("%d"), me->getHP());
 	case 84:
 		CenterPix.LoadBitmapW(ID8485);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
-		SDialog="Oops!\r\n You fell into a river!\r\n To your luck, it's \r\b not that deep";
+		SDialog="Oops!\r\n You fell into a river!\r\n To your luck, it's \r\n not that deep";
 		break;
 
 	case 85:
@@ -1059,7 +1061,7 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 89:
-		SDialog="Evil goblins!\r\n Show the who's the boss!";
+		SDialog = "It seems like your'e close to \r\n your destinatin!";
 		break;
 
 	case 90:
@@ -1072,7 +1074,12 @@ a.Format(_T("%d"), me->getHP());
 			gameOver(1);
 		}
 		else
-		SDialog="What a pastoral view!\r\n A valley is in your west direction\r\n and a desert is in your \r\neast direction.\r\n Where will you go?";
+		{
+			SDialog = "Continue the journey!";
+						CenterPix.LoadBitmapW(ID90);//load image  MAYBE I SHOULD CHANGE PICTURE
+       pView.SetBitmap(CenterPix );//post image
+
+		}
 		break;
 
 	case 91:
@@ -1083,6 +1090,8 @@ a.Format(_T("%d"), me->getHP());
 		SDialog="It's a trap!\r\n You have to defeat the dragons now!";
 		enemy=new Dragon();
 		monName="Dragon";
+		enemyhp.Format(_T("%d"), enemy->getHP());
+		CEnemyhp.SetWindowTextW(enemyhp);
 		gameOver(2);
 		activeEnemy[5]=false;
 		battleid=5;
@@ -1123,7 +1132,7 @@ a.Format(_T("%d"), me->getHP());
 		break;
 
 	case 96:
-		SDialog="What a nice view...";
+		SDialog = "Where will you go?";
 		CenterPix.LoadBitmapW(ID94);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
 	   break;
@@ -1137,7 +1146,7 @@ a.Format(_T("%d"), me->getHP());
 	case 98:
 		CenterPix.LoadBitmapW(ID9798);//load image  MAYBE I SHOULD CHANGE PICTURE
        pView.SetBitmap(CenterPix );//post image
-		SDialog="Its hot and sweaty \r\nand you're becoming tired";
+		SDialog = "You see only hills of sand";
 		break;
 
 	case 99:
@@ -1211,10 +1220,7 @@ void CDNDPprojectDlg::afterLoad()
 		Dialog.SetWindowTextW(msg);
 
 
-		CEast.EnableWindow(true);east=true;
-		CWest.EnableWindow(true); west=true;
-		CNorth.EnableWindow(true);north=true;
-		CSouth.EnableWindow(true);south=true;
+
 CGo.EnableWindow(false);
 Dialog.SetReadOnly(true);
 
@@ -1300,7 +1306,7 @@ CDNDPprojectDlg::CDNDPprojectDlg(bool * food,int classSelect,Character *m,CWnd* 
 	me=m;
 	afterload=true;
 	foods=food;
-	ClassSelect=ClassSelect;
+	ClassSelect=classSelect;
 	characterFactory=NinjaFactory::getInstance();
 }
 
@@ -1334,6 +1340,7 @@ void CDNDPprojectDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SAVE, CSaveG);
 	DDX_Control(pDX, IDC_EAT, CEat);
 	DDX_Control(pDX, IDC_ACTION, CAction);
+	DDX_Control(pDX, CE_ENEMYHP, CEnemyhp);
 }
 
 
@@ -1537,10 +1544,7 @@ void CDNDPprojectDlg::OnBnClickedGo()
 
 //SDialog=L""+name+L" \r\n";
 
-		CEast.EnableWindow(true);east=true;
-		CWest.EnableWindow(true); west=true;
-		CNorth.EnableWindow(true);north=true;
-		CSouth.EnableWindow(true);south=true;
+
 CGo.EnableWindow(false);
 Dialog.SetReadOnly(true);
 
@@ -1675,6 +1679,11 @@ Dialog.SetSel(0,-1,false);
 
 void CDNDPprojectDlg::OnBnClickedNorth()
 {
+		if(justwon)
+	{
+	CEnemyhp.SetWindowTextW(L"");
+		justwon=false;
+	}
 	me->goNorth();
 if(me->getY() ==9){
 	CNorth.EnableWindow(false);north=east;}
@@ -1687,6 +1696,11 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedSouth()
 {
+		if(justwon)
+	{
+	CEnemyhp.SetWindowTextW(L"");
+		justwon=false;
+	}
 	me->goSouth();
 	if(me->getY() ==0){
 		CSouth.EnableWindow(false);south=false;}
@@ -1699,6 +1713,11 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedEast()
 {
+		if(justwon)
+	{
+	CEnemyhp.SetWindowTextW(L"");
+		justwon=false;
+	}
 	me->goEast();
 if(me->getX() ==9){
 	CEast.EnableWindow(false);east=false;}
@@ -1711,6 +1730,12 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedWest()
 {
+	if(justwon)
+	{
+	CEnemyhp.SetWindowTextW(L"");
+		justwon=false;
+	}
+
 me->goWest();
 if(me->getX() ==0){
 	CWest.EnableWindow(false);west=false;}
@@ -1723,7 +1748,7 @@ checkLocation();
 
 void CDNDPprojectDlg::OnBnClickedRestart()
 {
-MsgAns = MessageBox(L"You are in the middle of a game. Are you sure?", 
+MsgAns = MessageBox(L"Are you sure you want to start over?", 
 L"Start Over?", MB_YESNOCANCEL|MB_ICONINFORMATION);
 if(MsgAns==IDYES)
 {
@@ -1769,7 +1794,6 @@ ClassSelect=0;
 for(int i=0;i<10;i++)
 activeEnemy[i]=false;
 delete me;
-delete Location;
 }
 
 
@@ -1798,9 +1822,6 @@ void CDNDPprojectDlg::OnBnClickedSave()
 {
 	SaveDialog dlg(activeEnemy,foods,ClassSelect,me);
 dlg.DoModal();
-//pSaveName = ( CEdit * ) GetDlgItem( IDC_SaveName );
-//pSavePassword = ( CEdit * ) GetDlgItem( IDC_SavePassword );
-//bool success;
 }
 
 
@@ -1816,7 +1837,8 @@ void CDNDPprojectDlg::OnBnClickedEat()
 	CString a,Temp0;
 	me->setHp(me->getHP() +2);
 	me->setFood(me->getFood() -1);
-	if (me->getFood() <1 && !me->getWeapon0()->getEnable()&& !me->getWeapon1()->getEnable()&& !me->getWeapon2()->getEnable())
+	if (me->getFood() <1 && !me->getWeapon0()->getEnable()&& !me->getWeapon1()->getEnable()&& !me->getWeapon2()->getEnable()
+		&& !me->getItem(0)&& !me->getItem(1)&& !me->getItem(2))
 	{
 		CEat.EnableWindow(false);
 		CInvetory.SetWindowTextW(L"You have nothing \r\n");
@@ -1899,6 +1921,9 @@ void CDNDPprojectDlg::OnBnClickedAction()
 	PlaySound(L"Sound/sword.wav",NULL,SND_FILENAME|SND_ASYNC); 
 	SDialog.Format(_T("You done %d damage, using %s,\r\n %s has %d HP left"), damage,Damaged,monName,enemy->getHP());
 	Output.SetWindowTextW(SDialog);
+	CString enemyhp;
+	enemyhp.Format(_T("%d"), enemy->getHP());
+	CEnemyhp.SetWindowTextW(enemyhp);
 	DoEvents();
 	if(enemy->getHP() <1)
 	{
@@ -1944,6 +1969,7 @@ void CDNDPprojectDlg::Won()
 		me->LevelUp();
 		updateHP();
 		CSaveG.EnableWindow(true);
+		justwon=true;
 		DoEvents();
 		return;
 }

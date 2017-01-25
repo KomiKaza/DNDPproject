@@ -1,16 +1,13 @@
 #pragma once
-#include "character.h"
+#include "MagicCharacter.h"
 class Fairy :
-	public Character
+	public MagicCharacter
 {
 public:
 	Fairy();
 	~Fairy();
 	int Attack(Monster * enemy,int WeID);
 	int DMG();
-	int getMagic() {return Magic;};
 	CString getStory();
-private:
-	int Magic;
 };
 

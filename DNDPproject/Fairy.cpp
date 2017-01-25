@@ -10,7 +10,7 @@ Fairy::Fairy()
 	setInt(3);
 	setHp(16);
 	setStr(2);
-	Magic=1;
+	setMagic(1);
 	setLoc(4,9);
 	setWeapon0(new Weapon(0,L"White Magic",0,5,0,0,10,false)); //
 	setWeapon1(new Weapon(0,L"Armour Magic",0,0,0,10,0,false));//
@@ -36,14 +36,14 @@ int Fairy::Attack(Monster * enemy,int WeID)
 	total=DMG()-enemy->getDEF();
 	if(total<1)
 		total=0;
-	enemy->setHP(enemy->getHP()-total-Magic);
+	enemy->setHP(enemy->getHP()-total-getMagic());
 	return total;
 	break;
 	case 1:
 		total=DMG()+getWeapon0()->getDex()*getWeapon0()->getInt()*0.55-enemy->getDEF();
 	if(total<1)
 		total=0;
-	enemy->setHP(enemy->getHP()-total-Magic);
+	enemy->setHP(enemy->getHP()-total-getMagic());
 	return total;
 	break;
 	case 2:

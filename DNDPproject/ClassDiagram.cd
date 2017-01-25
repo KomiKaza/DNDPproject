@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Character" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAsDABAwAAKYACAEAYACEEBQIDICgDoAACMEGEIKAA=</HashCode>
+      <FileName>Character.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterFactory" Collapsed="true">
+    <Position X="4" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAAAACAA=</HashCode>
+      <FileName>CharacterFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclop" Collapsed="true">
+    <Position X="5.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAACAAQ=</HashCode>
+      <FileName>Cyclop.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dragon" Collapsed="true">
+    <Position X="8" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAABAAAAAAAAIAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Dragon.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Elf" Collapsed="true">
+    <Position X="0.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAIAAAAAAIAAAAAgAAAIAAAAAAA=</HashCode>
+      <FileName>Elf.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElfFactory" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAIAAACAA=</HashCode>
+      <FileName>ElfFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fairy" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACEAIAAAAAAIAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Fairy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FairyFactory" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAA=</HashCode>
+      <FileName>FairyFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Goblin" Collapsed="true">
+    <Position X="10.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAIAAAAAAAAIAAAAAQ=</HashCode>
+      <FileName>Goblin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Items" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAiAACACAAGASIAAAAAAEAAAAECCBEAAAEACABAgA=</HashCode>
+      <FileName>Items.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MagicCharacter" Collapsed="true">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAARAAAAAAEAIAAAEAAIBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MagicCharacter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monster" Collapsed="true">
+    <Position X="8" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgCAAQAHAAAgAAAQICAACAAAgBAAEAAAEQ=</HashCode>
+      <FileName>Monster.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ninja" Collapsed="true">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEEAIAAAAAAIAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Ninja.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NinjaFactory" Collapsed="true">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAIAAAAAAAAAAAQAAAAAAAAACAA=</HashCode>
+      <FileName>NinjaFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaveDialog" Collapsed="true">
+    <Position X="14.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQQAAAQAIAAAAAAJAAAQAAEAAAAAAAAAAAAAgAABA=</HashCode>
+      <FileName>SaveDialog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viking" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAIAAAAAAIAQAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Viking.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VikingFactory" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAACAAAAAQAAAAAAAAACAA=</HashCode>
+      <FileName>VikingFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Weapon" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAgCAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapon.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

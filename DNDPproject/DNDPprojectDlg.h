@@ -115,5 +115,6 @@ public:
 	afx_msg void OnBnClickedAction();
 	CButton CAction;
 	afx_msg void OnBnClickedStopmusic();
+	CEdit CEnemyhp;
 };
 

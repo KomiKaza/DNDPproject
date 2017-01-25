@@ -114,6 +114,7 @@
     <ClInclude Include="FairyFactory.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Items.h" />
+    <ClInclude Include="MagicCharacter.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Ninja.h" />
     <ClInclude Include="NinjaFactory.h" />
@@ -148,6 +149,7 @@
     <ResourceCompile Include="DNDPproject.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="res\DNDPproject.rc2" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +220,7 @@
     <Image Include="Media\87,86.bmp" />
     <Image Include="Media\88.bmp" />
     <Image Include="Media\90,91,dragons.bmp" />
+    <Image Include="Media\90.bmp" />
     <Image Include="Media\92.bmp" />
     <Image Include="Media\93.bmp" />
     <Image Include="Media\94.bmp" />
